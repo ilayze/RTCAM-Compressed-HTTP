@@ -1,9 +1,9 @@
 package src.main.com.jce
 
-object HelloWorld {
+object entryPoint {
   def main(args: Array[String]): Unit = {
     println("Hello, world!")
-    var parser = new ruleParser()
+    val parser = new ruleParser()
     parser.parseRules()
 
   }
