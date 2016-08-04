@@ -8,7 +8,7 @@ import scala.collection.mutable.ListBuffer
   */
 class ruleParser {
     def parseRules(rules_file_path:String = "/community-rules"): ListBuffer[signature] ={
-    //  val lines = scala.io.Source.fromFile("classpath:community-rules").mkString
+
         val all_rules = io.Source.fromInputStream(getClass.getResourceAsStream(rules_file_path)).getLines()
         var lineNumber = 1
         var all_signatures:ListBuffer[signature] = new ListBuffer[signature]()
@@ -22,11 +22,20 @@ class ruleParser {
               if(!(contents.length==0))
               {
                   println(s"parsing rule: $snort_rule")
-                  for(cont <- contents)
+                  for(i <- 0 until contents.length)
                     {
-                      val signature = cont.split(";")(0)
-                      println(s"new signature: $signature")
-                      all_signatures+=new signature(signature,signature.getBytes.map("%02x".format(_)).mkString(""))
+                      if(i == 0)
+                        {
+                          //skip
+                        }
+                      else
+                        {
+                          val cont = contents(i)
+                          val signature = cont.split(";")(0).stripPrefix("\"").stripSuffix("\"")
+                          println(s"new signature: $signature")
+                          all_signatures+=new signature(signature,signature.getBytes.map("%02x".format(_)).mkString(""))
+                        }
+
                     }
 
               }
