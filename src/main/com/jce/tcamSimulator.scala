@@ -12,7 +12,7 @@ class tcamSimulator(val width:Int) {
 
     def lookUp(key: String): rowMetadata =
     {
-        return null;
+        return new rowMetadata(0);
     }
 
     def addEntry(entry: tcamEntry): Unit =

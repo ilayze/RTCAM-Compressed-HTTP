@@ -8,7 +8,7 @@ import src.main.com.jce.{gzipPacket, tcamSimulator}
 class algorithmTests extends FunSuite {
   test("Execute algorithm") {
     val tcamSimulator = new tcamSimulator(width = 4)
-    val gzipPacket = new gzipPacket("C104;C101;C108;C108;C111;C44;C32;C104;L4;D7;C33;C0;")
+    val gzipPacket = new gzipPacket("C104;C101;C108;C108;C111;C44;C32;C104;L4;D7;C33;C0;") //L4;D7; = 7 steps backward take 4 characters
     val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
     rtcamCompressedHttp.execute()
   }
