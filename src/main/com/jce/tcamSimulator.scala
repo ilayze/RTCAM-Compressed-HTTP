@@ -9,6 +9,7 @@ import scala.collection.mutable.ListBuffer
   */
 class tcamSimulator(val width:Int) {
     var tcam = new ListBuffer[tcamEntry]
+    val DONT_CARE = "xdc"
 
     def lookUp(key: String): rowMetadata =
     {
@@ -19,6 +20,29 @@ class tcamSimulator(val width:Int) {
     {
         tcam.append(entry)
     }
+
+    //initialize the tcam with one signature
+    def initialize(signature : String): Unit ={
+
+          if(signature!= null && signature.length()<=width)
+          {
+            val length = signature.length();
+            var i = 0
+            for(i <- 0 until length)
+            {
+                var signature_with_dont_care = signature.substring(0,length-i)
+                var j=0
+                for(j <-0 until i)
+                  signature_with_dont_care = signature_with_dont_care.concat(DONT_CARE)
+
+                val newRow = new row(signature_with_dont_care)
+                val newRowMewtadata = new rowMetadata(shift = i)
+                val newTcamEntry = new tcamEntry(newRow,newRowMewtadata)
+                println("new tcam entry: %s".format(newTcamEntry))
+                addEntry(newTcamEntry)
+            }
+          }
+    }
 }
 
 class rowMetadata(val shift:Int)
@@ -26,3 +50,10 @@ class rowMetadata(val shift:Int)
 class row(val data:String)
 
 class tcamEntry(val row:row, val metadata:rowMetadata)
+{
+  override def toString: String = {
+    println("data: %s, shift: %s".format(row.data, metadata.shift))
+    return ""
+  }
+
+}
