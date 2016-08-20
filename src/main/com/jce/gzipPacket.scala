@@ -12,6 +12,15 @@ class gzipPacket(val data:String) {
       dataSplittedSlice
   }
 
+  def isPointer(begin: Int, end: Int): Boolean ={
+    val dataSplittedSlice = dataSplitted.slice(begin,end+1)
+    for (i <- dataSplittedSlice){
+      if(i.contains("L") || i.contains("D"))
+        return true
+    }
+    return false
+  }
+
   def length: Int ={
         return dataSplitted.length
       }
