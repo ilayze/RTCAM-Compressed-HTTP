@@ -4,13 +4,16 @@ package src.main.com.jce
   * Created by izeidman on 8/4/2016.
   */
 class gzipPacket(val data:String) {
-  def get(pos: Int, i: Int) : String = {
-      ""
+
+  val dataSplitted: Array[String] = data.split(";")
+
+  def get(begin: Int, end: Int) : Array[String] = {
+      val dataSplittedSlice = dataSplitted.slice(begin,end+1)
+      dataSplittedSlice
   }
 
-
   def length: Int ={
-        10
+        return dataSplitted.length
       }
 
 }

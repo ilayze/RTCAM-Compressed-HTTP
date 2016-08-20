@@ -14,7 +14,7 @@ class algorithmTests extends FunSuite {
 
     val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
     val matchedList = rtcamCompressedHttp.execute()
-    
+
     assert(matchedList.length.equals(2))
   }
 }
