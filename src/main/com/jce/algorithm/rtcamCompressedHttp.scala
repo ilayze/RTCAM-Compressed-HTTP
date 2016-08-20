@@ -15,8 +15,8 @@ class rtcamCompressedHttp(val packet:gzipPacket,val tcam:tcamSimulator) {
         val n = packet.length
 
         while(pos <= n-width){
-            val key:String = packet.get(pos,pos+width-1)
-            val entry = tcam.lookUp(key)
+            val key:Array[String] = packet.get(pos,pos+width-1)
+            val entry = tcam.lookUp(key.toString)
             val shift = entry.shift
             if(shift!=0){
                 pos = pos+shift
