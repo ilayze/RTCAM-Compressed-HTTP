@@ -1,5 +1,5 @@
 import org.scalatest.FunSuite
-import src.main.com.jce.{Gzip, gzipPacket}
+import src.main.com.jce.{gzipPacket}
 
 /**
   * Created by izeidman on 8/4/2016.
