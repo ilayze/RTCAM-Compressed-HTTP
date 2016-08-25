@@ -13,7 +13,29 @@ class tcamSimulator(val width:Int) {
 
     def lookUp(key: String): rowMetadata =
     {
-        return new rowMetadata(0);
+
+      val keyLength = key.length()
+      for(i <- keyLength to 0 by -1)
+      {
+          var keyWithDontCare = key.substring(0,i)
+          val numberOfDontCare:Int = key.length()-i-1
+          for(dc <- numberOfDontCare to 0 by -1)
+            keyWithDontCare =keyWithDontCare+DONT_CARE
+         val entry =getEntry(keyWithDontCare)
+          if(entry!=null)
+            return entry
+      }
+
+        throw new Exception("No row match key "+key)
+    }
+
+    def getEntry(key: String): rowMetadata =
+    {
+      for(entry <- tcam){
+        if(entry.row.data==key)
+          return entry.metadata
+      }
+      return null
     }
 
     def addEntry(entry: tcamEntry): Unit =
@@ -21,7 +43,15 @@ class tcamSimulator(val width:Int) {
         tcam.append(entry)
     }
 
-    //initialize the tcam with one signature
+  def dontcare(numberOfDc: Int): String = {
+    var dontcares = "";
+    for (i<- 1 to numberOfDc){
+      dontcares = dontcares.concat(DONT_CARE)
+    }
+    return dontcares
+  }
+
+  //initialize the tcam with one signature
     def initialize(signature : String): Unit ={
 
           if(signature!= null && signature.length()<=width)
@@ -41,6 +71,8 @@ class tcamSimulator(val width:Int) {
                 println("new tcam entry: %s".format(newTcamEntry))
                 addEntry(newTcamEntry)
             }
+
+            addEntry(new tcamEntry(new row(dontcare(signature.length())),new rowMetadata(shift = signature.length())))
           }
     }
 }

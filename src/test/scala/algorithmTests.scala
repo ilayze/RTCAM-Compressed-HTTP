@@ -1,4 +1,5 @@
 import algorithm.rtcamCompressedHttp
+import com.jcraft.jzlib.Converter
 import org.scalatest.FunSuite
 import src.main.com.jce.{gzipPacket, tcamSimulator}
 
@@ -10,7 +11,8 @@ class algorithmTests extends FunSuite {
     val tcamSimulator = new tcamSimulator(width = 5)
     tcamSimulator.initialize("hello")
 
-    val gzipPacket = new gzipPacket("C104;C101;C108;C108;C111;C44;C32;C104;L4;D7;C33;C0;") //"hello, hello! " L4;D7; = 7 steps backward take 4 characters
+    val gzipAscii = Converter.ToGzipAscii("hello, hello! ")
+    val gzipPacket = new gzipPacket(gzipAscii) //"hello, hello! " L4;D7; = 7 steps backward take 4 characters
 
     val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
     val matchedList = rtcamCompressedHttp.execute()
