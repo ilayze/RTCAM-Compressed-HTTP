@@ -7,9 +7,20 @@ class gzipPacket(val data:String) {
 
   val dataSplitted: Array[String] = data.split(";")
 
-  def get(begin: Int, end: Int) : Array[String] = {
+  def get(begin: Int, end: Int) : String = {
       val dataSplittedSlice = dataSplitted.slice(begin,end+1)
-      dataSplittedSlice
+      var ret = ""
+      for (i <- dataSplittedSlice){
+        if(i.startsWith("C"))
+          {
+            val asciiChar = i.substring(1)
+            ret+=asciiChar.toInt.toChar
+          }
+        else{
+          throw new Exception("Pointer")
+        }
+      }
+      ret
   }
 
   def isPointer(begin: Int, end: Int): Boolean ={
