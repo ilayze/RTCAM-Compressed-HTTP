@@ -41,6 +41,7 @@ class tcamSimulator(val width:Int) {
     def addEntry(entry: tcamEntry): Unit =
     {
         tcam.append(entry)
+        println("new tcam entry: %s".format(entry))
     }
 
   def dontcare(numberOfDc: Int): String = {
@@ -68,7 +69,6 @@ class tcamSimulator(val width:Int) {
                 val newRow = new row(signature_with_dont_care)
                 val newRowMewtadata = new rowMetadata(shift = i)
                 val newTcamEntry = new tcamEntry(newRow,newRowMewtadata)
-                println("new tcam entry: %s".format(newTcamEntry))
                 addEntry(newTcamEntry)
             }
 
@@ -84,8 +84,8 @@ class row(val data:String)
 class tcamEntry(val row:row, val metadata:rowMetadata)
 {
   override def toString: String = {
-    println("data: %s, shift: %s".format(row.data, metadata.shift))
-    return ""
+    val ret="data: %s, shift: %s".format(row.data, metadata.shift)
+    return ret
   }
 
 }
