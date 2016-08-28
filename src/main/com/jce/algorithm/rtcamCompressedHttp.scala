@@ -30,11 +30,10 @@ class rtcamCompressedHttp(val packet:gzipPacket,val tcam:tcamSimulator) {
                 pos = pos+shift
               }
               else{
+                matchedList.append(pos+entry.signatureLength)
                 pos = pos +1
               }
             }
-
-
         }
 
         matchedList
