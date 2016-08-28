@@ -64,30 +64,46 @@ class tcamSimulator(val width:Int) {
           if(signature==null)
             throw new Exception("Signature is null")
 
-          val signatureSplitted = signature.grouped(width).toList
-          if(signature.length()<=width)
+          var signatureSplitted = signature.grouped(width).toList
+          if(signatureSplitted.last.length()!=width) {
+            val suffix = signature.substring(signature.length()-width,signature.length())
+            signatureSplitted = signatureSplitted.updated(signatureSplitted.length-1,suffix)
+          }
+
+          for (item <- signatureSplitted)
           {
-            val length = signature.length()
+            val length = item.length()
             var i = 0
             for(i <- 0 until length)
             {
-                var signature_with_dont_care = signature.substring(0,length-i)
-                var j=0
-                for(j <-0 until width-signature_with_dont_care.length())
-                  signature_with_dont_care = signature_with_dont_care.concat(DONT_CARE)
+              var signature_with_dont_care = item.substring(0,length-i)
+              var j=0
+              for(j <-0 until width-signature_with_dont_care.length())
+                signature_with_dont_care = signature_with_dont_care.concat(DONT_CARE)
 
-                val newRow = new row(signature_with_dont_care)
-                val newRowMewtadata = new rowMetadata(shift = i,signatureLength = length)
-                val newTcamEntry = new tcamEntry(newRow,newRowMewtadata)
-                addEntry(newTcamEntry)
+              val newRow = new row(signature_with_dont_care)
+              val newRowMewtadata = new rowMetadata(shift = i,signatureLength = length)
+              val newTcamEntry = new tcamEntry(newRow,newRowMewtadata)
+              addEntry(newTcamEntry)
             }
-
-            addEntry(new tcamEntry(new row(dontcare(width)),new rowMetadata(shift = width,signatureLength = width)))
-          }
-          else{
-            throw new Exception("Method not implemented")
           }
 
+          addEntry(new tcamEntry(new row(dontcare(width)),new rowMetadata(shift = width,signatureLength = width)))
+          println("############# TCAM entries #############\n" + this.toString())
+
+    }
+
+    override def toString(): String ={
+      var ret =""
+      for(i <-0 until((width+1))){
+        for(entry<-tcam){
+          if(entry.metadata.shift.equals(i)) {
+            val entryData = entry.row.data.replace(DONT_CARE, "?")
+            ret = ret+entryData+"\n"
+          }
+        }
+      }
+      ret
     }
 }
 
