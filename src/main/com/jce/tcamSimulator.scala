@@ -17,11 +17,11 @@ class tcamSimulator(val width:Int) {
       val keyLength = key.length()
       for(i <- 0 to keyLength)
       {
-          var keyWithDontCare = key.substring(i,keyLength)
-          val numberOfDontCare:Int = i
+          var subkeyWithDC = key.substring(i,keyLength)
+          val numberOfDontCare:Int = width - subkeyWithDC.length()
           for(dc <- numberOfDontCare to 1 by -1)
-            keyWithDontCare =keyWithDontCare+DONT_CARE
-         val entry =getEntry(keyWithDontCare)
+            subkeyWithDC =subkeyWithDC+DONT_CARE
+         val entry =getEntry(subkeyWithDC)
           if(entry!=null)
             return entry
       }
@@ -40,17 +40,23 @@ class tcamSimulator(val width:Int) {
 
     def addEntry(entry: tcamEntry): Unit =
     {
-        tcam.append(entry)
-        println("new tcam entry: %s".format(entry))
+      //check if the entry already exists
+      for(e <- tcam){
+        if(e.row.data==entry.row.data)
+          return
+      }
+
+      tcam.append(entry)
+      println("new tcam entry: %s".format(entry))
     }
 
-  def dontcare(numberOfDc: Int): String = {
-    var dontcares = "";
-    for (i<- 1 to numberOfDc){
-      dontcares = dontcares.concat(DONT_CARE)
+    def dontcare(numberOfDc: Int): String = {
+      var dontcares = "";
+      for (i<- 1 to numberOfDc){
+        dontcares = dontcares.concat(DONT_CARE)
+      }
+      return dontcares
     }
-    return dontcares
-  }
 
   //initialize the tcam with one signature
     def initialize(signature : String): Unit ={
@@ -58,6 +64,7 @@ class tcamSimulator(val width:Int) {
           if(signature==null)
             throw new Exception("Signature is null")
 
+          val signatureSplitted = signature.grouped(width).toList
           if(signature.length()<=width)
           {
             val length = signature.length()
