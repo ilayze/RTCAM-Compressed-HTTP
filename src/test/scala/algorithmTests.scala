@@ -9,32 +9,39 @@ import scala.collection.mutable.ListBuffer
   * Created by izeidman on 8/15/2016.
   */
 class algorithmTests extends FunSuite {
-  test("Execute algorithm - pattern and tcam width are equal") {
+  test("Pattern and tcam width are equal") {
     val matchedList: ListBuffer[Int] = runAlgorithmFlow() //use default parameters
 
     assert(matchedList.length.equals(2))
   }
 
-  test("Execute algorithm - pattern less than tcam width"){
+  test("Pattern less than tcam width"){
     val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "he")
 
     assert(matchedList.length.equals(2))
   }
 
-  test("Execute algorithm - pattern greater than tcam width"){
+  test("Pattern greater than tcam width"){
     val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "hello!")
 
     assert(matchedList.length.equals(1))
   }
 
+  test("Naive algorithm - no pointers"){
+    val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "abcd",tcamPackage = "treotp,abcd,glm")
+
+    assert(matchedList.length.equals(1))
+    assert(matchedList(0).equals(10))
+  }
+
 
 
   def runAlgorithmFlow(tcamWidth:Int =5,tcamPattern:String="hello",tcamPackage:String="hello, hello! "): ListBuffer[Int] = {
-    val tcamSimulator = new tcamSimulator(width = 5)
-    tcamSimulator.initialize("hello")
+    val tcamSimulator = new tcamSimulator(width = tcamWidth)
+    tcamSimulator.initialize(tcamPattern)
 
-    val gzipAscii = Converter.ToGzipAscii("hello, hello! ")
-    val gzipPacket = new gzipPacket(gzipAscii) //"hello, hello! " L4;D7; = 7 steps backward take 4 characters
+    val gzipAscii = Converter.ToGzipAscii(tcamPackage)
+    val gzipPacket = new gzipPacket(gzipAscii) //L4;D7; = 7 steps backward take 4 characters
 
     val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
     val matchedList = rtcamCompressedHttp.execute()
