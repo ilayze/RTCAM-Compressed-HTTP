@@ -34,6 +34,21 @@ class tcamSimulator(val width:Int) {
       for(entry <- tcam){
         if(entry.row.data==key)
           return entry.metadata
+        else if(entry.row.data.endsWith(DONT_CARE) && DONT_CARE.r.findAllMatchIn(entry.row.data).length<width){
+          var moreDC = true
+          var data = entry.row.data
+          var keyChanged = key
+          while (moreDC){
+            if(data.endsWith(DONT_CARE)){
+              data = data.substring(0,data.length()-DONT_CARE.length())
+              keyChanged = keyChanged.substring(0,key.length()-1)
+              if(data.equals(keyChanged))
+                return entry.metadata
+            }else{
+              moreDC =false
+            }
+          }
+        }
       }
       return null
     }
