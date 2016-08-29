@@ -20,7 +20,7 @@ class tcamSimulator(val width:Int) {
           var subkeyWithDC = key.substring(i,keyLength)
           val numberOfDontCare:Int = width - subkeyWithDC.length()
           for(dc <- numberOfDontCare to 1 by -1)
-            subkeyWithDC =subkeyWithDC+DONT_CARE
+            subkeyWithDC =DONT_CARE+subkeyWithDC
          val entry =getEntry(subkeyWithDC)
           if(entry!=null)
             return entry
@@ -65,7 +65,7 @@ class tcamSimulator(val width:Int) {
             throw new Exception("Signature is null")
 
           var signatureSplitted = signature.grouped(width).toList
-          if(signatureSplitted.last.length()!=width) {
+          if(signatureSplitted.last.length()!=width && signatureSplitted.length>1) {
             val suffix = signature.substring(signature.length()-width,signature.length())
             signatureSplitted = signatureSplitted.updated(signatureSplitted.length-1,suffix)
           }
@@ -79,10 +79,10 @@ class tcamSimulator(val width:Int) {
               var signature_with_dont_care = item.substring(0,length-i)
               var j=0
               for(j <-0 until width-signature_with_dont_care.length())
-                signature_with_dont_care = signature_with_dont_care.concat(DONT_CARE)
+                signature_with_dont_care = DONT_CARE+signature_with_dont_care
 
               val newRow = new row(signature_with_dont_care)
-              val newRowMewtadata = new rowMetadata(shift = i,signatureLength = length)
+              val newRowMewtadata = new rowMetadata(shift = i,signatureLength = signature.length())
               val newTcamEntry = new tcamEntry(newRow,newRowMewtadata)
               addEntry(newTcamEntry)
             }
