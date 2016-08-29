@@ -72,13 +72,30 @@ class tcamSimulator(val width:Int) {
 
           for (item <- signatureSplitted)
           {
-            val length = item.length()
+            var itemWithDC = item
+            var numberOfRightDC = 0
+            if(itemWithDC.length()<width){ //add don't cares to the right
+              for(n<-0 until(width-itemWithDC.length())){
+                itemWithDC = itemWithDC+DONT_CARE
+                numberOfRightDC+=1
+              }
+            }
+
             var i = 0
-            for(i <- 0 until length)
+            for(i <- 0 until width)
             {
-              var signature_with_dont_care = item.substring(0,length-i)
+              var numberOfCharacters = 0
+              for(m<-0 until(i)){
+                if(m<numberOfRightDC)
+                  numberOfCharacters+=DONT_CARE.length()
+                else{
+                  numberOfCharacters+=1
+                }
+              }
+
+              var signature_with_dont_care = itemWithDC.substring(0,itemWithDC.length()-numberOfCharacters)
               var j=0
-              for(j <-0 until width-signature_with_dont_care.length())
+              for(j <-0 until i)
                 signature_with_dont_care = DONT_CARE+signature_with_dont_care
 
               val newRow = new row(signature_with_dont_care)

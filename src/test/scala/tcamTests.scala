@@ -12,6 +12,14 @@ class tcamTests extends FunSuite{
     assert(entry.shift.equals(1))
   }
 
+  test("initialize signature less than width - should have don't cares on right"){
+    val tcamSimulator = new tcamSimulator(width = 5)
+    tcamSimulator.initialize("abcd")
+    val entry = tcamSimulator.lookUp("eabcd")
+
+    assert(entry.shift.equals(1))
+  }
+
   test("add same entry twice, should only add it once"){
     val tcamSimulator = new tcamSimulator(width = 4)
     val tcamEntry = new tcamEntry(new row(data = "abcd"),new rowMetadata(shift = 0,signatureLength = 4))
