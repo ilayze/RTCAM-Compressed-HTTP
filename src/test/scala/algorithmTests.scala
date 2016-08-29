@@ -31,14 +31,14 @@ class algorithmTests extends FunSuite {
     val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "abcd",tcamPackage = "treotp,abcd,glm")
 
     assert(matchedList.length.equals(1))
-    assert(matchedList(0).equals(10))
+    assert(matchedList(0).equals(11))
   }
 
   test("Naive algorithm - pattern greater than tcam width"){
     val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "abcdef",tcamPackage = "abcdef")
 
     assert(matchedList.length.equals(1))
-    assert(matchedList(0).equals(5))
+    assert(matchedList(0).equals(6))
 
   }
 
