@@ -30,8 +30,53 @@ class rtcamCompressedHttp(val packet:gzipPacket,val tcam:tcamSimulator) {
                 pos = pos+shift
               }
               else{
-                matchedList.append(pos+entry.signatureLength)
-                pos = pos +1
+
+                if(entry.signatureLength<=width) {
+                  matchedList.append(pos + entry.signatureLength)
+                  pos = pos + 1
+                }
+                //check for match for signature greater than width
+                else{
+                  var checkingSignature = true //true as long as we check the current signature
+                  var currentPos = pos + width  //current position in the checking
+                  var alreadyChecked = width //number of characters of the current signature that we already checked
+
+                  while(checkingSignature){
+                    if(alreadyChecked+width<entry.signatureLength){
+                      val currentKey:String = packet.get(currentPos,currentPos+width-1)
+
+                      val currentEntry = tcam.lookUp(currentKey)
+                      val currentShift = currentEntry.shift
+                      if(currentShift!=0){
+                        checkingSignature=false
+                      }
+                      else{
+                        alreadyChecked = alreadyChecked+width
+                        currentPos = currentPos+width
+                        if(alreadyChecked.equals(entry.signatureLength))//match
+                        {
+                              checkingSignature=false
+                        }
+                      }
+                    }else{
+                      val charsToAdd = width-(entry.signatureLength-alreadyChecked)
+                      val currentKey:String = packet.get(currentPos-charsToAdd,currentPos-charsToAdd+width-1)
+                      val currentEntry = tcam.lookUp(currentKey)
+                      val currentShift = currentEntry.shift
+                      //match
+                      if(currentShift==0){
+                        checkingSignature=false
+                        matchedList.append(pos + entry.signatureLength)
+                        pos = pos + 1
+                      }
+                      else{
+                        checkingSignature=false
+                        pos = pos+1
+                      }
+
+                      }
+                  }
+                }
               }
             }
         }
