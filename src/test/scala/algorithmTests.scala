@@ -42,6 +42,22 @@ class algorithmTests extends FunSuite {
 
   }
 
+  test("Left pointer match"){
+    val tcamSimulator = new tcamSimulator(width = 5)
+    tcamSimulator.initialize("dabc")
+
+    val gzipAscii = "C97;C98;C99;C100;L4;D4;" //abcd[4,4]
+    val gzipPacket = new gzipPacket(gzipAscii)
+
+    val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
+    val matchedList = rtcamCompressedHttp.execute()
+
+    assert(matchedList.length.equals(1))
+    assert(matchedList(0).equals(7))
+
+
+  }
+
 
 
   def runAlgorithmFlow(tcamWidth:Int =5,tcamPattern:String="hello",tcamPackage:String="hello, hello! "): ListBuffer[Int] = {
