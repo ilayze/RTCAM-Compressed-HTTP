@@ -1,51 +1,45 @@
 package src.main.com.jce
 
+import scala.collection.mutable.ListBuffer
+
 /**
   * Created by izeidman on 8/4/2016.
   */
 class gzipPacket(val data:String) {
 
   val dataSplitted: Array[String] = data.split(";")
+  var dataSplittedFull = new ListBuffer[String]
+  var dataSplittedMetadata = new ListBuffer[pointerMetadata]
+
+  for (i<-0 until(dataSplitted.length)){
+    if(dataSplitted(i).startsWith("C")){
+      dataSplittedFull.append(dataSplitted(i))
+      dataSplittedMetadata.append(new notPointer())
+    }
+    else if(dataSplitted(i).startsWith("L")){
+      val lNum =getPointerValue(dataSplitted(i)) //length of the pointer
+      val dNum = getPointerValue(dataSplitted(i+1)) //distnace to go back to start the pointer from
+
+      for (j<-0 until(lNum)){
+        dataSplittedFull.append(dataSplitted(i-dNum+j))
+        dataSplittedMetadata.append(new pointerMetadata(currentPos = j+1,isPointer = true,length = lNum))
+      }
+
+    }
+  }
 
   def get(begin: Int, end: Int) : subPacket = {
-      var subPacket = new subPacket(data = "",pointerMetadata = new notPointer())
-      val dataSplittedSlice = dataSplitted.slice(begin,end+1)
-      var subPacketData = ""
-      var pos = 0
-      while(subPacketData.length<end+1-begin){
-        val nextChar = dataSplittedSlice(pos)
-        if(nextChar.startsWith("C"))
-        {
-          val asciiChar = nextChar.substring(1)
-          subPacketData+=asciiChar.toInt.toChar
-          pos+=1
-        }
-        else if(nextChar.startsWith("L")) {
-          var dChar:Int = 0
-          val lChar = getPointerValue(nextChar)
-          if(pos.equals(dataSplittedSlice.length-1))//bring the D
-          {
-             dChar = getPointerValue(dataSplitted(end+1))
-          }
-          else{
-            dChar = getPointerValue(dataSplittedSlice(pos+1))
-          }
+      println("Gzip packet get(%d,%d)".format(begin,end))
 
-          val charsLeft = end+1-begin-subPacketData.length()
-
-          if(charsLeft<=getPointerValue(nextChar)){
-            subPacketData+=get(begin+pos-dChar,begin+pos-dChar+charsLeft-1).data
-            subPacket.pointerMetadata = new pointerMetadata(length=lChar,currentPos = charsLeft,isPointer= true)
-          }
-          else{
-            subPacketData+=get(begin+pos-dChar,begin+pos-dChar+lChar-1).data
-            pos+=2
-          }
-
-        }
+      var data = ""
+      for (i<-begin until(end+1)){
+        data+=dataSplittedFull(i).substring(1).toInt.toChar
       }
-      subPacket.data = subPacketData
-      return subPacket
+      val metadata = dataSplittedMetadata(end)
+
+      println("Gzip packet get return data: %s, %s".format(data,metadata))
+      return new subPacket(data = data, pointerMetadata = metadata)
+
   }
 
   def isPointer(begin: Int, end: Int): Boolean ={
@@ -76,8 +70,16 @@ class gzipPacket(val data:String) {
   }
 }
 
-class pointerMetadata(val length:Int,val currentPos:Int,val isPointer:Boolean)
+class pointerMetadata(val length:Int,val currentPos:Int,val isPointer:Boolean){
+  override def toString(): String ={
+    return "pointerMetadata: isPointer: %s, currentPos: %d, pointerLength: %d".format(isPointer,currentPos,length)
+  }
+}
 
-class notPointer extends pointerMetadata(length = -1,currentPos = -1, isPointer = false)
+class notPointer extends pointerMetadata(length = -1,currentPos = -1, isPointer = false){
+  override def toString():String={
+    return "no pointer"
+  }
+}
 
 class subPacket(var data:String,var pointerMetadata: pointerMetadata)
