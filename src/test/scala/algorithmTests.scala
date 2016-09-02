@@ -63,7 +63,19 @@ class algorithmTests extends FunSuite {
     assert(matchedList.length.equals(1))
     assert(matchedList(0).equals(7))
 
+  }
 
+  test("right pointer match"){
+    val tcamSimulator = new tcamSimulator(width = 5)
+    tcamSimulator.initialize("abc")
+    val gzipAscii = "C100;C100;C100;C100;C100;C97;C98;L7;D7;C99;C99;C99" //dddddab[7,7]ccc
+    val gzipPacket = new gzipPacket(gzipAscii)
+
+    val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
+    val matchedList = rtcamCompressedHttp.execute()
+
+    assert(matchedList.length.equals(1))
+    assert(matchedList(0).equals(15))
   }
 
 

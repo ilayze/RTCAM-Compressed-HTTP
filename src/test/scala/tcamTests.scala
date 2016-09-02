@@ -28,4 +28,15 @@ class tcamTests extends FunSuite{
 
     assert(tcamSimulator.tcam.length == 1)
   }
+
+  test("pattern less than width"){
+    val tcamSimulator = new tcamSimulator(width = 5)
+    tcamSimulator.initialize("abc")
+    val entry = tcamSimulator.lookUp("abccc")
+
+    assert(entry.shift.equals(0))
+
+
+
+  }
 }
