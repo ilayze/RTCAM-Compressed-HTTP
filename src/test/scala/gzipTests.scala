@@ -7,7 +7,7 @@ import src.main.com.jce.{gzipPacket}
 class gzipTests extends FunSuite{
   test("packet length") {
     val gzipPacket = new gzipPacket("C104;C101;C108;C108;C111;C44;C32;C104;L4;D7;C33;C0;") //"hello, hello! " L4;D7; = 7 steps backward take 4 characters
-    assert(gzipPacket.length.equals(12))
+    assert(gzipPacket.length.equals(14))
   }
 
   test("get function"){
@@ -27,5 +27,9 @@ class gzipTests extends FunSuite{
 
     val dPointer = gzipPacket.isPointer(9,11)
     assert(dPointer.equals(true))
+  }
+
+  test("get pointer"){
+
   }
 }

@@ -33,7 +33,19 @@ class gzipPacket(val data:String) {
   }
 
   def length: Int ={
-        return dataSplitted.length
+        var length:Int=0
+        for (i<-dataSplitted)
+          {
+            if(i.startsWith("C")){
+              length+=1
+            }
+            else if(i.startsWith("L")){
+              length+= i.substring(1,i.length()).toInt
+            }
+          }
+        return length
       }
 
 }
+
+class pointerMetadata(val length:Int,val currentPos:Int)
