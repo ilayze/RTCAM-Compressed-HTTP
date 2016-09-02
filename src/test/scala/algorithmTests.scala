@@ -42,6 +42,14 @@ class algorithmTests extends FunSuite {
 
   }
 
+  test("Naive algorithm - pattern greater than tcam width and divisble with width"){
+    val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "abcdef",tcamPackage = "abcdef",tcamWidth = 3)
+
+    assert(matchedList.length.equals(1))
+    assert(matchedList(0).equals(6))
+
+  }
+
   test("Left pointer match"){
     val tcamSimulator = new tcamSimulator(width = 5)
     tcamSimulator.initialize("dabc")
