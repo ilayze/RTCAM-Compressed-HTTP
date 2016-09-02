@@ -13,6 +13,7 @@ class tcamSimulator(val width:Int) {
 
     def lookUp(key: String): rowMetadata =
     {
+      println("Tcam simulator lookup key: %s".format(key))
 
       val keyLength = key.length()
       for(i <- 0 to keyLength)
@@ -22,8 +23,10 @@ class tcamSimulator(val width:Int) {
           for(dc <- numberOfDontCare to 1 by -1)
             subkeyWithDC =DONT_CARE+subkeyWithDC
          val entry =getEntry(subkeyWithDC)
-          if(entry!=null)
+          if(entry!=null) {
+            println("Tcam simulator lookup return entry with shift: %d and signature length: %d".format(entry.shift,entry.signatureLength))
             return entry
+          }
       }
 
         throw new Exception("No row match key "+key)
@@ -41,7 +44,7 @@ class tcamSimulator(val width:Int) {
           while (moreDC){
             if(data.endsWith(DONT_CARE)){
               data = data.substring(0,data.length()-DONT_CARE.length())
-              keyChanged = keyChanged.substring(0,key.length()-1)
+              keyChanged = keyChanged.substring(0,keyChanged.length()-1)
               if(data.equals(keyChanged))
                 return entry.metadata
             }else{
