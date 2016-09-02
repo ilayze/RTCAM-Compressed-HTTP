@@ -22,7 +22,8 @@ class rtcamCompressedHttp(val packet:gzipPacket,val tcam:tcamSimulator) {
                 pos = pos + 1
               }
             else{
-              val key:String = packet.get(pos,pos+width-1)
+              val subPacket = packet.get(pos,pos+width-1)
+              val key:String = subPacket.data
 
               val entry = tcam.lookUp(key)
               val shift = entry.shift
@@ -43,7 +44,8 @@ class rtcamCompressedHttp(val packet:gzipPacket,val tcam:tcamSimulator) {
 
                   while(checkingSignature){
                     if(alreadyChecked+width<entry.signatureLength){
-                      val currentKey:String = packet.get(currentPos,currentPos+width-1)
+                      val subPacket = packet.get(currentPos,currentPos+width-1)
+                      val currentKey = subPacket.data
 
                       val currentEntry = tcam.lookUp(currentKey)
                       val currentShift = currentEntry.shift
@@ -56,7 +58,8 @@ class rtcamCompressedHttp(val packet:gzipPacket,val tcam:tcamSimulator) {
                       }
                     }else{
                       val charsToAdd = width-(entry.signatureLength-alreadyChecked) //end of the signature we might need to add some chars e.g signature abcd width 3 so will check abc and then bcd so we added bc in the second check
-                      val currentKey:String = packet.get(currentPos-charsToAdd,currentPos-charsToAdd+width-1)
+                      val currentSubPacket = packet.get(currentPos-charsToAdd,currentPos-charsToAdd+width-1)
+                      val currentKey:String = currentSubPacket.data
                       val currentEntry = tcam.lookUp(currentKey)
                       val currentShift = currentEntry.shift
                       //match

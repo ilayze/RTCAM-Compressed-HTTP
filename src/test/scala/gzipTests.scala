@@ -13,8 +13,8 @@ class gzipTests extends FunSuite{
   test("get function"){
     val gzipPacket = new gzipPacket("C104;C101;C108;C108;C111;C44;C32;C104;L4;D7;C33;C0;") //"hello, hello! " L4;D7; = 7 steps backward take 4 characters
     val partialPacket = gzipPacket.get(0,4)
-    assert(partialPacket.length.equals(5))
-    assert(partialPacket.equals("hello"))
+    assert(partialPacket.data.length.equals(5))
+    assert(partialPacket.data.equals("hello"))
   }
 
   test("is pointer"){
@@ -29,7 +29,21 @@ class gzipTests extends FunSuite{
     assert(dPointer.equals(true))
   }
 
-  test("get pointer"){
+  test("get pointer - left bountary"){
+    val gzipPacket = new gzipPacket("C97;C98;C99;L3;D3;") //abc[3,3]
+    val subPacket = gzipPacket.get(0,4)
+    assert(subPacket.data.length.equals(5))
+    assert(subPacket.data.equals("abcab"))
+    assert(subPacket.pointerMetadata.isPointer.equals(true))
+    assert(subPacket.pointerMetadata.currentPos.equals(2))
+    assert(subPacket.pointerMetadata.length.equals(3))
+  }
 
+  test("get with full pointer"){
+    val gzipPacket = new gzipPacket("C97;C98;C99;L3;D3;C97;C97;") //abc[3,3]aa
+    val subPacket = gzipPacket.get(2,6)
+    assert(subPacket.data.length.equals(5))
+    assert(subPacket.data.equals("cabca"))
+    assert(subPacket.pointerMetadata.isPointer.equals(false))
   }
 }
