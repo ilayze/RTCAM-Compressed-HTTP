@@ -23,9 +23,9 @@ class gzipPacket(val data:String) {
         else if(nextChar.startsWith("L")) {
           var dChar:Int = 0
           val lChar = getPointerValue(nextChar)
-          if(pos.equals(dataSplittedSlice.length))//bring the D
+          if(pos.equals(dataSplittedSlice.length-1))//bring the D
           {
-             dChar = getPointerValue(dataSplitted(end+2))
+             dChar = getPointerValue(dataSplitted(end+1))
           }
           else{
             dChar = getPointerValue(dataSplittedSlice(pos+1))
