@@ -78,6 +78,20 @@ class algorithmTests extends FunSuite {
     assert(matchedList(0).equals(15))
   }
 
+  test("Internal pointer match"){
+    val tcamSimulator = new tcamSimulator(width = 3)
+    tcamSimulator.initialize("abc")
+    val gzipAscii = "C100;C100;C100;C97;C98;C99;C100;C100;C100;C100;C100;C100;L10;D12;C99;C99;C99" //dddabcdddddd[L10,D12]ccc
+    val gzipPacket = new gzipPacket(gzipAscii)
+
+    val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
+    val matchedList = rtcamCompressedHttp.execute()
+
+    assert(matchedList.length.equals(2))
+    assert(matchedList(0).equals(6))
+    assert(matchedList(1).equals(18))
+  }
+
 
 
   def runAlgorithmFlow(tcamWidth:Int =5,tcamPattern:String="hello",tcamPackage:String="hello, hello! "): ListBuffer[Int] = {

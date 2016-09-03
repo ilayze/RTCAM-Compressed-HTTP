@@ -19,7 +19,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
       val subPacket = packet.get(pos, pos + width - 1)
       val key: String = subPacket.data
       //internal boundary - should not lookup in tcam
-      if(subPacket.pointerMetadata.isPointer && subPacket.pointerMetadata.length>2*width-2 && subPacket.pointerMetadata.currentPos>width-1 && subPacket.pointerMetadata.currentPos<2*width-2)
+      if(subPacket.pointerMetadata.isPointer && subPacket.pointerMetadata.length>2*width-2 && subPacket.pointerMetadata.currentPos-width>width-1 && subPacket.pointerMetadata.currentPos<subPacket.pointerMetadata.length-width+1)
         {
           println("internal boundary")
           throw new NotImplementedError("Not implemented yet!")
@@ -33,6 +33,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
       else {
 
         if (entry.signatureLength <= width) {
+          println("Match!!! pos: "+(pos + entry.signatureLength).toString())
           matchedList.append(pos + entry.signatureLength)
           pos = pos + 1
         }
@@ -65,6 +66,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
               //match
               if (currentShift == 0) {
                 checkingSignature = false
+                println("Match!!! pos: "+(pos + entry.signatureLength).toString())
                 matchedList.append(pos + entry.signatureLength)
                 pos = pos + 1
               }
