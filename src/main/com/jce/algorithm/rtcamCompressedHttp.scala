@@ -14,7 +14,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
     var pos: Int = 0
     val n = packet.length
 
-    while (pos <= n - width) {
+    while (pos <= n- width) {
 
       val subPacket = packet.get(pos, pos + width - 1)
       val key: String = subPacket.data
@@ -52,6 +52,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
               val currentShift = currentEntry.shift
               if (currentShift != 0) {
                 checkingSignature = false
+                pos+=1
               }
               else {
                 alreadyChecked = alreadyChecked + width
@@ -80,7 +81,6 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
         }
       }
     }
-
 
     matchedList
   }

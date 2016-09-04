@@ -42,6 +42,12 @@ class algorithmTests extends FunSuite {
 
   }
 
+  test("Naive algorithm - pattern greater than width and no match in the end of the pattern"){
+    val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "abcdefg",tcamPackage = "abcabb",tcamWidth = 3)
+
+    assert(matchedList.length.equals(0))
+  }
+
   test("Naive algorithm - pattern greater than tcam width and divisble with width"){
     val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "abcdef",tcamPackage = "abcdef",tcamWidth = 3)
 
