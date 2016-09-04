@@ -13,6 +13,8 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
     val width: Int = tcam.width
     var pos: Int = 0
     val n = packet.length
+    var spmb = new Array[Boolean](n+width) //sub pattern match bit: if spmb(i)=true a sub pattern has been found in the index n the key that starts at index n-w returns shift = 0
+    var pmb = new Array[Boolean](n+width) //pattern matching bit save a Boolean value for each bit bit[n] = true: a full pattern has been found in the index n
 
     while (pos <= n- width) {
 
@@ -33,12 +35,16 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
       else {
 
         if (entry.signatureLength <= width) {
-          println("Match!!! pos: "+(pos + entry.signatureLength).toString())
-          matchedList.append(pos + entry.signatureLength)
+          val signature_pos = pos + entry.signatureLength
+          println("Match!!! pos: "+signature_pos.toString())
+          matchedList.append(pos + signature_pos)
+          spmb(signature_pos)=true
+          pmb(signature_pos)=true
           pos = pos + 1
         }
         //check for match for signature greater than width
         else {
+          spmb(pos+width)=true
           var checkingSignature = true //true as long as we check the current signature
           var currentPos = pos + width //current position in the checking
           var alreadyChecked = width //number of characters of the current signature that we already checked
@@ -67,8 +73,11 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
               //match
               if (currentShift == 0) {
                 checkingSignature = false
-                println("Match!!! pos: "+(pos + entry.signatureLength).toString())
-                matchedList.append(pos + entry.signatureLength)
+                val signature_pos = pos + entry.signatureLength
+                println("Match!!! pos: "+signature_pos.toString())
+                matchedList.append(signature_pos)
+                spmb(signature_pos) = true
+                pmb(signature_pos) =true
                 pos = pos + 1
               }
               else {
