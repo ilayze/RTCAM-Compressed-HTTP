@@ -37,7 +37,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
         if (entry.signatureLength <= width) {
           val signature_pos = pos + entry.signatureLength
           println("Match!!! pos: "+signature_pos.toString())
-          matchedList.append(pos + signature_pos)
+          matchedList.append(signature_pos)
           spmb(signature_pos)=true
           pmb(signature_pos)=true
           pos = pos + 1
