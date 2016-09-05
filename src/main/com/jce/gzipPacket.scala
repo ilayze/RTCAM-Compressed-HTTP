@@ -22,7 +22,7 @@ class gzipPacket(val data:String) {
 
       for (j<-0 until(lNum)){
         dataSplittedFull.append(dataSplitted(i-dNum+j))
-        dataSplittedMetadata.append(new pointerMetadata(currentPos = j+1,isPointer = true,length = lNum))
+        dataSplittedMetadata.append(new pointerMetadata(currentPos = j+1,isPointer = true,length = lNum,distance = dNum))
       }
 
     }
@@ -70,13 +70,13 @@ class gzipPacket(val data:String) {
   }
 }
 
-class pointerMetadata(val length:Int,val currentPos:Int,val isPointer:Boolean){
+class pointerMetadata(val length:Int,val currentPos:Int,val isPointer:Boolean,val distance:Int){
   override def toString(): String ={
-    return "pointerMetadata: isPointer: %s, currentPos: %d, pointerLength: %d".format(isPointer,currentPos,length)
+    return "pointerMetadata: isPointer: %s, currentPos: %d, pointerLength: %d, distance:".format(isPointer,currentPos,length,distance)
   }
 }
 
-class notPointer extends pointerMetadata(length = -1,currentPos = -1, isPointer = false){
+class notPointer extends pointerMetadata(length = -1,currentPos = -1, isPointer = false,distance = -1){
   override def toString():String={
     return "no pointer"
   }
