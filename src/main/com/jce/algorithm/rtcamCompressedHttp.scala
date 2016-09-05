@@ -66,25 +66,31 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
               }
             } else {
               val charsToAdd = width - (entry.signatureLength - alreadyChecked) //end of the signature we might need to add some chars e.g signature abcd width 3 so will check abc and then bcd so we added bc in the second check
-              val currentSubPacket = packet.get(currentPos - charsToAdd, currentPos - charsToAdd + width - 1)
-              val currentKey: String = currentSubPacket.data
-              val currentEntry = tcam.lookUp(currentKey)
-              val currentShift = currentEntry.shift
-              //match
-              if (currentShift == 0) {
-                checkingSignature = false
-                val signature_pos = pos + entry.signatureLength
-                println("Match!!! pos: "+signature_pos.toString())
-                matchedList.append(signature_pos)
-                spmb(signature_pos) = true
-                pmb(signature_pos) =true
-                pos = pos + 1
+              if(currentPos - charsToAdd + width - 1>=n)
+                {
+                  checkingSignature=false
+                  pos = pos+1
+                }
+              else{
+                val currentSubPacket = packet.get(currentPos - charsToAdd, currentPos - charsToAdd + width - 1)
+                val currentKey: String = currentSubPacket.data
+                val currentEntry = tcam.lookUp(currentKey)
+                val currentShift = currentEntry.shift
+                //match
+                if (currentShift == 0) {
+                  checkingSignature = false
+                  val signature_pos = pos + entry.signatureLength
+                  println("Match!!! pos: "+signature_pos.toString())
+                  matchedList.append(signature_pos)
+                  spmb(signature_pos) = true
+                  pmb(signature_pos) =true
+                  pos = pos + 1
+                }
+                else {
+                  checkingSignature = false
+                  pos = pos + 1
+                }
               }
-              else {
-                checkingSignature = false
-                pos = pos + 1
-              }
-
             }
           }
         }
