@@ -10,6 +10,7 @@ import scala.collection.mutable.ListBuffer
 class tcamSimulator(val width: Int) {
   var tcam = new ListBuffer[tcamEntry]
   val DONT_CARE = "xdc"
+  var signatureNumber = 1
 
   def lookUp(key: String): rowMetadata = {
     println("Tcam simulator lookup key: %s".format(key))
@@ -84,8 +85,8 @@ class tcamSimulator(val width: Int) {
       signatureSplitted = signatureSplitted.updated(signatureSplitted.length - 1, suffix)
     }
 
-    for (item <- signatureSplitted) {
-      var itemWithDC = item
+    for (itemIndex <- 0 until(signatureSplitted.length)) {
+      var itemWithDC = signatureSplitted(itemIndex)
       var numberOfRightDC = 0
       if (itemWithDC.length() < width) {
         //add don't cares to the right
@@ -112,14 +113,16 @@ class tcamSimulator(val width: Int) {
           signature_with_dont_care = DONT_CARE + signature_with_dont_care
 
         val newRow = new row(signature_with_dont_care)
-        val newRowMewtadata = new rowMetadata(shift = i, signatureLength = signature.length())
+        val newRowMewtadata = new rowMetadata(shift = i, signatureLength = signature.length(),signatureNumber = signatureNumber,signatureIndex = itemIndex)
         val newTcamEntry = new tcamEntry(newRow, newRowMewtadata)
         addEntry(newTcamEntry)
       }
     }
 
-    addEntry(new tcamEntry(new row(dontcare(width)), new rowMetadata(shift = width, signatureLength = width)))
+    addEntry(new tcamEntry(new row(dontcare(width)), new rowMetadata(shift = width, signatureLength = width,signatureNumber = -1,signatureIndex = -1)))
     println("############# TCAM entries #############\n" + this.toString())
+
+    signatureNumber+=1
 
   }
 
@@ -145,13 +148,13 @@ class tcamSimulator(val width: Int) {
   }
 }
 
-class rowMetadata(val shift: Int, val signatureLength: Int)
+class rowMetadata(val shift: Int, val signatureLength: Int,val signatureNumber: Int,val signatureIndex:Int)
 
 class row(val data: String)
 
 class tcamEntry(val row: row, val metadata: rowMetadata) {
   override def toString: String = {
-    val ret = "data: %s, shift: %s".format(row.data, metadata.shift)
+    val ret = "data: %s, shift: %s, index: %s, number: %s, length: %s".format(row.data, metadata.shift,metadata.signatureIndex,metadata.signatureNumber,metadata.signatureLength)
     return ret
   }
 

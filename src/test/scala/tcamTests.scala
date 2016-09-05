@@ -23,7 +23,7 @@ class tcamTests extends FunSuite{
 
   test("add same entry twice, should only add it once"){
     val tcamSimulator = new tcamSimulator(width = 4)
-    val tcamEntry = new tcamEntry(new row(data = "abcd"),new rowMetadata(shift = 0,signatureLength = 4))
+    val tcamEntry = new tcamEntry(new row(data = "abcd"),new rowMetadata(shift = 0,signatureLength = 4,signatureIndex = -1, signatureNumber = -1))
     tcamSimulator.addEntry(tcamEntry)
     tcamSimulator.addEntry(tcamEntry)
 

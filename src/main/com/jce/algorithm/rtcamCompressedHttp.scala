@@ -32,6 +32,10 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
       if (shift != 0) {
         pos = pos + shift
       }
+      else if(entry.signatureIndex!=0) //not a start of signature
+      {
+        pos+=1
+      }
       else {
 
         if (entry.signatureLength <= width) {
@@ -48,6 +52,8 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
           var checkingSignature = true //true as long as we check the current signature
           var currentPos = pos + width //current position in the checking
           var alreadyChecked = width //number of characters of the current signature that we already checked
+          var signatureIndex = 1
+          var signatureNumber = entry.signatureNumber
 
           while (checkingSignature) {
             if (alreadyChecked + width < entry.signatureLength) {
@@ -56,13 +62,14 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
 
               val currentEntry = tcam.lookUp(currentKey)
               val currentShift = currentEntry.shift
-              if (currentShift != 0) {
+              if (currentShift != 0 || currentEntry.signatureIndex!=signatureIndex || currentEntry.signatureNumber!=signatureNumber) {
                 checkingSignature = false
                 pos+=1
               }
               else {
                 alreadyChecked = alreadyChecked + width
                 currentPos = currentPos + width
+                signatureIndex+=1
               }
             } else {
               val charsToAdd = width - (entry.signatureLength - alreadyChecked) //end of the signature we might need to add some chars e.g signature abcd width 3 so will check abc and then bcd so we added bc in the second check
@@ -77,7 +84,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
                 val currentEntry = tcam.lookUp(currentKey)
                 val currentShift = currentEntry.shift
                 //match
-                if (currentShift == 0) {
+                if (currentShift == 0 && currentEntry.signatureIndex==signatureIndex && currentEntry.signatureNumber==signatureNumber) {
                   checkingSignature = false
                   val signature_pos = pos + entry.signatureLength
                   println("Match!!! pos: "+signature_pos.toString())

@@ -84,6 +84,20 @@ class algorithmTests extends FunSuite {
     assert(matchedList(0).equals(15))
   }
 
+  test("Shift 0 but no match"){
+    val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "abcdef",tcamPackage = "abcabc",tcamWidth = 3)
+
+    assert(matchedList.length.equals(0))
+
+  }
+
+  test("More example Shift 0 but no match"){
+    val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "abcdefghi",tcamPackage = "abcabcabc",tcamWidth = 3)
+
+    assert(matchedList.length.equals(0))
+
+  }
+
   test("Internal pointer match"){
     val tcamSimulator = new tcamSimulator(width = 3)
     tcamSimulator.initialize("abc")
