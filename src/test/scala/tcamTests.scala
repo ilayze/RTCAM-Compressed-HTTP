@@ -3,6 +3,7 @@ import src.main.com.jce.{rowMetadata, row, tcamEntry, tcamSimulator}
 /**
   * Created by izeidman on 8/4/2016.
   */
+
 class tcamTests extends FunSuite{
   test("initialize tcam - add don't cares to left"){
     val tcamSimulator = new tcamSimulator(width = 4)
@@ -36,7 +37,16 @@ class tcamTests extends FunSuite{
 
     assert(entry.shift.equals(0))
 
+  }
 
+  test("Initialize with rule parser"){
+    val tcamSimulator = new tcamSimulator(width = 5)
+    tcamSimulator.initializeWithParser("/rules/signatures1")
+    val entry1 = tcamSimulator.lookUp("abcd")
+    assert(entry1.shift.equals(0))
+
+    val entry2 = tcamSimulator.lookUp("efgh")
+    assert(entry2.shift.equals(0))
 
   }
 }
