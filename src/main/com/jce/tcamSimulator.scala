@@ -74,7 +74,7 @@ class tcamSimulator(val width: Int) {
   }
 
   //initialize the tcam with one signature
-    def initialize(signature : String): Unit ={
+  def initialize(signature: String): Unit = {
 
     if (signature == null)
       throw new Exception("Signature is null")
@@ -85,7 +85,7 @@ class tcamSimulator(val width: Int) {
       signatureSplitted = signatureSplitted.updated(signatureSplitted.length - 1, suffix)
     }
 
-    for (itemIndex <- 0 until(signatureSplitted.length)) {
+    for (itemIndex <- 0 until (signatureSplitted.length)) {
       var itemWithDC = signatureSplitted(itemIndex)
       var numberOfRightDC = 0
       if (itemWithDC.length() < width) {
@@ -113,23 +113,23 @@ class tcamSimulator(val width: Int) {
           signature_with_dont_care = DONT_CARE + signature_with_dont_care
 
         val newRow = new row(signature_with_dont_care)
-        val newRowMewtadata = new rowMetadata(shift = i, signatureLength = signature.length(),signatureNumber = signatureNumber,signatureIndex = itemIndex)
+        val newRowMewtadata = new rowMetadata(shift = i, signatureLength = signature.length(), signatureNumber = signatureNumber, signatureIndex = itemIndex)
         val newTcamEntry = new tcamEntry(newRow, newRowMewtadata)
         addEntry(newTcamEntry)
       }
     }
 
-    addEntry(new tcamEntry(new row(dontcare(width)), new rowMetadata(shift = width, signatureLength = width,signatureNumber = -1,signatureIndex = -1)))
+    addEntry(new tcamEntry(new row(dontcare(width)), new rowMetadata(shift = width, signatureLength = width, signatureNumber = -1, signatureIndex = -1)))
     println("############# TCAM entries #############\n" + this.toString())
 
-    signatureNumber+=1
+    signatureNumber += 1
 
   }
 
   def initializeWithParser(rules_file_path: String): Unit = {
     val parser = new ruleParser()
     val signatures = parser.parseRules(rules_file_path)
-    for (sig<-signatures){
+    for (sig <- signatures) {
       initialize(sig.regular)
     }
   }
@@ -148,13 +148,13 @@ class tcamSimulator(val width: Int) {
   }
 }
 
-class rowMetadata(val shift: Int, val signatureLength: Int,val signatureNumber: Int,val signatureIndex:Int)
+class rowMetadata(val shift: Int, val signatureLength: Int, val signatureNumber: Int, val signatureIndex: Int)
 
 class row(val data: String)
 
 class tcamEntry(val row: row, val metadata: rowMetadata) {
   override def toString: String = {
-    val ret = "data: %s, shift: %s, index: %s, number: %s, length: %s".format(row.data, metadata.shift,metadata.signatureIndex,metadata.signatureNumber,metadata.signatureLength)
+    val ret = "data: %s, shift: %s, index: %s, number: %s, length: %s".format(row.data, metadata.shift, metadata.signatureIndex, metadata.signatureNumber, metadata.signatureLength)
     return ret
   }
 

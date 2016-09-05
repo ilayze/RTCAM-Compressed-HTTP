@@ -12,7 +12,7 @@ class RuleParserSuite extends FunSuite {
     parser.parseRules("/rules/comments")
   }
 
-  test("rule with content"){
+  test("rule with content") {
     val parser = new ruleParser()
     val signatures = parser.parseRules("/rules/content")
     println(signatures)
