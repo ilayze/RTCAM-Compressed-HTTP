@@ -11,6 +11,7 @@ class tcamSimulator(val width: Int) {
   var tcam = new ListBuffer[tcamEntry]
   val DONT_CARE = "xdc"
   var signatureNumber = 1
+  var printTcam =true
 
   def lookUp(key: String): rowMetadata = {
     println("Tcam simulator lookup key: %s".format(key))
@@ -120,7 +121,8 @@ class tcamSimulator(val width: Int) {
     }
 
     addEntry(new tcamEntry(new row(dontcare(width)), new rowMetadata(shift = width, signatureLength = width, signatureNumber = -1, signatureIndex = -1)))
-    println("############# TCAM entries #############\n" + this.toString())
+    if(printTcam)
+        println("############# TCAM entries #############\n" + this.toString())
 
     signatureNumber += 1
 

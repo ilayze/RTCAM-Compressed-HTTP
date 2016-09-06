@@ -18,6 +18,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
   var runtimeMeasurements = new runtimeMeasurements(packetLength = n, tcamWidth = width)
   println("Tcam width: %s, packet length: %s".format(width, n))
 
+
   def execute(): algorithmResult = {
 
     while (pos <= n - width) {
@@ -50,8 +51,6 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
 
   }
 
-
-
   def isInternalBoundary(subPacket: subPacket): Boolean = {
     subPacket.pointerMetadata.isPointer &&
       subPacket.pointerMetadata.length > 2 * width - 2 &&
@@ -62,7 +61,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
   def internalBoundaryHandler(subPacket: subPacket): Unit = {
     println("internal boundary")
 
-    for (i <- pos + width until (pos + subPacket.pointerMetadata.length - width)) {
+    for (i <- pos + width-1 until (pos + subPacket.pointerMetadata.length - width)) {
       val pmbIndex = i - subPacket.pointerMetadata.distance
       if (pmb(pmbIndex) != null) //check if the rest of the signature match
       {
@@ -90,7 +89,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
       }
     }
 
-    val incrementPos = (pos + subPacket.pointerMetadata.length - width) - (pos + width)
+    val incrementPos = subPacket.pointerMetadata.length - 2*width +1
     pos += incrementPos
   }
 
@@ -167,7 +166,8 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
     println("\n##################### Measurements #####################")
 
     println("%s lookups, packet length %s, tcam width %s".format(runtimeMeasurements.lookupCounter,runtimeMeasurements.packetLength,runtimeMeasurements.tcamWidth))
-    println("Shift average: %s".format(runtimeMeasurements.shiftSum / runtimeMeasurements.lookupCounter))
+    if(runtimeMeasurements.lookupCounter>0)
+      println("Shift average: %s".format(runtimeMeasurements.shiftSum / runtimeMeasurements.lookupCounter))
 
     println("##################### End Of Measurements #####################")
   }
