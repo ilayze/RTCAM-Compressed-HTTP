@@ -126,6 +126,16 @@ class algorithmTests extends FunSuite {
 
   }
 
+  test("tcam width = 2"){
+    val algorithmResult = runAlgorithmFlow(tcamPattern = "Subject|3A 20|HawkEye Keylogger|20 7C 20|", tcamPackage = "Subject|3A 20|HawkEye Keylogger|20 7C 20|", tcamWidth = 2)
+    assert(algorithmResult.matchList.length.equals(1))
+  }
+
+  test("same substring in signature"){
+    val algorithmResult = runAlgorithmFlow(tcamPattern = "abcabc", tcamPackage = "abcabc", tcamWidth = 3)
+    assert(algorithmResult.matchList.length.equals(1))
+  }
+
 
   def runAlgorithmFlow(tcamWidth: Int = 5, tcamPattern: String = "hello", tcamPackage: String = "hello, hello! "): algorithmResult = {
     val tcamSimulator = new tcamSimulator(width = tcamWidth)
