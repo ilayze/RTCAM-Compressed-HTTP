@@ -30,7 +30,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
       else {
         val entry = tcam.lookUp(key)
         val shift = entry.shift
-        runtimeMeasurements.shiftCounter+=1
+        runtimeMeasurements.lookupCounter+=1
         runtimeMeasurements.shiftSum+=shift
         if (shift != 0) {
           pos = pos + shift
@@ -45,15 +45,53 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
       }
     }
 
+    printMeasurements
     return new algorithmResult(matchedList,runtimeMeasurements)
 
   }
+
+
 
   def isInternalBoundary(subPacket: subPacket): Boolean = {
     subPacket.pointerMetadata.isPointer &&
       subPacket.pointerMetadata.length > 2 * width - 2 &&
       subPacket.pointerMetadata.currentPos > width - 1 &&
       subPacket.pointerMetadata.currentPos < subPacket.pointerMetadata.length - width + 1
+  }
+
+  def internalBoundaryHandler(subPacket: subPacket): Unit = {
+    println("internal boundary")
+
+    for (i <- pos + width until (pos + subPacket.pointerMetadata.length - width)) {
+      val pmbIndex = i - subPacket.pointerMetadata.distance
+      if (pmb(pmbIndex) != null) //check if the rest of the signature match
+      {
+        var checkingInternalMatch = true
+        val sigNumber = pmb(pmbIndex).signatureNumber
+        var sigIndex = pmb(pmbIndex).signatureIndex
+        var counter = 1
+        while (checkingInternalMatch) {
+          if (sigIndex == 0) {
+            checkingInternalMatch = false
+            val sig_pos = i
+            println("Match!!! pos: " + sig_pos.toString())
+            matchedList.append(sig_pos)
+          }
+          else if (spmb(pmbIndex - counter * width) != null) {
+            if (spmb(pmbIndex - counter * width).signatureNumber == sigNumber && spmb(pmbIndex - counter * width).signatureIndex == sigIndex - 1) {
+              sigIndex = sigIndex - 1
+              counter += 1
+            }
+          }
+          else {
+            checkingInternalMatch = false
+          }
+        }
+      }
+    }
+
+    val incrementPos = (pos + subPacket.pointerMetadata.length - width) - (pos + width)
+    pos += incrementPos
   }
 
   def checkMatch(entry: rowMetadata): Unit = {
@@ -125,41 +163,15 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
     pos = pos + 1
   }
 
-  def internalBoundaryHandler(subPacket: subPacket): Unit = {
-    println("internal boundary")
+  def printMeasurements: Unit = {
+    println("\n##################### Measurements #####################")
 
-    for (i <- pos + width until (pos + subPacket.pointerMetadata.length - width)) {
-      val pmbIndex = i - subPacket.pointerMetadata.distance
-      if (pmb(pmbIndex) != null) //check if the rest of the signature match
-      {
-        var checkingInternalMatch = true
-        val sigNumber = pmb(pmbIndex).signatureNumber
-        var sigIndex = pmb(pmbIndex).signatureIndex
-        var counter = 1
-        while (checkingInternalMatch) {
-          if (sigIndex == 0) {
-            checkingInternalMatch = false
-            val sig_pos = i
-            println("Match!!! pos: " + sig_pos.toString())
-            matchedList.append(sig_pos)
-          }
-          else if (spmb(pmbIndex - counter * width) != null) {
-            if (spmb(pmbIndex - counter * width).signatureNumber == sigNumber && spmb(pmbIndex - counter * width).signatureIndex == sigIndex - 1) {
-              sigIndex = sigIndex - 1
-              counter += 1
-            }
-          }
-          else {
-            checkingInternalMatch = false
-          }
-        }
-      }
-    }
+    println("%s lookups, packet length %s, tcam width %s".format(runtimeMeasurements.lookupCounter,runtimeMeasurements.packetLength,runtimeMeasurements.tcamWidth))
+    println("Shift average: %s".format(runtimeMeasurements.shiftSum / runtimeMeasurements.lookupCounter))
 
-    val incrementPos = (pos + subPacket.pointerMetadata.length - width) - (pos + width)
-    pos += incrementPos
+    println("##################### End Of Measurements #####################")
   }
 }
 
-class algorithmResult(val matcheList: ListBuffer[Int],val measurments:runtimeMeasurements)
+class algorithmResult(val matchList: ListBuffer[Int],val measurements:runtimeMeasurements)
 
