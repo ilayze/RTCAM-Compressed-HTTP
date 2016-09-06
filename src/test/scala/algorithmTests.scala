@@ -9,50 +9,51 @@ import scala.collection.mutable.ListBuffer
   * Created by izeidman on 8/15/2016.
   */
 class algorithmTests extends FunSuite {
+
   test("Pattern and tcam width are equal") {
     val algorithmResult = runAlgorithmFlow() //use default parameters
 
-    assert(algorithmResult.matcheList.length.equals(2))
+    assert(algorithmResult.matchList.length.equals(2))
   }
 
   test("Pattern less than tcam width") {
     val algorithmResult = runAlgorithmFlow(tcamPattern = "he")
 
-    assert(algorithmResult.matcheList.length.equals(2))
+    assert(algorithmResult.matchList.length.equals(2))
   }
 
   test("Pattern greater than tcam width") {
     val algorithmResult = runAlgorithmFlow(tcamPattern = "hello!")
 
-    assert(algorithmResult.matcheList.length.equals(1))
+    assert(algorithmResult.matchList.length.equals(1))
   }
 
   test("Naive algorithm - no pointers") {
     val algorithmResult = runAlgorithmFlow(tcamPattern = "abcd", tcamPackage = "treotp,abcd,glm")
 
-    assert(algorithmResult.matcheList.length.equals(1))
-    assert(algorithmResult.matcheList(0).equals(11))
+    assert(algorithmResult.matchList.length.equals(1))
+    assert(algorithmResult.matchList(0).equals(11))
   }
 
   test("Naive algorithm - pattern greater than tcam width") {
     val algorithmResult = runAlgorithmFlow(tcamPattern = "abcdef", tcamPackage = "abcdef")
 
-    assert(algorithmResult.matcheList.length.equals(1))
-    assert(algorithmResult.matcheList(0).equals(6))
+    assert(algorithmResult.matchList.length.equals(1))
+    assert(algorithmResult.matchList(0).equals(6))
 
   }
 
   test("Naive algorithm - pattern greater than width and no match in the end of the pattern") {
     val algorithmResult = runAlgorithmFlow(tcamPattern = "abcdefg", tcamPackage = "abcabb", tcamWidth = 3)
 
-    assert(algorithmResult.matcheList.length.equals(0))
+    assert(algorithmResult.matchList.length.equals(0))
   }
 
   test("Naive algorithm - pattern greater than tcam width and divisble with width") {
     val algorithmResult = runAlgorithmFlow(tcamPattern = "abcdef", tcamPackage = "abcdef", tcamWidth = 3)
 
-    assert(algorithmResult.matcheList.length.equals(1))
-    assert(algorithmResult.matcheList(0).equals(6))
+    assert(algorithmResult.matchList.length.equals(1))
+    assert(algorithmResult.matchList(0).equals(6))
 
   }
 
@@ -66,8 +67,8 @@ class algorithmTests extends FunSuite {
     val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
     val algorithmResult = rtcamCompressedHttp.execute()
 
-    assert(algorithmResult.matcheList.length.equals(1))
-    assert(algorithmResult.matcheList(0).equals(7))
+    assert(algorithmResult.matchList.length.equals(1))
+    assert(algorithmResult.matchList(0).equals(7))
 
   }
 
@@ -80,21 +81,21 @@ class algorithmTests extends FunSuite {
     val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
     val algorithmResult = rtcamCompressedHttp.execute()
 
-    assert(algorithmResult.matcheList.length.equals(1))
-    assert(algorithmResult.matcheList(0).equals(15))
+    assert(algorithmResult.matchList.length.equals(1))
+    assert(algorithmResult.matchList(0).equals(15))
   }
 
   test("Shift 0 but no match") {
     val algorithmResult = runAlgorithmFlow(tcamPattern = "abcdef", tcamPackage = "abcabc", tcamWidth = 3)
 
-    assert(algorithmResult.matcheList.length.equals(0))
+    assert(algorithmResult.matchList.length.equals(0))
 
   }
 
   test("More example Shift 0 but no match") {
     val algorithmResult = runAlgorithmFlow(tcamPattern = "abcdefghi", tcamPackage = "abcabcabc", tcamWidth = 3)
 
-    assert(algorithmResult.matcheList.length.equals(0))
+    assert(algorithmResult.matchList.length.equals(0))
 
   }
 
@@ -107,9 +108,22 @@ class algorithmTests extends FunSuite {
     val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
     val algorithmResult = rtcamCompressedHttp.execute()
 
-    assert(algorithmResult.matcheList.length.equals(2))
-    assert(algorithmResult.matcheList(0).equals(6))
-    assert(algorithmResult.matcheList(1).equals(18))
+    assert(algorithmResult.matchList.length.equals(2))
+    assert(algorithmResult.matchList(0).equals(6))
+    assert(algorithmResult.matchList(1).equals(18))
+  }
+
+  test("No match at all - shift average should be equal to width"){
+    val tcamSimulator = new tcamSimulator(width = 5)
+    tcamSimulator.initialize("abcde")
+    val gzipAscii = "C112;C112;C112;L2;D3;C101;C101;C101;L2;D2;C114;C114;C114;C114;C114;C116;C116;C116;L2;D2;" //pppppeeeeerrrrrttttt
+    val gzipPacket = new gzipPacket(gzipAscii)
+
+    val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
+    val algorithmResult = rtcamCompressedHttp.execute()
+
+    assert(algorithmResult.measurements.tcamWidth.equals(algorithmResult.measurements.shiftSum/algorithmResult.measurements.lookupCounter))
+
   }
 
 
