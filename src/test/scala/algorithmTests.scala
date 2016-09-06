@@ -1,4 +1,4 @@
-import algorithm.rtcamCompressedHttp
+import algorithm.{algorithmResult, rtcamCompressedHttp}
 import com.jcraft.jzlib.Converter
 import org.scalatest.FunSuite
 import src.main.com.jce.{gzipPacket, tcamSimulator}
@@ -10,49 +10,49 @@ import scala.collection.mutable.ListBuffer
   */
 class algorithmTests extends FunSuite {
   test("Pattern and tcam width are equal") {
-    val matchedList: ListBuffer[Int] = runAlgorithmFlow() //use default parameters
+    val algorithmResult = runAlgorithmFlow() //use default parameters
 
-    assert(matchedList.length.equals(2))
+    assert(algorithmResult.matcheList.length.equals(2))
   }
 
   test("Pattern less than tcam width") {
-    val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "he")
+    val algorithmResult = runAlgorithmFlow(tcamPattern = "he")
 
-    assert(matchedList.length.equals(2))
+    assert(algorithmResult.matcheList.length.equals(2))
   }
 
   test("Pattern greater than tcam width") {
-    val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "hello!")
+    val algorithmResult = runAlgorithmFlow(tcamPattern = "hello!")
 
-    assert(matchedList.length.equals(1))
+    assert(algorithmResult.matcheList.length.equals(1))
   }
 
   test("Naive algorithm - no pointers") {
-    val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "abcd", tcamPackage = "treotp,abcd,glm")
+    val algorithmResult = runAlgorithmFlow(tcamPattern = "abcd", tcamPackage = "treotp,abcd,glm")
 
-    assert(matchedList.length.equals(1))
-    assert(matchedList(0).equals(11))
+    assert(algorithmResult.matcheList.length.equals(1))
+    assert(algorithmResult.matcheList(0).equals(11))
   }
 
   test("Naive algorithm - pattern greater than tcam width") {
-    val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "abcdef", tcamPackage = "abcdef")
+    val algorithmResult = runAlgorithmFlow(tcamPattern = "abcdef", tcamPackage = "abcdef")
 
-    assert(matchedList.length.equals(1))
-    assert(matchedList(0).equals(6))
+    assert(algorithmResult.matcheList.length.equals(1))
+    assert(algorithmResult.matcheList(0).equals(6))
 
   }
 
   test("Naive algorithm - pattern greater than width and no match in the end of the pattern") {
-    val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "abcdefg", tcamPackage = "abcabb", tcamWidth = 3)
+    val algorithmResult = runAlgorithmFlow(tcamPattern = "abcdefg", tcamPackage = "abcabb", tcamWidth = 3)
 
-    assert(matchedList.length.equals(0))
+    assert(algorithmResult.matcheList.length.equals(0))
   }
 
   test("Naive algorithm - pattern greater than tcam width and divisble with width") {
-    val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "abcdef", tcamPackage = "abcdef", tcamWidth = 3)
+    val algorithmResult = runAlgorithmFlow(tcamPattern = "abcdef", tcamPackage = "abcdef", tcamWidth = 3)
 
-    assert(matchedList.length.equals(1))
-    assert(matchedList(0).equals(6))
+    assert(algorithmResult.matcheList.length.equals(1))
+    assert(algorithmResult.matcheList(0).equals(6))
 
   }
 
@@ -64,10 +64,10 @@ class algorithmTests extends FunSuite {
     val gzipPacket = new gzipPacket(gzipAscii)
 
     val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
-    val matchedList = rtcamCompressedHttp.execute()
+    val algorithmResult = rtcamCompressedHttp.execute()
 
-    assert(matchedList.length.equals(1))
-    assert(matchedList(0).equals(7))
+    assert(algorithmResult.matcheList.length.equals(1))
+    assert(algorithmResult.matcheList(0).equals(7))
 
   }
 
@@ -78,23 +78,23 @@ class algorithmTests extends FunSuite {
     val gzipPacket = new gzipPacket(gzipAscii)
 
     val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
-    val matchedList = rtcamCompressedHttp.execute()
+    val algorithmResult = rtcamCompressedHttp.execute()
 
-    assert(matchedList.length.equals(1))
-    assert(matchedList(0).equals(15))
+    assert(algorithmResult.matcheList.length.equals(1))
+    assert(algorithmResult.matcheList(0).equals(15))
   }
 
   test("Shift 0 but no match") {
-    val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "abcdef", tcamPackage = "abcabc", tcamWidth = 3)
+    val algorithmResult = runAlgorithmFlow(tcamPattern = "abcdef", tcamPackage = "abcabc", tcamWidth = 3)
 
-    assert(matchedList.length.equals(0))
+    assert(algorithmResult.matcheList.length.equals(0))
 
   }
 
   test("More example Shift 0 but no match") {
-    val matchedList: ListBuffer[Int] = runAlgorithmFlow(tcamPattern = "abcdefghi", tcamPackage = "abcabcabc", tcamWidth = 3)
+    val algorithmResult = runAlgorithmFlow(tcamPattern = "abcdefghi", tcamPackage = "abcabcabc", tcamWidth = 3)
 
-    assert(matchedList.length.equals(0))
+    assert(algorithmResult.matcheList.length.equals(0))
 
   }
 
@@ -105,15 +105,15 @@ class algorithmTests extends FunSuite {
     val gzipPacket = new gzipPacket(gzipAscii)
 
     val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
-    val matchedList = rtcamCompressedHttp.execute()
+    val algorithmResult = rtcamCompressedHttp.execute()
 
-    assert(matchedList.length.equals(2))
-    assert(matchedList(0).equals(6))
-    assert(matchedList(1).equals(18))
+    assert(algorithmResult.matcheList.length.equals(2))
+    assert(algorithmResult.matcheList(0).equals(6))
+    assert(algorithmResult.matcheList(1).equals(18))
   }
 
 
-  def runAlgorithmFlow(tcamWidth: Int = 5, tcamPattern: String = "hello", tcamPackage: String = "hello, hello! "): ListBuffer[Int] = {
+  def runAlgorithmFlow(tcamWidth: Int = 5, tcamPattern: String = "hello", tcamPackage: String = "hello, hello! "): algorithmResult = {
     val tcamSimulator = new tcamSimulator(width = tcamWidth)
     tcamSimulator.initialize(tcamPattern)
 
@@ -121,8 +121,8 @@ class algorithmTests extends FunSuite {
     val gzipPacket = new gzipPacket(gzipAscii) //L4;D7; = 7 steps backward take 4 characters
 
     val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
-    val matchedList = rtcamCompressedHttp.execute()
-    matchedList
+    val algorithmResult = rtcamCompressedHttp.execute()
+    algorithmResult
   }
 }
 

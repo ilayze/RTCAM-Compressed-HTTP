@@ -16,9 +16,10 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
   var spmb = new Array[rowMetadata](n + width)
   //sub pattern match bit: if spmb(i)=true a sub pattern has been found in the index n the key that starts at index n-w returns shift = 0
   var pmb = new Array[rowMetadata](n + width) //pattern matching bit save a Boolean value for each bit bit[n] = true: a full pattern has been found in the index n
+  var runtimeMeasurements = new runtimeMeasurements()
   println("Tcam width: %s, packet length: %s".format(width, n))
 
-  def execute(): ListBuffer[Int] = {
+  def execute(): algorithmResult = {
 
     while (pos <= n - width) {
       val subPacket = packet.get(pos, pos + width - 1)
@@ -30,6 +31,8 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
       else {
         val entry = tcam.lookUp(key)
         val shift = entry.shift
+        runtimeMeasurements.shiftCounter+=1
+        runtimeMeasurements.shiftSum+=shift
         if (shift != 0) {
           pos = pos + shift
         }
@@ -43,7 +46,8 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
       }
     }
 
-    return matchedList
+    return new algorithmResult(matchedList,runtimeMeasurements)
+
   }
 
   def isInternalBoundary(subPacket: subPacket): Boolean = {
@@ -157,3 +161,6 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
     pos += incrementPos
   }
 }
+
+class algorithmResult(val matcheList: ListBuffer[Int],val measurments:runtimeMeasurements)
+
