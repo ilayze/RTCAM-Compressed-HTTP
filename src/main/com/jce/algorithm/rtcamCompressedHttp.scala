@@ -14,9 +14,8 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
   var pos: Int = 0
   val n = packet.length
   var spmb = new Array[rowMetadata](n + width)
-  //sub pattern match bit: if spmb(i)=true a sub pattern has been found in the index n the key that starts at index n-w returns shift = 0
-  var pmb = new Array[rowMetadata](n + width) //pattern matching bit save a Boolean value for each bit bit[n] = true: a full pattern has been found in the index n
-  var runtimeMeasurements = new runtimeMeasurements()
+  var pmb = new Array[rowMetadata](n + width)
+  var runtimeMeasurements = new runtimeMeasurements(packetLength = n, tcamWidth = width)
   println("Tcam width: %s, packet length: %s".format(width, n))
 
   def execute(): algorithmResult = {
