@@ -17,12 +17,19 @@ class gzipPacket(val data: String) {
       dataSplittedMetadata.append(new notPointer())
     }
     else if (dataSplitted(i).startsWith("L")) {
-      val lNum = getPointerValue(dataSplitted(i)) //length of the pointer
-      val dNum = getPointerValue(dataSplitted(i + 1)) //distnace to go back to start the pointer from
-
-      for (j <- 0 until (lNum)) {
-        dataSplittedFull.append(dataSplitted(i - dNum + j))
-        dataSplittedMetadata.append(new pointerMetadata(currentPos = j + 1, isPointer = true, length = lNum, distance = dNum))
+      val pointerLength = getPointerValue(dataSplitted(i)) //length of the pointer
+      val pointerDistance = getPointerValue(dataSplitted(i + 1)) //distnace to go back to start the pointer from
+      if(pointerLength<=pointerDistance) {
+        for (j <- 0 until (pointerLength)) {
+          dataSplittedFull.append(dataSplitted(i - pointerDistance + j))
+          dataSplittedMetadata.append(new pointerMetadata(currentPos = j + 1, isPointer = true, length = pointerLength, distance = pointerDistance))
+        }
+      }
+      else{
+        for(k<-0 until(pointerLength)){
+          dataSplittedFull.append(dataSplitted(i-pointerDistance+ k%pointerDistance))
+          dataSplittedMetadata.append(new pointerMetadata(currentPos = k + 1, isPointer = true, length = pointerLength, distance = pointerDistance))
+        }
       }
 
     }
@@ -71,7 +78,7 @@ class gzipPacket(val data: String) {
 
 class pointerMetadata(val length: Int, val currentPos: Int, val isPointer: Boolean, val distance: Int) {
   override def toString(): String = {
-    return "pointerMetadata: isPointer: %s, currentPos: %d, pointerLength: %d, distance:".format(isPointer, currentPos, length, distance)
+    return "pointerMetadata: isPointer: %s, currentPos: %d, pointerLength: %d, distance: %d".format(isPointer, currentPos, length, distance)
   }
 }
 
