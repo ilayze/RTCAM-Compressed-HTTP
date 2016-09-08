@@ -13,7 +13,7 @@ class tcamSimulator(val width: Int) {
   var signatureNumber = 1
   var printTcam =true
 
-  def lookUp(key: String): rowMetadata = {
+  def lookUp(key: String):  ListBuffer[subSignatureMetadata] = {
     println("Tcam simulator lookup key: %s".format(key))
 
     val keyLength = key.length()
@@ -24,7 +24,7 @@ class tcamSimulator(val width: Int) {
         subkeyWithDC = DONT_CARE + subkeyWithDC
       val entry = getEntry(subkeyWithDC)
       if (entry != null) {
-        println("Tcam simulator lookup return entry with shift: %d and signature length: %d".format(entry.shift, entry.signatureLength))
+        println("Tcam simulator lookup return entry with shift: %d".format(entry(0).shift))
         return entry
       }
     }
@@ -32,7 +32,7 @@ class tcamSimulator(val width: Int) {
     throw new Exception("No row match key " + key)
   }
 
-  def getEntry(key: String): rowMetadata = {
+  def getEntry(key: String): ListBuffer[subSignatureMetadata] = {
     for (entry <- tcam) {
       if (entry.row.data == key)
         return entry.metadata
@@ -55,13 +55,19 @@ class tcamSimulator(val width: Int) {
     return null
   }
 
-  def addEntry(entry: tcamEntry): Unit = {
+  def addEntry(row:row,subSignatureMetadata:subSignatureMetadata): Unit = {
     //check if the entry already exists
     for (e <- tcam) {
-      if (e.row.data == entry.row.data)
-        return
+      if (e.row.data == row.data){
+           e.metadata.append(subSignatureMetadata)
+           return
+      }
+
     }
 
+    val subSigToAdd = new ListBuffer[subSignatureMetadata]()
+    subSigToAdd.append(subSignatureMetadata)
+    val entry =new tcamEntry(row = row, metadata=subSigToAdd)
     tcam.append(entry)
     println("new tcam entry: %s".format(entry))
   }
@@ -114,13 +120,12 @@ class tcamSimulator(val width: Int) {
           signature_with_dont_care = DONT_CARE + signature_with_dont_care
 
         val newRow = new row(signature_with_dont_care)
-        val newRowMewtadata = new rowMetadata(shift = i, signatureLength = signature.length(), signatureNumber = signatureNumber, signatureIndex = itemIndex)
-        val newTcamEntry = new tcamEntry(newRow, newRowMewtadata)
-        addEntry(newTcamEntry)
+        val newRowMewtadata = new subSignatureMetadata(shift = i, signatureLength = signature.length(), signatureNumber = signatureNumber, signatureIndex = itemIndex)
+        addEntry(newRow,newRowMewtadata)
       }
     }
 
-    addEntry(new tcamEntry(new row(dontcare(width)), new rowMetadata(shift = width, signatureLength = width, signatureNumber = -1, signatureIndex = -1)))
+    addEntry(new row(dontcare(width)), new subSignatureMetadata(shift = width, signatureLength = width, signatureNumber = -1, signatureIndex = -1))
     if(printTcam)
         println("############# TCAM entries #############\n" + this.toString())
 
@@ -140,7 +145,7 @@ class tcamSimulator(val width: Int) {
     var ret = ""
     for (i <- 0 until ((width + 1))) {
       for (entry <- tcam) {
-        if (entry.metadata.shift.equals(i)) {
+        if (entry.metadata(0).shift.equals(i)) {
           val entryData = entry.row.data.replace(DONT_CARE, "?")
           ret = ret + entryData + "\n"
         }
@@ -150,13 +155,16 @@ class tcamSimulator(val width: Int) {
   }
 }
 
-class rowMetadata(val shift: Int, val signatureLength: Int, val signatureNumber: Int, val signatureIndex: Int)
+class subSignatureMetadata(val shift: Int, val signatureLength: Int, val signatureNumber: Int, val signatureIndex: Int)
 
 class row(val data: String)
 
-class tcamEntry(val row: row, val metadata: rowMetadata) {
+class tcamEntry(val row: row, val metadata: ListBuffer[subSignatureMetadata]) {
   override def toString: String = {
-    val ret = "data: %s, shift: %s, index: %s, number: %s, length: %s".format(row.data, metadata.shift, metadata.signatureIndex, metadata.signatureNumber, metadata.signatureLength)
+    var ret=""
+    for(subSig<-metadata) {
+       ret += "data: %s, shift: %s, index: %s, number: %s, length: %s".format(row.data, subSig.shift, subSig.signatureIndex, subSig.signatureNumber, subSig.signatureLength)
+    }
     return ret
   }
 
