@@ -131,10 +131,10 @@ class algorithmTests extends FunSuite {
     assert(algorithmResult.matchList.length.equals(1))
   }
 
-  test("pointer recursive"){
+  test("pattern less than width in the end of the packet"){
     val abcd = "abcd"
-    val algorithmResult = runAlgorithmFlow(tcamPattern = abcd, tcamPackage = abcd+abcd+abcd+abcd, tcamWidth = 5)
-    assert(algorithmResult.matchList.length.equals(4))
+    val algorithmResult = runAlgorithmFlow(tcamPattern = abcd, tcamPackage = abcd, tcamWidth = 5)
+    assert(algorithmResult.matchList.length.equals(1))
   }
 
 
