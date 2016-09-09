@@ -103,7 +103,8 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
       }
       //check for match for signature greater than width
       else {
-        spmb(pos + width) = subSignaturesMetadata
+        if(pos+width<spmb.length)
+          spmb(pos + width) = subSignaturesMetadata
         var checkingSignature = true //true as long as we check the current signature
         var currentPos = pos + width //current position in the checking
         var alreadyChecked = width //number of characters of the current signature that we already checked
