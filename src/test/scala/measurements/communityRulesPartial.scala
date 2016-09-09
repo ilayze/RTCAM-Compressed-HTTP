@@ -14,7 +14,7 @@ class communityRulesPartial extends FunSuite {
       val allAbc = "abcdefghijklmnopqrstuvwxyz"
       test("partial snort community rules"){
         var results = ListBuffer[algorithmResult]()
-        for(i<-5 until(30)){
+        for(i<-5 until(50) by 5){
           val tcamSimulator = new tcamSimulator(width = i)
           tcamSimulator.printTcam = false
           tcamSimulator.initializeWithParser("/rules/community-rules-partial.txt")
@@ -30,7 +30,7 @@ class communityRulesPartial extends FunSuite {
         }
 
         for (res<-results){
-          println(res.measurements.tcamWidth)
+          println("Width "+res.measurements.tcamWidth)
           println("Shift average: %s".format(res.measurements.shiftSum.toFloat / res.measurements.lookupCounter))
 
         }

@@ -20,8 +20,20 @@ class gzipPacket(val data: String) {
       val pointerLength = getPointerValue(dataSplitted(i)) //length of the pointer
       val pointerDistance = getPointerValue(dataSplitted(i + 1)) //distnace to go back to start the pointer from
 
+      var pointerInPointerLength = 0
+      for(curr<-0 until(pointerLength)){
+        val index = i-curr
+        if(index>=0){
+          //check if there is pointer within pointer
+          if(dataSplitted(index).startsWith("D")){
+            val lNum = getPointerValue(dataSplitted(index-1))
+            pointerInPointerLength +=lNum-2
+          }
+        }
+      }
+
       for (j <- 0 until (pointerLength)) {
-        dataSplittedFull.append(dataSplitted(i - pointerDistance + j%pointerDistance))
+        dataSplittedFull.append(dataSplittedFull(i - pointerDistance + j%pointerDistance+pointerInPointerLength))
         dataSplittedMetadata.append(new pointerMetadata(currentPos = j + 1, isPointer = true, length = pointerLength, distance = pointerDistance))
       }
 

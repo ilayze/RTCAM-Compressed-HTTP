@@ -49,6 +49,8 @@ class gzipTests extends FunSuite {
 
   test("pointer within pointer"){
     val gzipPacket = new gzipPacket("C97;C98;C99;L3;D3;L6;D6;") //abc[3,3][6,6]
+    val check = gzipPacket.get(0,11)
+    assert(check.data.equals("abcabcabcabc"))
 
   }
 }
