@@ -31,8 +31,8 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
       else {
         val entry = tcam.lookUp(key)
         val shift = entry(0).shift
-        runtimeMeasurements.lookupCounter+=1
-        runtimeMeasurements.shiftSum+=shift
+        runtimeMeasurements.lookupCounter += 1
+        runtimeMeasurements.shiftSum += shift
         if (shift != 0) {
           pos = pos + shift
         }
@@ -43,7 +43,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
     }
 
     printMeasurements
-    return new algorithmResult(matchedList,runtimeMeasurements)
+    return new algorithmResult(matchedList, runtimeMeasurements)
 
   }
 
@@ -57,11 +57,11 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
   def internalBoundaryHandler(subPacket: subPacket): Unit = {
     println("internal boundary")
 
-    for (i <- pos + width-1 until (pos + subPacket.pointerMetadata.length - width)) {
+    for (i <- pos + width - 1 until (pos + subPacket.pointerMetadata.length - width)) {
       val pmbIndex = i - subPacket.pointerMetadata.distance
       if (pmb(pmbIndex) != null) //check if the rest of the signature match
       {
-        for (subSig<-pmb(pmbIndex)) {
+        for (subSig <- pmb(pmbIndex)) {
           var checkingInternalMatch = true
           val sigNumber = subSig.signatureNumber
           var sigIndex = subSig.signatureIndex
@@ -74,7 +74,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
               matchedList.append(sig_pos)
             }
             else if (spmb(pmbIndex - counter * width) != null) {
-              for (spmbSubSig<-spmb(pmbIndex - counter * width)) {
+              for (spmbSubSig <- spmb(pmbIndex - counter * width)) {
                 if (spmbSubSig.signatureNumber == sigNumber && spmbSubSig.signatureIndex == sigIndex - 1) {
                   sigIndex = sigIndex - 1
                   counter += 1
@@ -89,21 +89,26 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
       }
     }
 
-    val incrementPos = subPacket.pointerMetadata.length - 2*width +1
+    val incrementPos = subPacket.pointerMetadata.length - 2 * width + 1
     pos += incrementPos
   }
 
+  /**
+    * Iterate through all the input sub signatures and for each
+    * check if there is a full match of a pattern
+    */
   def checkMatch(subSignaturesMetadata: ListBuffer[subSignatureMetadata]): Unit = {
 
-    for (subSigMetadata<-subSignaturesMetadata) {
+    for (subSigMetadata <- subSignaturesMetadata) {
+      //there is a match because the shift is 0 and the signature length is <= width
       if (subSigMetadata.signatureLength <= width) {
         matchLessThanWidth(subSigMetadata)
-        spmb(pos-1 + subSigMetadata.signatureLength) = subSignaturesMetadata
-        pmb(pos-1 + subSigMetadata.signatureLength) = subSignaturesMetadata
+        spmb(pos - 1 + subSigMetadata.signatureLength) = subSignaturesMetadata
+        pmb(pos - 1 + subSigMetadata.signatureLength) = subSignaturesMetadata
       }
       //check for match for signature greater than width
       else {
-        if(pos+width<spmb.length)
+        if (pos + width < spmb.length)
           spmb(pos + width) = subSignaturesMetadata
         var checkingSignature = true //true as long as we check the current signature
         var currentPos = pos + width //current position in the checking
@@ -112,6 +117,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
         var signatureNumber = subSigMetadata.signatureNumber
 
         while (checkingSignature) {
+          //there are still more than width chars to check in the current signature
           if (alreadyChecked + width < subSigMetadata.signatureLength) {
             if (currentPos <= n - width) {
               val subPacket = packet.get(currentPos, currentPos + width - 1)
@@ -137,6 +143,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
               pos += 1
               checkingSignature = false
             }
+            //check the end of the signature
           } else {
             val charsToAdd = width - (subSigMetadata.signatureLength - alreadyChecked) //end of the signature we might need to add some chars e.g signature abcd width 3 so will check abc and then bcd so we added bc in the second check
             if (currentPos - charsToAdd + width - 1 >= n) {
@@ -148,9 +155,8 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
               val currentKey: String = currentSubPacket.data
               val currentEntry = tcam.lookUp(currentKey)
               val currentShift = currentEntry(0).shift
-              //match
 
-              for (s<-currentEntry) {
+              for (s <- currentEntry) {
                 if (currentShift == 0 && s.signatureIndex == signatureIndex && s.signatureNumber == signatureNumber) {
                   val signature_pos = pos + s.signatureLength
                   println("Match!!! pos: " + signature_pos.toString())
@@ -178,13 +184,13 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
   def printMeasurements: Unit = {
     println("\n##################### Measurements #####################")
 
-    println("%s lookups, packet length %s, tcam width %s".format(runtimeMeasurements.lookupCounter,runtimeMeasurements.packetLength,runtimeMeasurements.tcamWidth))
-    if(runtimeMeasurements.lookupCounter>0)
+    println("%s lookups, packet length %s, tcam width %s".format(runtimeMeasurements.lookupCounter, runtimeMeasurements.packetLength, runtimeMeasurements.tcamWidth))
+    if (runtimeMeasurements.lookupCounter > 0)
       println("Shift average: %s".format(runtimeMeasurements.shiftSum / runtimeMeasurements.lookupCounter))
 
     println("##################### End Of Measurements #####################")
   }
 }
 
-class algorithmResult(val matchList: ListBuffer[Int],val measurements:runtimeMeasurements)
+class algorithmResult(val matchList: ListBuffer[Int], val measurements: runtimeMeasurements)
 

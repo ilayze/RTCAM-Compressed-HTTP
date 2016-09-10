@@ -11,9 +11,9 @@ class tcamSimulator(val width: Int) {
   var tcam = new ListBuffer[tcamEntry]
   val DONT_CARE = "xdc"
   var signatureNumber = 1
-  var printTcam =true
+  var printTcam = true
 
-  def lookUp(key: String):  ListBuffer[subSignatureMetadata] = {
+  def lookUp(key: String): ListBuffer[subSignatureMetadata] = {
     println("Tcam simulator lookup key: %s".format(key))
 
     val keyLength = key.length()
@@ -55,19 +55,19 @@ class tcamSimulator(val width: Int) {
     return null
   }
 
-  def addEntry(row:row,subSignatureMetadata:subSignatureMetadata): Unit = {
+  def addEntry(row: row, subSignatureMetadata: subSignatureMetadata): Unit = {
     //check if the entry already exists
     for (e <- tcam) {
-      if (e.row.data == row.data){
-           e.metadata.append(subSignatureMetadata)
-           return
+      if (e.row.data == row.data) {
+        e.metadata.append(subSignatureMetadata)
+        return
       }
 
     }
 
     val subSigToAdd = new ListBuffer[subSignatureMetadata]()
     subSigToAdd.append(subSignatureMetadata)
-    val entry =new tcamEntry(row = row, metadata=subSigToAdd)
+    val entry = new tcamEntry(row = row, metadata = subSigToAdd)
     tcam.append(entry)
     println("new tcam entry: %s".format(entry))
   }
@@ -121,13 +121,13 @@ class tcamSimulator(val width: Int) {
 
         val newRow = new row(signature_with_dont_care)
         val newRowMewtadata = new subSignatureMetadata(shift = i, signatureLength = signature.length(), signatureNumber = signatureNumber, signatureIndex = itemIndex)
-        addEntry(newRow,newRowMewtadata)
+        addEntry(newRow, newRowMewtadata)
       }
     }
 
     addEntry(new row(dontcare(width)), new subSignatureMetadata(shift = width, signatureLength = width, signatureNumber = -1, signatureIndex = -1))
-    if(printTcam)
-        println("############# TCAM entries #############\n" + this.toString())
+    if (printTcam)
+      println("############# TCAM entries #############\n" + this.toString())
 
     signatureNumber += 1
 
@@ -161,9 +161,9 @@ class row(val data: String)
 
 class tcamEntry(val row: row, val metadata: ListBuffer[subSignatureMetadata]) {
   override def toString: String = {
-    var ret=""
-    for(subSig<-metadata) {
-       ret += "data: %s, shift: %s, index: %s, number: %s, length: %s".format(row.data, subSig.shift, subSig.signatureIndex, subSig.signatureNumber, subSig.signatureLength)
+    var ret = ""
+    for (subSig <- metadata) {
+      ret += "data: %s, shift: %s, index: %s, number: %s, length: %s".format(row.data, subSig.shift, subSig.signatureIndex, subSig.signatureNumber, subSig.signatureLength)
     }
     return ret
   }
