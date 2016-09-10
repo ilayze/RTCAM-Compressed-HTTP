@@ -36,6 +36,7 @@ class tcamSimulator(val width: Int) {
     for (entry <- tcam) {
       if (entry.row.data == key)
         return entry.metadata
+        //match with dont cares e.g key: abcde entry: abcd?
       else if (entry.row.data.endsWith(DONT_CARE) && DONT_CARE.r.findAllMatchIn(entry.row.data).length < width) {
         var moreDC = true
         var data = entry.row.data
