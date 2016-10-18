@@ -142,6 +142,31 @@ class tcamSimulator(val width: Int) {
     }
   }
 
+  /*
+  *  Takes String with snort representation and convert it to hex e.g 2|00 00 00 06 00 00 00|Drives|24 00| every | ... | is alredy in hex representation and what outside it converted into hex
+  * */
+  def snortToHex(input: String) : String = {
+    var ret = ""
+    val splittedInput = input.split('|')
+    for (i<-0 until(splittedInput.length)){
+      if(i%2==0) //regular string covert to hex
+      {
+        val toHex = string2hex(splittedInput(i))
+        ret = ret.concat(toHex)
+      }
+      else // already in hex represenation e.g 00 00 00 06 00 00 00
+      {
+        ret = ret.concat(splittedInput(i).replaceAll(" ",""))
+      }
+    }
+
+    return ret
+  }
+
+  def string2hex(str: String): String = {
+    str.toList.map(_.toInt.toHexString).mkString
+  }
+
   override def toString(): String = {
     var ret = ""
     for (i <- 0 until ((width + 1))) {
