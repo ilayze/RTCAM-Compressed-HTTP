@@ -50,7 +50,19 @@ class tcamTests extends FunSuite {
 
   }
 
-  test("snort to hex"){
+  test("snort to hex regular string"){
+    val tcamSimulator = new tcamSimulator(width = 5)
+    val hexRepresentation = tcamSimulator.snortToHex("abcd")
+    assert(hexRepresentation.equals("61626364"))
+  }
+
+  test("snort to hex ascii string"){
+    val tcamSimulator = new tcamSimulator(width = 5)
+    val hexRepresentation = tcamSimulator.snortToHex("|06|")
+    assert(hexRepresentation.equals("06"))
+  }
+
+  test("snort to hex regular and ascii"){
     val tcamSimulator = new tcamSimulator(width = 5)
     val hexRepresentation = tcamSimulator.snortToHex("2|00 00 00 06 00 00 00|Drives|24 00|")
     assert(hexRepresentation.equals("32000000060000004472697665732400"))
