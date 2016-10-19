@@ -42,10 +42,10 @@ class tcamTests extends FunSuite {
   test("Initialize with rule parser") {
     val tcamSimulator = new tcamSimulator(width = 5)
     tcamSimulator.initializeWithParser("/rules/signatures1")
-    val entry1 = tcamSimulator.lookUp("abcd")
+    val entry1 = tcamSimulator.lookUp("abcde")
     assert(entry1(0).shift.equals(0))
 
-    val entry2 = tcamSimulator.lookUp("efgh")
+    val entry2 = tcamSimulator.lookUp("efght")
     assert(entry2(0).shift.equals(0))
 
   }

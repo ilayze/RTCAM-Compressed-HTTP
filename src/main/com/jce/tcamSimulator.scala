@@ -9,17 +9,23 @@ import scala.collection.mutable.ListBuffer
   */
 class tcamSimulator(val width: Int) {
   var tcam = new ListBuffer[tcamEntry]
-  val DONT_CARE = "xdc"
+  val DONT_CARE = "z"
   var signatureNumber = 1
   var printTcam = true
 
   def lookUp(key: String): ListBuffer[subSignatureMetadata] = {
     println("Tcam simulator lookup key: %s".format(key))
 
+    val keyHex = snortToHex(key)
+    return lookupHex(keyHex)
+
+  }
+
+  def lookupHex(key: String): ListBuffer[subSignatureMetadata] = {
     val keyLength = key.length()
-    for (i <- 0 to keyLength) {
+    for (i <- 0 to keyLength by 2) {
       var subkeyWithDC = key.substring(i, keyLength)
-      val numberOfDontCare: Int = width - subkeyWithDC.length()
+      val numberOfDontCare: Int = (width*2 - subkeyWithDC.length())/2
       for (dc <- numberOfDontCare to 1 by -1)
         subkeyWithDC = DONT_CARE + subkeyWithDC
       val entry = getEntry(subkeyWithDC)
@@ -44,7 +50,7 @@ class tcamSimulator(val width: Int) {
         while (moreDC) {
           if (data.endsWith(DONT_CARE)) {
             data = data.substring(0, data.length() - DONT_CARE.length())
-            keyChanged = keyChanged.substring(0, keyChanged.length() - 1)
+            keyChanged = keyChanged.substring(0, keyChanged.length() - 2)
             if (data.equals(keyChanged))
               return entry.metadata
           } else {
@@ -87,18 +93,26 @@ class tcamSimulator(val width: Int) {
     if (signature == null)
       throw new Exception("Signature is null")
 
-    var signatureSplitted = signature.grouped(width).toList
-    if (signatureSplitted.last.length() != width && signatureSplitted.length > 1) {
-      val suffix = signature.substring(signature.length() - width, signature.length())
+    val hexSignature = snortToHex(signature)
+    initializeHex(hexSignature)
+
+  }
+
+  def initializeHex(hexSignature: String): Unit = {
+
+    val hexWidth = width*2
+    var signatureSplitted = hexSignature.grouped(hexWidth).toList
+    if (signatureSplitted.last.length() != hexWidth && signatureSplitted.length > 1) {
+      val suffix = hexSignature.substring(hexSignature.length() - hexWidth, hexSignature.length())
       signatureSplitted = signatureSplitted.updated(signatureSplitted.length - 1, suffix)
     }
 
     for (itemIndex <- 0 until (signatureSplitted.length)) {
       var itemWithDC = signatureSplitted(itemIndex)
       var numberOfRightDC = 0
-      if (itemWithDC.length() < width) {
+      if (itemWithDC.length() < hexWidth) {
         //add don't cares to the right
-        for (n <- 0 until (width - itemWithDC.length())) {
+        for (n <- 0 until (hexWidth - itemWithDC.length()) by 2) {
           itemWithDC = itemWithDC + DONT_CARE
           numberOfRightDC += 1
         }
@@ -111,7 +125,7 @@ class tcamSimulator(val width: Int) {
           if (m < numberOfRightDC)
             numberOfCharacters += DONT_CARE.length()
           else {
-            numberOfCharacters += 1
+            numberOfCharacters += 2
           }
         }
 
@@ -121,7 +135,7 @@ class tcamSimulator(val width: Int) {
           signature_with_dont_care = DONT_CARE + signature_with_dont_care
 
         val newRow = new row(signature_with_dont_care)
-        val newRowMewtadata = new subSignatureMetadata(shift = i, signatureLength = signature.length(), signatureNumber = signatureNumber, signatureIndex = itemIndex)
+        val newRowMewtadata = new subSignatureMetadata(shift = i, signatureLength = hexSignature.length()/2, signatureNumber = signatureNumber, signatureIndex = itemIndex)
         addEntry(newRow, newRowMewtadata)
       }
     }
@@ -131,7 +145,6 @@ class tcamSimulator(val width: Int) {
       println("############# TCAM entries #############\n" + this.toString())
 
     signatureNumber += 1
-
   }
 
   def initializeWithParser(rules_file_path: String): Unit = {
