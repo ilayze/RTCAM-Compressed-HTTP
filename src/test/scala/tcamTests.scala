@@ -39,6 +39,17 @@ class tcamTests extends FunSuite {
 
   }
 
+  test("initialize with snort syntax, lookup in hex and regular"){
+    val tcamSimulator = new tcamSimulator(width = 5)
+    tcamSimulator.initialize("ab|63 64 65|")
+    val entryHex = tcamSimulator.lookupHex("6162636465")
+    assert(entryHex(0).shift.equals(0))
+
+    val entryRegular = tcamSimulator.lookUp("abcde")
+    assert(entryRegular(0).shift.equals(0))
+
+  }
+
   test("Initialize with rule parser") {
     val tcamSimulator = new tcamSimulator(width = 5)
     tcamSimulator.initializeWithParser("/rules/signatures1")
