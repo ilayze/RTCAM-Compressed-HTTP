@@ -14,10 +14,13 @@ class tcamSimulator(val width: Int) {
   var printTcam = true
   var lookupCounter = 0
   var shiftSum = 0
+  var lookupsHistory = new ListBuffer[String]
+  var shiftsHistory = new ListBuffer[Int]
+
 
   def lookUp(key: String): ListBuffer[subSignatureMetadata] = {
     println("Tcam simulator lookup key: %s".format(key))
-
+    lookupsHistory.append(key)
     val keyHex = snortToHex(key)
     return lookupHex(keyHex)
 
@@ -35,6 +38,7 @@ class tcamSimulator(val width: Int) {
         println("Tcam simulator lookup return entry with shift: %d".format(entry(0).shift))
         lookupCounter += 1
         shiftSum += entry(0).shift
+        shiftsHistory.append(entry(0).shift)
         return entry
       }
     }
@@ -182,6 +186,13 @@ class tcamSimulator(val width: Int) {
 
   def string2hex(str: String): String = {
     str.toList.map(_.toInt.toHexString).mkString
+  }
+
+  def printLookUpHistory: Unit = {
+    println("####################### Lookups History ( <lookup key> <shift> ) #######################")
+    for(index<-0 until lookupsHistory.length){
+      println(lookupsHistory(index)+"  "+shiftsHistory(index))
+    }
   }
 
   override def toString(): String = {

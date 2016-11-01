@@ -40,7 +40,8 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
       }
     }
 
-    printMeasurements
+    updateRuntimeMeasurements
+    printSummary
     return new algorithmResult(matchedList, runtimeMeasurements)
 
   }
@@ -180,15 +181,22 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
     pos = pos + 1
   }
 
-  def printMeasurements: Unit = {
-    println("\n##################### Measurements #####################")
+  def updateRuntimeMeasurements: Unit = {
+    runtimeMeasurements.lookupCounter = tcam.lookupCounter
+    runtimeMeasurements.shiftSum = tcam.shiftSum
+    runtimeMeasurements.memoryAccessCounter = packet.accessNumber + spmb.accessCounter + pmb.accessCounter
 
-    println("%s lookups, packet length %s, tcam width %s".format(runtimeMeasurements.lookupCounter, runtimeMeasurements.packetLength, runtimeMeasurements.tcamWidth))
-    if (runtimeMeasurements.lookupCounter > 0)
-      println("Shift average: %s".format(runtimeMeasurements.shiftSum / runtimeMeasurements.lookupCounter))
-
-    println("##################### End Of Measurements #####################")
   }
+
+  def printSummary:Unit = {
+    println("################ Runtime Summary ################")
+    println("Packet:"+packet.toString())
+    tcam.printLookUpHistory
+    runtimeMeasurements.printMeasurements
+
+
+  }
+
 }
 
 class algorithmResult(val matchList: ListBuffer[Int], val measurements: runtimeMeasurements)

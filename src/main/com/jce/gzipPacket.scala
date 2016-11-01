@@ -82,6 +82,19 @@ class gzipPacket(val data: String) {
   def getPointerValue(i: String): Int = {
     i.substring(1, i.length()).toInt
   }
+
+  override def toString(): String = {
+    var ret=""
+    for(i<-0 until(dataSplitted.length)){
+      if (dataSplitted(i).startsWith("C")) {
+          ret += dataSplitted(i).substring(1).toInt.toChar
+      }
+      else if (dataSplitted(i).startsWith("L")) {
+          ret += "["+dataSplitted(i).substring(1)+","+dataSplitted(i+1).substring(1)+"]"
+      }
+    }
+    ret
+  }
 }
 
 class pointerMetadata(val length: Int, val currentPos: Int, val isPointer: Boolean, val distance: Int) {
