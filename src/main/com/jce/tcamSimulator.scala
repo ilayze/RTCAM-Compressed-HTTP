@@ -12,6 +12,8 @@ class tcamSimulator(val width: Int) {
   val DONT_CARE = "z"
   var signatureNumber = 1
   var printTcam = true
+  var lookupCounter = 0
+  var shiftSum = 0
 
   def lookUp(key: String): ListBuffer[subSignatureMetadata] = {
     println("Tcam simulator lookup key: %s".format(key))
@@ -31,6 +33,8 @@ class tcamSimulator(val width: Int) {
       val entry = getEntry(subkeyWithDC)
       if (entry != null) {
         println("Tcam simulator lookup return entry with shift: %d".format(entry(0).shift))
+        lookupCounter += 1
+        shiftSum += entry(0).shift
         return entry
       }
     }

@@ -10,6 +10,7 @@ class gzipPacket(val data: String) {
   val dataSplitted: Array[String] = data.split(";")
   var dataSplittedFull = new ListBuffer[String]
   var dataSplittedMetadata = new ListBuffer[pointerMetadata]
+  var accessNumber = 0
 
   for (i <- 0 until (dataSplitted.length)) {
     if (dataSplitted(i).startsWith("C")) {
@@ -43,6 +44,7 @@ class gzipPacket(val data: String) {
 
   def get(begin: Int, end: Int): subPacket = {
     println("Gzip packet get(%d,%d)".format(begin, end))
+    accessNumber += 1
 
     var data = ""
     for (i <- begin until (end + 1)) {
