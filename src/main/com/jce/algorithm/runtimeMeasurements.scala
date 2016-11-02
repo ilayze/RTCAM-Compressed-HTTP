@@ -16,7 +16,7 @@ class runtimeMeasurements(val packetLength:Int,val tcamWidth:Int,val numberOfUnc
   def printMeasurements: Unit = {
     println("\n##################### Measurements #####################")
 
-    println("%s lookups, %s memory access, packet length %s, tcam width %s".format(lookupCounter,memoryAccessCounter, packetLength, tcamWidth))
+    println("%s lookups, %s memory access, packet length %s, tcam width %s, number of uncompressed %s, number of compressed %s".format(lookupCounter,memoryAccessCounter, packetLength, tcamWidth,numberOfUncompressed,packetLength-numberOfUncompressed))
     if (lookupCounter > 0)
       println("Shift average: %s".format(shiftSum / lookupCounter))
 

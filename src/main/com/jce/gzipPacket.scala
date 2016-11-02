@@ -83,6 +83,16 @@ class gzipPacket(val data: String) {
     i.substring(1, i.length()).toInt
   }
 
+  def getNumberOfUncompressed:Int = {
+    var ret = 0
+    for (i <- dataSplitted) {
+      if (i.startsWith("C")) {
+        ret += 1
+      }
+    }
+    ret
+  }
+
   override def toString(): String = {
     var ret=""
     for(i<-0 until(dataSplitted.length)){
@@ -95,6 +105,8 @@ class gzipPacket(val data: String) {
     }
     ret
   }
+
+
 }
 
 class pointerMetadata(val length: Int, val currentPos: Int, val isPointer: Boolean, val distance: Int) {

@@ -15,7 +15,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
   val n = packet.length
   var spmb = new matchBit(length=n,width=width)
   var pmb = new matchBit(length=n,width=width)
-  var runtimeMeasurements = new runtimeMeasurements(packetLength = n, tcamWidth = width,numberOfUncompressed = 0)
+  var runtimeMeasurements = new runtimeMeasurements(packetLength = n, tcamWidth = width,numberOfUncompressed = packet.getNumberOfUncompressed)
   println("Tcam width: %s, packet length: %s".format(width, n))
 
 
@@ -190,7 +190,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
 
   def printSummary:Unit = {
     println("################ Runtime Summary ################")
-    println("Packet:"+packet.toString())
+    println(packet.toString())
     tcam.printLookUpHistory
     runtimeMeasurements.printMeasurements
 
