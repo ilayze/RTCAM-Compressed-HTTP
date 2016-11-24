@@ -94,9 +94,11 @@ class gzipPacket(val data: String) {
   }
 
   override def toString(): String = {
+
     var ret="Full Packet: "
     for(i<-0 until(dataSplittedFull.length)){
       ret += dataSplittedFull(i).substring(1).toInt.toChar
+
     }
     ret+="\nCompressed: "
     for(i<-0 until(dataSplitted.length)){
@@ -107,7 +109,7 @@ class gzipPacket(val data: String) {
           ret += "["+dataSplitted(i).substring(1)+","+dataSplitted(i+1).substring(1)+"]"
       }
     }
-    ret
+    return ret
   }
 
 

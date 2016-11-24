@@ -113,6 +113,28 @@ class algorithmTests extends FunSuite {
     assert(algorithmResult.matchList(1).equals(18))
   }
 
+  test("Internal pointer match - long pattern") {
+    val tcamSimulator = new tcamSimulator(width = 3)
+    tcamSimulator.initialize("abcabcabcabc")
+    val gzipAscii = "C97;C98;C99;L21;D3;" //abc[21,3]
+    val gzipPacket = new gzipPacket(gzipAscii)
+
+    val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
+    val algorithmResult = rtcamCompressedHttp.execute()
+    for(matchIns <- algorithmResult.matchList){
+      println("match: "+matchIns.toString)
+    }
+
+    assert(algorithmResult.matchList.length.equals(5))
+    assert(algorithmResult.matchList(0).equals(12))
+    assert(algorithmResult.matchList(1).equals(15))
+    assert(algorithmResult.matchList(2).equals(18))
+    assert(algorithmResult.matchList(3).equals(21))
+    assert(algorithmResult.matchList(4).equals(24))
+  }
+
+
+
   test("No match at all - shift average should be equal to width"){
     val tcamSimulator = new tcamSimulator(width = 5)
     tcamSimulator.initialize("abcde")

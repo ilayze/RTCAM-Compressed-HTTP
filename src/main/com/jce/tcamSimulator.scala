@@ -14,14 +14,12 @@ class tcamSimulator(val width: Int) {
   var printTcam = true
   var lookupCounter = 0
   var shiftSum = 0
-  var lookupsHistory = new ListBuffer[lookupOccurence]
   var shiftsHistory = new ListBuffer[Int]
   var matchIdexes = new ListBuffer[Int]
 
 
   def lookUp(key: String,lookupType:String = "start"): ListBuffer[subSignatureMetadata] = {
     println("Tcam simulator lookup key: %s".format(key))
-    lookupsHistory.append(new lookupOccurence(key, lookupType))
     val keyHex = snortToHex(key)
     return lookupHex(keyHex)
 
@@ -190,29 +188,6 @@ class tcamSimulator(val width: Int) {
     str.toList.map(_.toInt.toHexString).mkString
   }
 
-  def addMatch():Unit = {
-    matchIdexes.append(lookupsHistory.length-1)
-  }
-
-  def printLookUpHistory: Unit = {
-    println("####################### Lookups History ( <lookup key> <shift> ) #######################")
-    var number = 0
-    for(index<-0 until lookupsHistory.length){
-      if(lookupsHistory(index).lookUpType.equals("start")){
-        number+=1
-        print("\nSearch "+number+": "+lookupsHistory(index).key+" "+shiftsHistory(index)+" ")
-        if(matchIdexes.contains(index))
-          print("match ")
-
-      }
-      else{
-        print(lookupsHistory(index).key+" "+shiftsHistory(index)+" ")
-        if(matchIdexes.contains(index))
-          print("match ")
-      }
-    }
-  }
-
   override def toString(): String = {
     var ret = ""
     for (i <- 0 until ((width + 1))) {
@@ -242,4 +217,3 @@ class tcamEntry(val row: row, val metadata: ListBuffer[subSignatureMetadata]) {
 
 }
 
-class lookupOccurence(val key:String,val lookUpType:String)

@@ -16,6 +16,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
   var spmb = new matchBit(length=n,width=width)
   var pmb = new matchBit(length=n,width=width)
   var runtimeMeasurements = new runtimeMeasurements(packetLength = n, tcamWidth = width,numberOfUncompressed = packet.getNumberOfUncompressed)
+  var lookupsHistory = new ListBuffer[lookupOccurence]
   println("Tcam width: %s, packet length: %s, number of uncompressed: %s".format(width, n,runtimeMeasurements.numberOfUncompressed))
 
 
@@ -26,11 +27,13 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
       val key: String = subPacket.data
 
       if (isInternalBoundary(subPacket)) {
+        lookupsHistory.append(new lookupOccurence(key,Constants.INTERNAL_START,-1))
         internalBoundaryHandler(subPacket)
       }
       else {
         val entry = tcam.lookUp(key)
         val shift = entry(0).shift
+        lookupsHistory.append(new lookupOccurence(key,Constants.START,shift))
         if (shift != 0) {
           pos = pos + shift
         }
@@ -56,7 +59,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
   def internalBoundaryHandler(subPacket: subPacket): Unit = {
     println("internal boundary")
 
-    for (i <- pos + width - 1 until (pos + subPacket.pointerMetadata.length - width)) {
+    for (i <- pos + width - 1 until (pos + subPacket.pointerMetadata.length)) {
       val pmbIndex = i - subPacket.pointerMetadata.distance
       val pmbSignatures = pmb.get(pmbIndex)
       if (pmbSignatures != null) //check if the rest of the signature match
@@ -69,7 +72,10 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
           while (checkingInternalMatch) {
             if (sigIndex == 0) {
               checkingInternalMatch = false
+              lookupsHistory.append(new lookupOccurence("packet["+i+"]",Constants.INTERNAL_MATCH,-1,isMatch = true))
               val sig_pos = i
+              spmb.set(sig_pos ,pmbSignatures)
+              pmb.set(sig_pos ,pmbSignatures)
               addMatch(sig_pos)
             }
             else if (spmb.get(pmbIndex - counter * width) != null) {
@@ -85,6 +91,9 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
             }
           }
         }
+      }
+      else{
+        lookupsHistory.append(new lookupOccurence("pakcet["+i+"]",Constants.INTERNAL_NO_MATCH,-1))
       }
     }
 
@@ -124,6 +133,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
 
               val currentEntry = tcam.lookUp(currentKey,"middle")
               val currentShift = currentEntry(0).shift
+              lookupsHistory.append(new lookupOccurence(currentKey,Constants.MIDDLE,currentShift))
               checkingSignature = false
               for (currentSig <- currentEntry) {
                 if (currentShift != 0 || currentSig.signatureIndex != signatureIndex || currentSig.signatureNumber != signatureNumber) {
@@ -134,6 +144,13 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
                   currentPos = currentPos + width
                   signatureIndex += 1
                   checkingSignature = true
+                  if (alreadyChecked == subSigMetadata.signatureLength){
+                    val signature_pos = pos + subSigMetadata.signatureLength
+                    addMatch(signature_pos)
+                    spmb.set(signature_pos,currentEntry)
+                    pmb.set(signature_pos,currentEntry)
+                    checkingSignature = false
+                  }
                 }
               }
               if (!checkingSignature)
@@ -143,7 +160,8 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
               checkingSignature = false
             }
             //check the end of the signature
-          } else {
+          }
+          else {
             val charsToAdd = width - (subSigMetadata.signatureLength - alreadyChecked) //end of the signature we might need to add some chars e.g signature abcd width 3 so will check abc and then bcd so we added bc in the second check
             if (currentPos - charsToAdd + width - 1 >= n) {
               checkingSignature = false
@@ -154,6 +172,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
               val currentKey: String = currentSubPacket.data
               val currentEntry = tcam.lookUp(currentKey,"middle")
               val currentShift = currentEntry(0).shift
+              lookupsHistory.append(new lookupOccurence(currentKey,Constants.MIDDLE,currentShift))
 
               for (s <- currentEntry) {
                 if (currentShift == 0 && s.signatureIndex == signatureIndex && s.signatureNumber == signatureNumber) {
@@ -179,9 +198,14 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
   }
 
   def addMatch(matchPos:Int): Unit = {
+    if(matchedList.contains(matchPos))
+      {
+        println("duplicate match: "+matchPos.toString+" ignoring")
+        return
+      }
     println("Match!!! pos: " + matchPos.toString())
     matchedList.append(matchPos)
-    tcam.addMatch()
+    lookupsHistory(lookupsHistory.length-1).isMatch = true
   }
 
   def updateRuntimeMeasurements: Unit = {
@@ -194,10 +218,41 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
   def printSummary:Unit = {
     println("################ Runtime Summary ################")
     println(packet.toString())
-    tcam.printLookUpHistory
+    printLookUpHistory
     runtimeMeasurements.printMeasurements
 
 
+  }
+
+  def printLookUpHistory: Unit = {
+    println("####################### Lookups History ( <lookup key> <shift> ) #######################")
+    var number = 0
+    for(index<-0 until lookupsHistory.length){
+      if(lookupsHistory(index).lookUpType.equals(Constants.START)){
+        number+=1
+        print("\nSearch "+number+": "+lookupsHistory(index).key+" "+lookupsHistory(index).shift+" ")
+        if(lookupsHistory(index).isMatch)
+          print("match ")
+
+      }
+      else if(lookupsHistory(index).lookUpType.equals(Constants.INTERNAL_START)){
+        print("\nInternal Boundary: "+lookupsHistory(index).key+" ")
+        if(lookupsHistory(index).isMatch)
+          print("match ")
+
+      }
+      else if(lookupsHistory(index).lookUpType.equals(Constants.INTERNAL_NO_MATCH)){
+        print("\nInternal no match: "+lookupsHistory(index).key+" ")
+      }
+      else if(lookupsHistory(index).lookUpType.equals(Constants.INTERNAL_MATCH)){
+        print("\n"+lookupsHistory(index).key+" Internal match!!!")
+      }
+      else{
+        print(lookupsHistory(index).key+" "+lookupsHistory(index).shift+" ")
+        if(lookupsHistory(index).isMatch)
+          print("match ")
+      }
+    }
   }
 
 }
@@ -222,4 +277,6 @@ class matchBit(val length:Int,val width:Int){
   }
 
 }
+
+class lookupOccurence(val key:String,val lookUpType:String,val shift:Int,var isMatch: Boolean=false)
 
