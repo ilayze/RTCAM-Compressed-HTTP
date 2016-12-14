@@ -36,4 +36,41 @@ class communityRulesPartial extends FunSuite {
         }
       }
 
+      test("Naive vs Compressed"){
+        var resultsCompressed = ListBuffer[algorithmResult]()
+        var resultsNaive = ListBuffer[algorithmResult]()
+        for(i<-5 until(50) by 5){
+          val tcamSimulator = new tcamSimulator(width = i)
+          tcamSimulator.printTcam = false
+          tcamSimulator.initialize(allAbc)
+
+          val gzipAsciiCompressed = Converter.ToGzipAscii(allAbc+allAbc+allAbc)
+          val gzipPacketCompressed = new gzipPacket(gzipAsciiCompressed)
+
+          var gzipAsciiNaive = Converter.ToGzipAscii(allAbc)
+          gzipAsciiNaive =gzipAsciiNaive+gzipAsciiNaive+gzipAsciiNaive
+          val gzipPacketNaive = new gzipPacket(gzipAsciiNaive)
+
+          val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacketCompressed, tcam = tcamSimulator)
+          val algorithmResult = rtcamCompressedHttp.execute()
+          resultsCompressed.append(algorithmResult)
+
+          val rtcamCompressedHttpNaive = new rtcamCompressedHttp(packet = gzipPacketCompressed, tcam = tcamSimulator)
+          val algorithmResultNaive = rtcamCompressedHttpNaive.execute()
+
+          resultsNaive.append(algorithmResultNaive)
+         // assert(algorithmResult.matchList.length.equals(3))
+        }
+
+        for (i<-0 until(resultsCompressed.length)){
+          println("$$$$$$$$$$     Width "+resultsCompressed(i).measurements.tcamWidth+"     $$$$$$$$$$")
+          val skipAverageCompressed =(resultsCompressed(i).measurements.shiftSum.toFloat+resultsCompressed(i).measurements.numberOfCompressed) / resultsCompressed(i).measurements.lookupCounter
+          val skipAverageNaive = (resultsNaive(i).measurements.shiftSum.toFloat+resultsNaive(i).measurements.numberOfCompressed) / resultsNaive(i).measurements.lookupCounter
+          println("Skip average compressed: %s, Naive: %s".format(skipAverageCompressed,skipAverageNaive))
+          println("Memory access compressed: %s,Naive: %s".format(resultsCompressed(i).measurements.memoryAccessCounter,resultsNaive(i).measurements.memoryAccessCounter))
+          println("TCAM lookup compressed: %s, Naive: %s".format(resultsCompressed(i).measurements.lookupCounter,resultsNaive(i).measurements.lookupCounter))
+          println("")
+        }
+      }
+
 }

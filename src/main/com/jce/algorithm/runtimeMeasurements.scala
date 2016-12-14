@@ -9,6 +9,7 @@ class runtimeMeasurements(val packetLength:Int,val tcamWidth:Int,val numberOfUnc
   var skipSum = 0
   var memoryAccessCounter = 0
   var actualScannedBytes = 0
+  var numberOfCompressed = packetLength-numberOfUncompressed
 
   def compressionRatio = numberOfUncompressed/packetLength
   def scannedRatio = actualScannedBytes/packetLength
@@ -16,7 +17,7 @@ class runtimeMeasurements(val packetLength:Int,val tcamWidth:Int,val numberOfUnc
   def printMeasurements: Unit = {
     println("\n##################### Measurements #####################")
 
-    println("%s lookups, %s memory access, packet length %s, tcam width %s, number of uncompressed %s, number of compressed %s".format(lookupCounter,memoryAccessCounter, packetLength, tcamWidth,numberOfUncompressed,packetLength-numberOfUncompressed))
+    println("%s lookups, %s memory access, packet length %s, tcam width %s, number of uncompressed %s, number of compressed %s".format(lookupCounter,memoryAccessCounter, packetLength, tcamWidth,numberOfUncompressed,numberOfCompressed))
     if (lookupCounter > 0)
       println("Shift average: %s".format(shiftSum / lookupCounter))
 
