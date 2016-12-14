@@ -69,6 +69,7 @@ class communityRulesPartial extends FunSuite {
           println("Skip average compressed: %s, Naive: %s".format(skipAverageCompressed,skipAverageNaive))
           println("Memory access compressed: %s,Naive: %s".format(resultsCompressed(i).measurements.memoryAccessCounter,resultsNaive(i).measurements.memoryAccessCounter))
           println("TCAM lookup compressed: %s, Naive: %s".format(resultsCompressed(i).measurements.lookupCounter,resultsNaive(i).measurements.lookupCounter))
+          println("Compression ratio: %s".format(resultsCompressed(i).measurements.compressionRatio))
           println("")
         }
       }

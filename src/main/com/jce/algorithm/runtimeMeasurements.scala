@@ -11,7 +11,7 @@ class runtimeMeasurements(val packetLength:Int,val tcamWidth:Int,val numberOfUnc
   var actualScannedBytes = 0
   var numberOfCompressed = packetLength-numberOfUncompressed
 
-  def compressionRatio = numberOfUncompressed/packetLength
+  def compressionRatio = numberOfUncompressed.toFloat/packetLength
   def scannedRatio = actualScannedBytes/packetLength
 
   def printMeasurements: Unit = {
