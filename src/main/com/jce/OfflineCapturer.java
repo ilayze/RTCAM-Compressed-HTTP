@@ -98,7 +98,8 @@ public class OfflineCapturer {
          * which protocol ID to use as the data link type for this pcap interface.
          **************************************************************************/
         try {
-            pcap.loop(10, jpacketHandler, "jNetPcap rocks!");
+            int numberOfPackets = 1000;
+            pcap.loop(numberOfPackets, jpacketHandler, "");
         } finally {
             /***************************************************************************
              * Last thing to do is close the pcap handle
