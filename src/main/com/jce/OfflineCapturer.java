@@ -1,10 +1,12 @@
 package com.jce;
 
-import java.util.Date;
+import java.util.*;
+
 import org.jnetpcap.Pcap;
 import org.jnetpcap.packet.Payload;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
+import org.jnetpcap.protocol.tcpip.Tcp;
 
 /**
  * This example is similar to the classic libpcap example shown in nearly every
@@ -32,6 +34,9 @@ import org.jnetpcap.packet.PcapPacketHandler;
  */
 public class OfflineCapturer {
 
+    List<String> packetsPayload = new ArrayList<String>();
+
+
     /**
      * Main startup method
      *
@@ -39,11 +44,19 @@ public class OfflineCapturer {
      *          ignored
      */
     public static void main(String[] args) {
+        OfflineCapturer oc=new OfflineCapturer();
+        List<String> payloads = oc.Capture("resources/outside.tcpdump",1000);
+        System.out.println(payloads);
+    }
+
+    public List<String> Capture(String fileName,int numberOfPackets) {
+
+
         /***************************************************************************
          * First we setup error buffer and name for our file
          **************************************************************************/
         final StringBuilder errbuf = new StringBuilder(); // For any error msgs
-        final String file = "resources/outside.tcpdump";
+        final String file = fileName;
 
         System.out.printf("Opening file for reading: %s%n", file);
 
@@ -60,7 +73,7 @@ public class OfflineCapturer {
         if (pcap == null) {
             System.err.printf("Error while opening device for capture: "
                     + errbuf.toString());
-            return;
+            return null;
         }
 
         /***************************************************************************
@@ -72,7 +85,7 @@ public class OfflineCapturer {
             public void nextPacket(PcapPacket packet, String user) {
                 String payloadAsString="";
                 Payload payloadHeader = new Payload();
-                if(packet.hasHeader(payloadHeader)) {
+                if(packet.hasHeader(payloadHeader) && payloadHeader.size()>0) {
                      payloadAsString = payloadHeader.getUTF8String(0, payloadHeader.size()); // offset, length
                 }
                 System.out.printf("Received at %s caplen=%-4d len=%-4d payload: %s %s\n",
@@ -82,6 +95,8 @@ public class OfflineCapturer {
                         payloadAsString,// Original length
                         user // User supplied object
                 );
+
+                packetsPayload.add(payloadAsString);
 
 
             }
@@ -98,13 +113,14 @@ public class OfflineCapturer {
          * which protocol ID to use as the data link type for this pcap interface.
          **************************************************************************/
         try {
-            int numberOfPackets = 1000;
             pcap.loop(numberOfPackets, jpacketHandler, "");
+            return packetsPayload;
         } finally {
             /***************************************************************************
              * Last thing to do is close the pcap handle
              **************************************************************************/
             pcap.close();
+
         }
     }
 }

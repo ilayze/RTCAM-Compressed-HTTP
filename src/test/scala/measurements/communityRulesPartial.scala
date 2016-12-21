@@ -62,16 +62,19 @@ class communityRulesPartial extends FunSuite {
          // assert(algorithmResult.matchList.length.equals(3))
         }
 
-        for (i<-0 until(resultsCompressed.length)){
-          println("$$$$$$$$$$     Width "+resultsCompressed(i).measurements.tcamWidth+"     $$$$$$$$$$")
-          val skipAverageCompressed =(resultsCompressed(i).measurements.shiftSum.toFloat+resultsCompressed(i).measurements.numberOfCompressed) / resultsCompressed(i).measurements.lookupCounter
-          val skipAverageNaive = (resultsNaive(i).measurements.shiftSum.toFloat+resultsNaive(i).measurements.numberOfCompressed) / resultsNaive(i).measurements.lookupCounter
-          println("Skip average compressed: %s, Naive: %s".format(skipAverageCompressed,skipAverageNaive))
-          println("Memory access compressed: %s,Naive: %s".format(resultsCompressed(i).measurements.memoryAccessCounter,resultsNaive(i).measurements.memoryAccessCounter))
-          println("TCAM lookup compressed: %s, Naive: %s".format(resultsCompressed(i).measurements.lookupCounter,resultsNaive(i).measurements.lookupCounter))
-          println("Compression ratio: %s".format(resultsCompressed(i).measurements.compressionRatio))
-          println("")
-        }
+        printResults(resultsCompressed, resultsNaive)
       }
 
+  def printResults(resultsCompressed: ListBuffer[algorithmResult], resultsNaive: ListBuffer[algorithmResult]): Unit = {
+    for (i <- 0 until (resultsCompressed.length)) {
+      println("$$$$$$$$$$     Width " + resultsCompressed(i).measurements.tcamWidth + "     $$$$$$$$$$")
+      val skipAverageCompressed = (resultsCompressed(i).measurements.shiftSum.toFloat + resultsCompressed(i).measurements.numberOfCompressed) / resultsCompressed(i).measurements.lookupCounter
+      val skipAverageNaive = (resultsNaive(i).measurements.shiftSum.toFloat + resultsNaive(i).measurements.numberOfCompressed) / resultsNaive(i).measurements.lookupCounter
+      println("Skip average compressed: %s, Naive: %s".format(skipAverageCompressed, skipAverageNaive))
+      println("Memory access compressed: %s,Naive: %s".format(resultsCompressed(i).measurements.memoryAccessCounter, resultsNaive(i).measurements.memoryAccessCounter))
+      println("TCAM lookup compressed: %s, Naive: %s".format(resultsCompressed(i).measurements.lookupCounter, resultsNaive(i).measurements.lookupCounter))
+      println("Compression ratio: %s".format(resultsCompressed(i).measurements.compressionRatio))
+      println("")
+    }
+  }
 }
