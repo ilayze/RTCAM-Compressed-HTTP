@@ -67,6 +67,7 @@ class tcamSimulator(val width: Int) {
           }
         }
       }
+      //todo add case where the key starts with dont cares! see lookupHex function
     }
     return null
   }
