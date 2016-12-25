@@ -53,13 +53,14 @@ class tcamSimulator(val width: Int) {
         //match with dont cares e.g key: abcde entry: abcd?
       else if (entry.row.data.endsWith(DONT_CARE) && DONT_CARE.r.findAllMatchIn(entry.row.data).length < width) {
         var moreDC = true
-        var data = entry.row.data
+        var tcamData = entry.row.data
         var keyChanged = key
         while (moreDC) {
-          if (data.endsWith(DONT_CARE)) {
-            data = data.substring(0, data.length() - DONT_CARE.length())
+          if (tcamData.endsWith(DONT_CARE)) {
+            tcamData = tcamData.substring(0, tcamData.length() - DONT_CARE.length())
             keyChanged = keyChanged.substring(0, keyChanged.length() - 2)
-            if (data.equals(keyChanged))
+            println("Tcam data:"+tcamData+", key:"+keyChanged+":"+(keyChanged.length() - 2).toString)
+            if (tcamData.equals(keyChanged))
               return entry.metadata
           } else {
             moreDC = false

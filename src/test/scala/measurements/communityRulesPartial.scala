@@ -1,9 +1,11 @@
 package measurements
 
 import algorithm.{algorithmResult, rtcamCompressedHttp}
+import com.jce.OfflineCapturer
 import com.jcraft.jzlib.Converter
 import org.scalatest.FunSuite
 import src.main.com.jce.{gzipPacket, tcamSimulator}
+import scala.collection.JavaConverters._
 
 import scala.collection.mutable.ListBuffer
 
@@ -63,6 +65,17 @@ class communityRulesPartial extends FunSuite {
         }
 
         printResults(resultsCompressed, resultsNaive)
+      }
+
+      test("Real packets - from tcp dump"){
+        val oc = new OfflineCapturer()
+        val payloads = oc.Capture().asScala
+        var counter = 1
+        for(p <- payloads){
+
+          println("Counter "+counter+":"+p)
+          counter+=1
+        }
       }
 
   def printResults(resultsCompressed: ListBuffer[algorithmResult], resultsNaive: ListBuffer[algorithmResult]): Unit = {

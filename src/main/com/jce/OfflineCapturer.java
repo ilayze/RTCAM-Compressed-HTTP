@@ -49,6 +49,10 @@ public class OfflineCapturer {
         System.out.println(payloads);
     }
 
+    public List<String> Capture(){
+        return Capture("resources/outside.tcpdump",1000);
+    }
+
     public List<String> Capture(String fileName,int numberOfPackets) {
 
 
