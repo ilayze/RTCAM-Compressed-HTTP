@@ -34,8 +34,13 @@ class gzipPacket(val data: String) {
       }
 
       for (j <- 0 until (pointerLength)) {
-        dataSplittedFull.append(dataSplittedFull(i - pointerDistance + j % pointerDistance + pointerInPointerLength))
-        dataSplittedMetadata.append(new pointerMetadata(currentPos = j + 1, isPointer = true, length = pointerLength, distance = pointerDistance))
+        try {
+          dataSplittedFull.append(dataSplittedFull(i - pointerDistance + j % pointerDistance + pointerInPointerLength))
+          dataSplittedMetadata.append(new pointerMetadata(currentPos = j + 1, isPointer = true, length = pointerLength, distance = pointerDistance))
+        }
+        catch{
+          case e:Exception => println("Exception thrown for data: %s, exception message: %s,pointer length: %s, pointer distance: %s".format(data,e.toString,pointerLength,pointerDistance))
+        }
       }
 
 
@@ -48,7 +53,12 @@ class gzipPacket(val data: String) {
 
     var data = ""
     for (i <- begin until (end + 1)) {
-      data += dataSplittedFull(i).substring(1).toInt.toChar
+      if(dataSplittedFull.length>i) {
+        data += dataSplittedFull(i).substring(1).toInt.toChar
+      }
+      else{
+        println("invalid gzip packet get: begin: %s, end %s, data full length: %s".format(begin,end,dataSplittedFull.length))
+      }
     }
     val metadata = dataSplittedMetadata(end)
 

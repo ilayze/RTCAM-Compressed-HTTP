@@ -58,7 +58,10 @@ class tcamSimulator(val width: Int) {
         while (moreDC) {
           if (tcamData.endsWith(DONT_CARE)) {
             tcamData = tcamData.substring(0, tcamData.length() - DONT_CARE.length())
-            keyChanged = keyChanged.substring(0, keyChanged.length() - 2)
+            if(keyChanged.length()>1) {
+              keyChanged = keyChanged.substring(0, keyChanged.length() - 2)
+              moreDC = false
+            }
             println("Tcam data:"+tcamData+", key:"+keyChanged+":"+(keyChanged.length() - 2).toString)
             if (tcamData.equals(keyChanged))
               return entry.metadata
@@ -67,7 +70,9 @@ class tcamSimulator(val width: Int) {
           }
         }
       }
-      //todo add case where the key starts with dont cares! see lookupHex function
+      else if(entry.row.data.endsWith(DONT_CARE) && DONT_CARE.r.findAllMatchIn(entry.row.data).length == width)
+        return entry.metadata
+      //todo add case where the key starts with dont cares! see lookupHex function e.g key: ???ab entry df???
     }
     return null
   }

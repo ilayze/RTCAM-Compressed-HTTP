@@ -16,12 +16,12 @@ class communityRulesPartial extends FunSuite {
       val allAbc = "abcdefghijklmnopqrstuvwxyz"
       test("partial snort community rules"){
         var results = ListBuffer[algorithmResult]()
-        for(i<-5 until(50) by 5){
+        for(i<-10 until(50) by 5){
           val tcamSimulator = new tcamSimulator(width = i)
           tcamSimulator.printTcam = false
           tcamSimulator.initializeWithParser("/rules/community-rules-partial.txt")
 
-          val gzipAscii = Converter.ToGzipAscii(allAbc+"Subject|3A 20|HawkEye Keylogger|20 7C 20|"+allAbc)
+          val gzipAscii = Converter.ToGzipAscii(allAbc+"Subject: HawkEye Keylogger | "+allAbc)
           val gzipPacket = new gzipPacket(gzipAscii)
 
           val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacket, tcam = tcamSimulator)
@@ -68,14 +68,34 @@ class communityRulesPartial extends FunSuite {
       }
 
       test("Real packets - from tcp dump"){
-        val oc = new OfflineCapturer()
-        val payloads = oc.Capture().asScala
-        var counter = 1
-        for(p <- payloads){
+        var resultsCompressed = ListBuffer[algorithmResult]()
+        var resultsNaive = ListBuffer[algorithmResult]()
 
-          println("Counter "+counter+":"+p)
+        val oc = new OfflineCapturer()
+        val payloads = oc.Capture("resources/outside.tcpdump",100).asScala
+        var counter = 1
+        for(packet <- payloads){
+
+          println("Counter "+counter+":"+packet)
           counter+=1
+
+          val tcamSimulator = new tcamSimulator(width = 10)
+          tcamSimulator.printTcam = false
+          tcamSimulator.initializeWithParser("/rules/community-rules-partial.txt")
+
+          println("Packet: "+packet)
+          val gzipAsciiCompressed = Converter.ToGzipAscii(packet)
+          val gzipPacketCompressed = new gzipPacket(gzipAsciiCompressed)
+
+          val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacketCompressed, tcam = tcamSimulator)
+          val algorithmResult = rtcamCompressedHttp.execute()
+
+          resultsCompressed.append(algorithmResult)
+          resultsNaive.append(algorithmResult)
+
         }
+
+        printResults(resultsCompressed,resultsNaive)
       }
 
   def printResults(resultsCompressed: ListBuffer[algorithmResult], resultsNaive: ListBuffer[algorithmResult]): Unit = {
@@ -87,6 +107,7 @@ class communityRulesPartial extends FunSuite {
       println("Memory access compressed: %s,Naive: %s".format(resultsCompressed(i).measurements.memoryAccessCounter, resultsNaive(i).measurements.memoryAccessCounter))
       println("TCAM lookup compressed: %s, Naive: %s".format(resultsCompressed(i).measurements.lookupCounter, resultsNaive(i).measurements.lookupCounter))
       println("Compression ratio: %s".format(resultsCompressed(i).measurements.compressionRatio))
+      println("Number of matches: %s".format(resultsCompressed(i).matchList.length))
       println("")
     }
   }

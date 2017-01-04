@@ -45,9 +45,11 @@ public class OfflineCapturer {
      */
     public static void main(String[] args) {
         OfflineCapturer oc=new OfflineCapturer();
-        List<String> payloads = oc.Capture("resources/outside.tcpdump",1000);
+        List<String> payloads = oc.Capture("resources/outside.tcpdump",9);
         System.out.println(payloads);
     }
+
+    public static int counter =0;
 
     public List<String> Capture(){
         return Capture("resources/outside.tcpdump",1000);
@@ -87,20 +89,22 @@ public class OfflineCapturer {
         PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {
 
             public void nextPacket(PcapPacket packet, String user) {
+                counter++;
                 String payloadAsString="";
                 Payload payloadHeader = new Payload();
                 if(packet.hasHeader(payloadHeader) && payloadHeader.size()>0) {
                      payloadAsString = payloadHeader.getUTF8String(0, payloadHeader.size()); // offset, length
                 }
-                System.out.printf("Received at %s caplen=%-4d len=%-4d payload: %s %s\n",
+                System.out.printf("Received at %s caplen=%-4d len=%-4d payload: %s,payload length %s\n",
                         new Date(packet.getCaptureHeader().timestampInMillis()),
                         packet.getCaptureHeader().caplen(), // Length actually captured
                         packet.getCaptureHeader().wirelen(),
                         payloadAsString,// Original length
-                        user // User supplied object
+                        payloadAsString.length()
                 );
 
-                packetsPayload.add(payloadAsString);
+                if( payloadAsString.length()>10)
+                    packetsPayload.add(payloadAsString);
 
 
             }
