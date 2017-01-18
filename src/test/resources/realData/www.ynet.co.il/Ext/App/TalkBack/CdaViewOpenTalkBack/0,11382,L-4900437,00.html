@@ -1,0 +1,542 @@
+<html lang=he>
+
+<!-- Mirrored from www.ynet.co.il/Ext/App/TalkBack/CdaViewOpenTalkBack/0,11382,L-4900437,00.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Jan 2017 04:28:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+<meta name='description' content='תגובות כואב הלב: כשלילד אין חברים  | חינוך Ynet'>
+<title>תגובות כואב הלב: כשלילד אין חברים  | חינוך Ynet</title><LINK REL="stylesheet" TYPE="text/css" HREF="http://www.ynet.co.il/styles/ie.css" TITLE="ynet"><LINK REL='stylesheet' TYPE='text/css' HREF='http://www.ynet.co.il/styles/ie.css' TITLE='ynet'>
+<LINK REL="stylesheet" TYPE="text/css" HREF="http://www.ynet.co.il/styles/ie.css" TITLE="ynet">
+<STYLE TYPE="TEXT/CSS">
+<!--
+.text20rb {
+         FONT-SIZE: 20px; COLOR: #FF0000; FONT-WEIGHT: bold;
+}
+.text14gb {
+         FONT-SIZE: 14px; COLOR: #CCCCCC; FONT-WEIGHT: bold;
+}
+-->
+</STYLE>
+<SCRIPT language=javascript>
+function MSIE_VER() {
+	agt=navigator.userAgent.toLowerCase();
+	pos=agt.indexOf('msie')+1;
+	if (pos)
+		return agt.charAt(pos+4);
+	return 0
+}
+
+
+		
+			function pcardFocus(url,is_userid,show_talkbacks) {
+				
+				if (typeof(is_userid)!='undefined') {
+					if ((typeof(show_talkbacks)!='undefined')&&(show_talkbacks==true)) {
+						var url='http://www.ynet.co.il/home/0,7340,L-5034-TOREPLACE,00.html'.replace('TOREPLACE',''+url);
+					} else {
+						var url='http://www.ynet.co.il/home/0,7340,L-5031-TOREPLACE,00.html'.replace('TOREPLACE',''+url);
+					};
+				};				
+				
+				function pcardFocusTry(x) {
+					if (x<20) {
+						
+						try {
+							newPcardWindow=window.open(url,'pcardNewWin' + x,'location=yes,scrollbars=yes,toolbar=yes,menubar=yes,resizable=yes,height=550,width=770');
+							if (window.focus) {newPcardWindow.focus()}
+						}
+						catch(err) {
+							pcardFocusTry(x + 1);
+						}
+					}
+				}
+				
+				pcardFocusTry(0);
+
+			}function openWin(url,title,attrib) {
+	wref=window.open(url,title,attrib);
+	if (MSIE_VER()>=5)
+		wref.focus();
+}
+function openInnewWindow(url,width,height,toolbar,WinName) {
+	var TheLeft=(screen.availWidth - width)/2;
+	var TheTop=(screen.availHeight - height)/2;
+	if (WinName=='') {
+		WinName='Ynet talk back response';
+	}
+	if (toolbar==1) {
+		openWin(url,WinName,'toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,width='+width+',height='+height+',left='+TheLeft+',top='+TheTop);
+	} else {
+		openWin(url,WinName,'toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=no,movable=yes,resizable=no,width='+width+',height='+height+',left='+TheLeft+',top='+TheTop);
+	}
+}
+function doPrint() {
+
+	// Printing functions for ie and netscape
+	var ver = navigator.appVersion;
+	var dom = document.getElementById ? 1: 0;
+	var nIE5 = ( ver.indexOf('MSIE 5') > -1 && dom ) ? 1 : 0;
+	var nIE6 = ( ver.indexOf('MSIE 6') > -1 && dom ) ? 1 : 0;
+	var nIE7 = ( ver.indexOf('MSIE 7') > -1 && dom ) ? 1 : 0;
+	// Changed for IE8 compatibility by Moshe Levi on 05-Apr-2009: difining new variable.
+	var nIE8 = ( ver.indexOf('MSIE 8') > -1 && dom ) ? 1 : 0;
+	var nIE4 = ( document.all && !dom ) ? 1 : 0;
+	var nNS5 = ( dom && parseInt(ver) >= 5 ) ? 1 : 0;
+	var nNS4 = ( document.layers && !dom ) ? 1 : 0;
+	//Changed for IE8 compatibility by Moshe Levi on 05-Apr-2009: added the nIE8 to condition
+	if ( nIE8 || nIE7 ||  nIE6 || nIE5 || nNS5 || nNS4 ) window.print();
+	else if ( nIE4 ) IEPrint();
+	return;
+}
+
+function getCookie(name) {
+	var dc = document.cookie;	  
+	var prefix = name + '=';
+	var begin = dc.indexOf('; ' + prefix);
+	if (begin == -1) {
+		begin = dc.indexOf(prefix);
+		if (begin != 0) return null;
+	} else
+		begin += 2;
+	var end = document.cookie.indexOf(';', begin);
+	if (end == -1)
+		end = dc.length;
+	return unescape(dc.substring(begin + prefix.length, end));
+}
+function setCookie(name, value, path, expires , domain, secure) {
+	var curCookie = name + '=' + escape(value) +
+		((expires) ? '; expires=' + expires.toGMTString() : '') +
+		((path) ? '; path=' + path : '') +
+		((domain) ? '; domain=' + domain : '') +
+		((secure) ? '; secure' : '');
+	document.cookie = curCookie;
+	
+}
+function recommendTb(tbId) {
+	setCookie('Tb'+tbId, '1', 'http://www.ynet.co.il/');
+	oIframe = document.getElementById('tb_iframe');
+	Adrs = '/Ext/App/TalkBack/CdaAddTalkbackRecommendation/0,11380,L-toReplace-4900437,00.html';
+	Adrs = Adrs.replace('toReplace',tbId);
+	oIframe.src = Adrs;
+	document.getElementById('recommendationTd'+tbId).innerHTML = 'המלצתך נרשמה. תודה.';
+}
+function ReloadArticleInOpener() {
+	if (window.opener && !window.opener.closed) {
+		window.opener.location.href = 'http://www.ynet.co.il/articles/0,7340,L-4900437,00.html';
+		window.opener.focus();
+		self.close();
+	} else {
+		window.location.href = 'http://www.ynet.co.il/articles/0,7340,L-4900437,00.html';
+	};
+	return false;
+}
+</script>
+<style>.ContentTablePadding {width:100%;padding: 0px 5px 0px 5px;}</style>
+<script type='text/javascript'>var _gaq = _gaq || [];_gaq.push(['_setAccount', 'UA-10772561-7']);_gaq.push(['_setDomainName', '.ynet.co.il']);_gaq.push(["_setAllowLinker", true]);_gaq.push(["_setAllowHash", false]);_gaq.push(['_trackPageview', "/TalkBack/ViewOpenTalkBack.html?prof=1.OpenTalkBack"]);(function() {var ga = document.createElement("script");ga.type = "text/javascript";ga.async = true;ga.src = "http" + (document.location.protocol == "https:" ? "s://ssl" : "://www") + ".google-analytics.com/ga.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ga, s);})();</script>
+</head>
+<body style='margin:0 0 0 0' >
+
+<table cellpadding=0 cellspacing=0 width=408 align=center border=0 dir=rtl>
+	<tr>
+		<td align=center><img src='http://www.ynet.co.il/images/talkback/popup_talkback_title.gif'></td>
+	</tr>
+	<tr height=10>
+		<td></td>
+	</tr>
+
+		<tr>
+			<td class=text18 style='padding-left:10px;padding-right:10px' align=right><span dir=rtl><span dir=rtl><a href='http://www.ynet.co.il/home/0,7340,1208,00.html' class='text12' style='color:#000000;font-weight:bold; font-size:14px;' target='_blank'>בריאות</a>&nbsp;<img src='http://www.ynet.co.il/images/trajarrow.gif' width='7' height='7' alt='' border=0>&nbsp;<a href='http://www.ynet.co.il/home/0,7340,3052,00.html' class='text12' style='color:#000000;' target='_blank'>הורים</a>&nbsp;<img src='http://www.ynet.co.il/images/trajarrow.gif' width='7' height='7' alt='' border=0>&nbsp;<a href='http://www.ynet.co.il/home/0,7340,3377,00.html' class='text12' style='color:#000000;' target='_blank'>חינוך</a></span><br /><span dir=rtl><a class=blkbigheader style='font-size:18px' href='http://www.ynet.co.il/articles/0,7340,L-4900437,00.html' target=_blank>כואב הלב: כשלילד אין חברים</a></span><div dir=rtl style='padding-top:10px;'><span dir=rtl style='margin-top:2; font-size:14px; color:#646464;' class='text14'>ד"ר אילן טל וטל רחמים<img src='http://www.ynet.co.il/images/kav.jpg' style='vertical-align: middle; padding-right: 3px;'/></span></div><div dir=rtl><div dir=rtl class='text12g'>פורסם:  01.01.17, 08:07										</div></div></span></td>
+		</tr>
+		<tr height=10>
+			<td></td>
+		</tr>
+		<tr>
+			<td style='width:100%;padding: 0px 5px 15px 5px;'>
+				<table height=20 width=100% border=0 cellpadding=0 cellspacing=0 dir=rtl>
+					<tr>
+	
+						<td align=right height=20 width=25%>
+							<table width=100% height=20 border=0 cellpadding=0 cellspacing=0 dir=rtl><tr>
+								
+								<td valign=middle height=20 width=20><a class='text12' href="javascript:if(typeof(stlkbc)!='undefined')stlkbc.replytalkback();"><img alt='תגובה לכתבה' src='http://www.ynet.co.il/Cmm/Files/images/ic_talkback2.gif' border='0' /></a></td>
+								<td valign=middle height=20 align=right style='padding-right:5px;'><a class='index' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה לכתבה</a></td>
+									
+						</tr></table></td>
+						<td align=right height=20 width=35%>
+							<table width=100% height=20 border=0 cellpadding=0 cellspacing=0 dir=rtl><tr>
+								<td valign=middle height=20 width=20 ><a href='javascript:window.focus(); window.print();' class='index'><IMG alt='הדפיסו את התגובות' src='http://www.ynet.co.il/images/index/ic_printer.gif' border='0' /></a></td>
+								<td valign=middle height=20 align=right style='padding-right:5px;'><a href='javascript:doPrint();' class='index'>הדפיסו את התגובות</a></td>
+						</tr></table></td>
+	
+						<td align=left height=20 width=40% valign=middle><a class='bluelink' href='http://www.ynet.co.il/articles/0,7340,L-4900437,00.html' onClick='return ReloadArticleInOpener();'>חזרה לכתבה</a></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class='ContentTablePadding'><table cellspacing=0 cellpadding=0 width='100%' border=0 dir=rtl bgColor='#000066' style='padding:3px 3px 3px 3px;'><tr><td><font class='leshonit'>לכתבה זו התפרסמו 20 תגובות ב-16 דיונים</font></td></tr></table></td>
+		</tr>
+		<tr height=10>
+			<td></td>
+		</tr>
+		<tr>
+			<td class='ContentTablePadding'><table width=100% cellpadding=0 cellspacing=0 dir=rtl border=0 align=right>
+			
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>1.&nbsp;תנועת נוער לביישנים </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>עמותת רקפת </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(01.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>קבוצות חברתיות לבני נוער שמתמודדים עם חרדה חברתית וביישנות</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>2.&nbsp;בלה בלה בלה, פנו לטיפול... כתבה חסרת תועלת </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>שרונה , &nbsp;</span></td>
+							<td>תל אביב </td>
+							<td>&nbsp;</td>
+							<td>(01.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>3.&nbsp;רשמו אותו לחוג ג׳ודו </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>אריק , &nbsp;</span></td>
+							<td>מרכז </td>
+							<td>&nbsp;</td>
+							<td>(01.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>מניסיון אישי זה משפר בטחון עצמי פלאים!!! יש לזה עוד דברים טובים אבל חפשו ברשת ותמצאו הכל. <br/></div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>4.&nbsp;בלה בלה בלה, שום עצות פרקטיות או רבע חכמות. ממש כמו &quot;טיפול&quot; </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>פסיכולוגים=חרטטנים </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(01.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>פסיכולוג=חרטטן שרלטן תמורת 400 ש&quot;ח לשעה. אפס תועלת (אלא אם אתה מוכנים לשלם הון שמישהו יהנהן בראש כשאתם חופרים עם עצמכם שלושת רבעי שעה - אפשר כבר לכתוב ליומן בחינם).</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>5.&nbsp;אם יכאב לכם הלב אז גם לילד יכאב הלב </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>דן </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(01.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>אל תרחמו, תנו לו כוח, הראו לו מהי שמחת חיים<br/>אולי הוא גאון מידי בשביל ילדים בני גילו</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>6.&nbsp;עם ילדים כאלה רעים שמסתובבים ומשפיעים לרעה עדיף בלי . </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(01.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>7.&nbsp;בשיעורי החנג אפשר לראות </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>משהי </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(01.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>הילדים רוב הזמן בבית, פחות פעילים, פחות משחקים,ולא תמיד יודעים להתמודד עם מצבים חברתיים ובשעורים שלי הם לומדים. </div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>8.&nbsp;בילדותי לא היו לי חברים...זה גרם להרס עתידי </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(01.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>9.&nbsp;3 הדרכים הראשונות שגויות לחלוטין </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>אחד שאכפת לו </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(02.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>- ״ ילדיכם רואים כיצד אתם מתנהלים בסיטואציות חברתיות רבות ״ - זה הדבר האחרון שמעניין אותם, לפחות עד גיל הבגרות. הם לא מקשרים את ה״שפה״ שבה המבוגרים דוברים וחושבים שהיא אינה חלה עליהם. הם חושבים שזהו עולם שונה משלהם בשלב זה.<br/>- ״ זה באמת מביך לבקש להצטרף למשחק ״ - זה הדבר האחרון שילד צריך לחשוב, או אפילו לשמוע. יש הבדל בין ״להבין״ את ההיסוס שלו לבין להצדיק אותו. הדבר היחיד שצריך להחדיר בילד זה א - לא יקרה לו כלום אם הוא רק ינסה, ב - הוא רק יראה כמה זה קל אחרי מספר פעמים בודדות.<br/>- ״ חשבו יחד עם הילד על דרכי פעולה ״ - ישירות יגרום לילד שמדובר בנושא שדורש מחשבה. בנושאים מסוג כזה הביטחון העצמי בלבד הוא זה ששולט ולא ה״ראש החושב״. אם הילד מסתגר, רק דברים של החדרת מוטיבציה כמו הרשום מקודם, אלה שהילד רוצה לשמוע מהדמות הסמכותית שלהם.<br/><br/>והמלצה נוספת וחשובה משלי - תביאו לילד כל יום חבר אחר. תכינו להם צהריים, תשלחו אותם לשחק כדורגל / במחשב, או אפילו לעשות שיעורים ביחד. תביאו גם יותר מאחד, כדי שילמד לשלב / להשתלב. אל תוותרו על זה.</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>10.&nbsp;תפתחו אצל ילדיכם </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>אריק </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(02.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>כישורים ״מגניבים״ כגון רכיבת אופנועי שטח וטרקטורונים (מגיל 8 ניתן רישיון נהיגה ספורטיבי, אני התחלתי ללמד את בנותיי מגיל 3) ותראו שכולם ירצו להיות חברים שלהם. בכלל, אם תהיו הורים מגניבים ולא מרובעים ומשעממים אז לילד יהיה קל יותר.<br/></div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>11.&nbsp;העברתי הילד בית ספר.  הכל השתנה </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(01.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>במקרה שלי מנהלת ומחנכים גרועים ורעים בכיתות 36 תלמיד עם מכות כל היום. </div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>12.&nbsp;אם אתה צריך לשאול את השאלה אז התשובה היא-&quot; יש לו&quot; </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>דוד </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(01.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>מה לעשות? איגוד הרופאים האמריקני עמד בלחץ 20 שנה<br/>אבל השנה התקפל - אסור להחשוף ילדים למספר שעות כה<br/>גדול כמו שהורים היום עושים.<br/>אם הצליחו להשרות ADHD בעכברים אז מה יהיה עלינו?<br/>אבל אל תבתבלו עם העובדות. זה כנראה לא בריא.<br/>,</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>13.&nbsp;אני הלכתי לטיפול הוליסטי לילד </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>הודיה רובין </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(01.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>וזה עזר ביותר. בטח יש רבות בנושא, לי אישית עזרה אביבית זריני בטיפול ממוקד לילד</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>14.&nbsp;&quot;לרדת למטה&quot; תמיד היה רק לערסים </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>אנחנו </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(01.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>תמיד שיחקנו במחשב הרבה לפני הסמארטפון וכשלא היינו עם המחשב היינו רואים סרטי קאלט וטרילוגיות כמו סטאר ווארסושומעים מוסיקה אלבומים שלמים של דרים ת&#39;יאטר ופינק פלויד מהתחלה עד הסוף.. היה כיף מאוד גם בלי לשחק כדורגל וללכת מכות במגרש עם הערסים העילגים.. חברים גם ככה נעלמים אחרי שהם מתחתנים אז לא הפסדנו הרבה..</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>15.&nbsp;אני לא יודע אם אפשר לעזור לילדים כאלו, אבל </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>דניאל </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(02.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>אם אין לכם אפילו מוטיבציה לנסות, אז אולי אני אעזור לכם ממרומי גילי שמתקרב ל-50<br/><br/>גם לי לא היו חברים כשהייתי ילד. ילדים התרחקו ממני, בהפגנתיות לא היו מוכנים לשחק איתי או להיות חברים שלי. מעולם לא הבנתי למה. לא הייתי אלים. לא הייתי אדיוט. לא הייתי פוגעני. גם בגילי אני לא מבין למה זה קרה. אבל ככה זה פשוט היה. אבל בכל מקום אני זוכר ילדים פשוט מסרבים לשחק איתי. מארגנים מסיבות, ופתאום אני מגיע ואיזה צדקן אומר ״אולי נזמין גם אותו״ והשאר משתיקים אותו בקולניות  של ״מה פתאום אותו״? <br/><br/>זה ממשיך בגיל העשרה. אפס בטחון עצמי. בית הספר הוא סיוט. גיהנום עלי אדמות בו אתה מנסה להישרד מהתעלמות חברתית כוללת מצד כמה - ובוליינג מאחרים. הלימודים הם כישלון כי אתה לא מצליח ללמוד ולהקיא הכל במבחנים. אז בשנות ה-80 בית הספר מחליט לאחר חטיבת הביניים שאתה לא ממשיך לתיכון. ההורים בפאניקה רושמים אותך לאיזה בית ספר אקסטרני חדש שבו אין ממש לימודים אלא על הנייר. בפועל מדובר בשירותי בייביסיטר לבני נוער כדי שלא יהיו ברחוב -  ואז הביטחון מתרסק לגמרי. הבוליינג נמשך בעצמה מתגברת. אתה דחוי גם שם ואתה מת. הייתי מת מגיל 14 ועד גיל 26 בערך. לא דיברתי עם אף אחד. לא יצאתי לדייט אחד אפילו. אין בנות כמובן. אף אחת לא משתינה לכיוון שלך וזה כמובן מוצדק מבחינתך, כי אתה אפס, אף אחד אף פעם לא רצה להיות חבר שלך. הצבא מתנקם בך זה זה ״שהועפת מבית הספר״ ולמעשה לא סיימת תיכון. אתה משווק כנתונים נמוכים מראש. מה שעוזר מאד לביטחון שלך להיות איזה עובד רס״ר באיזה מקום כשמה שתמיד חלמת עליו היה, משהו אחר לגמרי. האנשים שעשו לי בוליינג הלכו לקורס טיס. אני הלכתי לעזאזל. <br/><br/>זה ממשיך אחרי הצבא, אתה גורר את הכישלון והדיכאון הזה כל החיים. בעבודה, במערכות יחסים שאתה לא יכול לנהל כי אתה לא באמת מאמין שמישהי רוצה באמת ובתמים להשתין בכיוון שלך. לא מאמין שאפשר לאהוב מישהו כמוך. אתה מתגרש מיחידת הסגולה היחידה שהסכימה להסתכל עליך. וחי בצער כל הזמן על מה שהפסדת ועל הכאב מגיל צעיר שלא יכול לעזוב אותך. תחושה ממאירה של כישלון והחמצה. אתה חולם בלילה על איך היה יכול להיות אחרת. שאתה מישהו אחר ומתעורר להבין שזה לא כך. העבודה שלך סובלת. אתה לא תהיה לעולם מאלו שמקודמים, גם כשאתה עובד קשה. הדבר הזה ״שאתה לא!״ מושרש בך. אתה חושב שכולם רואים את זה ואי אפשר אחרת. אתה מפסיק לנסות באיזשהו שלב כי נמאס לך להתאכזב. אתה חי לבד ומחכה למות. אם יש לך את האומץ שלי כמובן אין, אתה תתאבד. <br/><br/>אני לא יודע איך לעזור לילדים כאלו. אבל אם אתם הורים לכאלו - תהפכו עולמות - תימכרו את הדירה שלכם, עיזבו את העבודה שלכם ונסו להציל אותו.. אני לא מגזים. הדבר הזה זה עונש מוות וזה לא ילך מעצמו. זה יהיה איתו לכל החיים. גם ב-30, ב-40... ב-50... וזה יהרוס לו את החיים. אני מתכוון לכך בדיוק. זה לא סתם ביטוי. עיזרו להם בכל מחיר כי זה לא עובר, לעולם. </div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>16.&nbsp;בחלק ניכר מהמקרים </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(02.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>לא הילד לא חברותי, אלא החברה שסביבו לא ראויה. אין ללחוץ על ילד להתחבר עם חברה שלא עושה לו טוב רק בשביל להגיד שיש לו חברה. במקרה כזה, להעביר ביה''ס תוך בחירה מוקפדת של ביהס החדש. לרוב זה עוזר. וחשוב להדגיש לילד . . שהבעיה לא אצלו</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4900437-0-68-3377-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>			</table>
+			</td>
+		</tr>
+				<tr height=10>
+			<td></td>
+		</tr>
+		<tr height=10 align=left class='ContentTablePadding'>
+			<td><a class='bluelink' href='http://www.ynet.co.il/articles/0,7340,L-4900437,00.html' onClick='ReloadArticleInOpener();'>חזרה לכתבה</a></td>
+		</tr>
+	</table>
+</body>
+<!-- Mirrored from www.ynet.co.il/Ext/App/TalkBack/CdaViewOpenTalkBack/0,11382,L-4900437,00.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Jan 2017 04:28:45 GMT -->
+</html>

@@ -1,0 +1,189 @@
+
+
+<!-- Mirrored from www.ynet.co.il/Ext/Comp/Ticker/Dhtml_Flash_Ticker/0,12114,L-184-253-150,00.html?js=1 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 17 Jan 2017 03:52:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+</HEAD>
+ <META HTTP-EQUIV="Expires" CONTENT="Tue, 20 Jun 1995 04:13:09 GMT"><script type='text/javascript' src='http://www.ynet.co.il/Common/Api/Scripts/jquery-1.4.2.min.js'></script><script>yq=jQuery.noConflict();(function(){getJSContentData = function (onFinish) {var LanguageDirection  = 'rtl';            var LangDir = 'rtl';yq.ajax({ url: '/Ext/Comp/Ticker/JS_Ticker_Data/0,13760,L-184,00.html',  success: function(res){                   var theJsTickerwidth;if (150>=132) {theJsTickerwidth = 131;} else {theJsTickerwidth = 150-1;}yq('#getJSContent').html(res);yq('#aTicker table, #bTicker table').css('direction',LanguageDirection);
+yq('#aTicker table, #bTicker table').css('width',theJsTickerwidth);if (onFinish){onFinish();}Tck_Init();}});}})();</script><HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 6.0">
+<TITLE></TITLE>
+
+<script language="JavaScript">
+<!--
+
+
+	function getFlashVersion(){
+	  // ie
+	  try {
+		try {
+		  // avoid fp6 minor version lookup issues
+		  // see: http://blog.deconcept.com/2006/01/11/getvariable-setvariable-crash-internet-explorer-flash-6/
+		  var axo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.6');
+		  try { axo.AllowScriptAccess = 'always'; }
+		  catch(e) { return '6,0,0'; }
+		} catch(e) {}
+		return new ActiveXObject('ShockwaveFlash.ShockwaveFlash').GetVariable('$version').replace(/D+/g, ',').match(/^,?(.+),?$/)[1];
+	  // other browsers
+	  } catch(e) {
+		try {
+		  if(navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin){
+			return (navigator.plugins["Shockwave Flash 2.0"] || navigator.plugins["Shockwave Flash"]).description.replace(/D+/g, ",").match(/^,?(.+),?$/)[1];
+		  }
+		} catch(e) {}
+	  }
+	  return '0,0,0';
+	}
+ 
+	var version  = getFlashVersion().split(',').shift(),
+		hasFlash = version != '0' ? true : false,
+		isIE9	 = navigator.userAgent.indexOf('Trident/5.0') > -1;
+	
+	function getFlashMovieObject(movieName)
+	{
+		if (window.document[movieName]) 
+		{
+			return window.document[movieName];
+		}
+		if (navigator.appName.indexOf("Microsoft Internet")==-1)
+		{
+			if (document.embeds && document.embeds[movieName])
+				return document.embeds[movieName]; 
+		}
+		else // if (navigator.appName.indexOf("Microsoft Internet")!=-1)
+		{
+			return document.getElementById(movieName);
+		}
+	}
+	function openWin(my_var) {
+		
+			window.open(my_var,'NewsFlash','menubar=no,resizable=no,scrollbars=yes,width=450,height=470');
+			}
+	function RunScroll()
+	{
+		var TickerObj = getFlashMovieObject("FlashTicker");
+		TickerObj.SetVariable("/:pause", "0");
+	}
+	function StopScroll()
+	{
+		var TickerObj = getFlashMovieObject("FlashTicker");
+		TickerObj.SetVariable("/:pause", "1");
+	}
+	
+
+//JS content Data script///////////////////////////////////////////////////////////////////	
+	function Tck_Init()	{
+		var enabled=true;
+		var msinterval=40;
+		var maxiters=10;
+		var lastime=(new Date()).getTime();
+		var a=document.getElementById('aTicker');
+		var b=document.getElementById('bTicker');
+		a.style.top = 130;
+		b.style.top = a.offsetHeight +130;
+		var Tck_Roll=function(){
+			var a=document.getElementById('aTicker');
+			var b=document.getElementById('bTicker');
+			a.style.top = parseInt(a.style.top)-1;
+			b.style.top = parseInt(b.style.top)-1;
+			if(parseInt(a.style.top) < -a.offsetHeight) a.style.top = a.offsetHeight;
+			if(parseInt(b.style.top) < -b.offsetHeight) b.style.top = b.offsetHeight;
+		};
+		var rollfunc=function(){
+			var curtime=(new Date()).getTime();
+			if (enabled && (curtime-lastime>msinterval)) {
+				var iters=Math.round((curtime-lastime)/msinterval);
+				if (iters>maxiters) iters=maxiters;
+				for(var i=0;i<Math.round((curtime-lastime)/msinterval);i++){
+					Tck_Roll();
+				};
+				lastime=curtime;
+			};
+			setTimeout(function(){rollfunc();},7);
+		};
+		window.Tck_stopRoll=function(){
+			enabled=false;
+		};
+		window.Tck_startRoll=function(){
+			enabled=true;
+			lastime=(new Date()).getTime();
+			setTimeout(function(){rollfunc();},7);
+		};
+		window.Tck_startRoll();
+	};
+
+	function openWin(my_var) {
+		window.open(my_var,'NewsFlash','menubar=no,resizable=no,scrollbars=yes,width=460,height=550');
+	};
+
+	
+//-->
+</script>
+
+<script src="http://www.ynet.co.il/images/ticker/AC_RunActiveContent.js" type="text/javascript"></script>
+
+</HEAD>
+<BODY leftmargin=0 bottommargin=0 topmargin=0 rightmargin=0>
+
+<form>
+
+<script language="JavaScript">
+<!--
+if (hasFlash) {
+	var isInternetExplorer = navigator.appName.indexOf("Microsoft") != -1;
+	// Handle all the FSCommand messages in a Flash movie.
+	function FlashTicker_DoFSCommand(command, args) {
+		//var TickerObj = isInternetExplorer ? document.all.FlashTicker : document.FlashTicker;
+		var TickerObj = getFlashMovieObject("FlashTicker");
+		if (command=='OpenPopup')
+		{
+			openWin("http://www.ynet.co.il" + args);
+		}
+	}
+	// Hook for Internet Explorer.
+	if (navigator.appName && navigator.appName.indexOf("Microsoft") != -1 && navigator.userAgent.indexOf("Windows") != -1 && navigator.userAgent.indexOf("Windows 3.1") == -1) {
+		document.write('<script language="VBScript">\n');
+		document.write('On Error Resume Next\n');
+		document.write('Sub FlashTicker_FSCommand(ByVal command, ByVal args)\n');
+		document.write('	Call FlashTicker_DoFSCommand(command, args)\n');
+		document.write('End Sub\n');
+		document.write('</script>\n');
+	}
+}
+//-->
+
+</script>
+
+<div  id='getJSContent' style='position:absolute;overflow:hidden;height:253;width:132;direction:rtl;text-align:right;display:none;'></div>
+
+<script type="text/javascript">		
+		if (hasFlash && !isIE9 && (window.location.href.indexOf("js")==-1)) {			
+			AC_FL_RunContent('codebase','http://active.macromedia.com/flash2/cabs/swflash.cab#version=8,0,0,0','id','FlashTicker','width','150','height','253','play','false','swliveconnect','true','name','FlashTicker','src','../../../../images/ticker/Dhtml_Flash_Ticker/default_wide9dcb.html?newsxml=http://www.ynet.co.il/Ext/Comp/Ticker/Flash_Ticker_Data/0,12115,L-184,00.html?timestamp=8014693','quality','high','loop','false','menu','0','bgcolor','#FFFFFF','wmode','transparent','pluginspage','http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash','movie','../../../../images/ticker/Dhtml_Flash_Ticker/default_wide9dcb.html?newsxml=http://www.ynet.co.il/Ext/Comp/Ticker/Flash_Ticker_Data/0,12115,L-184,00.html?timestamp=8014693' ); //end AC code
+			document.onmouseover = function() {
+				StopScroll();
+			}
+			document.onmouseout = function() {
+				RunScroll();
+			}
+		} else {
+			var theJsTickerwidth;					
+			if (150>=132) {
+				theJsTickerwidth = 131;
+			} else {
+				theJsTickerwidth = 150-1;
+			}
+			document.getElementById('getJSContent').style.width = theJsTickerwidth;
+			document.getElementById('getJSContent').style.display = 'inline';
+
+			getJSContentData();		
+		}
+</script>
+
+</form>
+
+</BODY>
+
+<!-- Mirrored from www.ynet.co.il/Ext/Comp/Ticker/Dhtml_Flash_Ticker/0,12114,L-184-253-150,00.html?js=1 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 17 Jan 2017 03:52:18 GMT -->
+</HTML>

@@ -1,0 +1,832 @@
+<html lang=he>
+
+<!-- Mirrored from www.ynet.co.il/Ext/App/TalkBack/CdaViewOpenTalkBack/0,11382,L-4905355,00.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Jan 2017 04:16:11 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+<meta name='description' content='תגובות "טופר ענק של חייזר" התגלה בפרו  | הפיד Ynet'>
+<title>תגובות "טופר ענק של חייזר" התגלה בפרו  | הפיד Ynet</title><LINK REL="stylesheet" TYPE="text/css" HREF="http://www.ynet.co.il/styles/ie.css" TITLE="ynet"><LINK REL='stylesheet' TYPE='text/css' HREF='http://www.ynet.co.il/styles/ie.css' TITLE='ynet'>
+<LINK REL="stylesheet" TYPE="text/css" HREF="http://www.ynet.co.il/styles/ie.css" TITLE="ynet">
+<STYLE TYPE="TEXT/CSS">
+<!--
+.text20rb {
+         FONT-SIZE: 20px; COLOR: #FF0000; FONT-WEIGHT: bold;
+}
+.text14gb {
+         FONT-SIZE: 14px; COLOR: #CCCCCC; FONT-WEIGHT: bold;
+}
+-->
+</STYLE>
+<SCRIPT language=javascript>
+function MSIE_VER() {
+	agt=navigator.userAgent.toLowerCase();
+	pos=agt.indexOf('msie')+1;
+	if (pos)
+		return agt.charAt(pos+4);
+	return 0
+}
+
+
+		
+			function pcardFocus(url,is_userid,show_talkbacks) {
+				
+				if (typeof(is_userid)!='undefined') {
+					if ((typeof(show_talkbacks)!='undefined')&&(show_talkbacks==true)) {
+						var url='http://www.ynet.co.il/home/0,7340,L-5034-TOREPLACE,00.html'.replace('TOREPLACE',''+url);
+					} else {
+						var url='http://www.ynet.co.il/home/0,7340,L-5031-TOREPLACE,00.html'.replace('TOREPLACE',''+url);
+					};
+				};				
+				
+				function pcardFocusTry(x) {
+					if (x<20) {
+						
+						try {
+							newPcardWindow=window.open(url,'pcardNewWin' + x,'location=yes,scrollbars=yes,toolbar=yes,menubar=yes,resizable=yes,height=550,width=770');
+							if (window.focus) {newPcardWindow.focus()}
+						}
+						catch(err) {
+							pcardFocusTry(x + 1);
+						}
+					}
+				}
+				
+				pcardFocusTry(0);
+
+			}function openWin(url,title,attrib) {
+	wref=window.open(url,title,attrib);
+	if (MSIE_VER()>=5)
+		wref.focus();
+}
+function openInnewWindow(url,width,height,toolbar,WinName) {
+	var TheLeft=(screen.availWidth - width)/2;
+	var TheTop=(screen.availHeight - height)/2;
+	if (WinName=='') {
+		WinName='Ynet talk back response';
+	}
+	if (toolbar==1) {
+		openWin(url,WinName,'toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,width='+width+',height='+height+',left='+TheLeft+',top='+TheTop);
+	} else {
+		openWin(url,WinName,'toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=no,movable=yes,resizable=no,width='+width+',height='+height+',left='+TheLeft+',top='+TheTop);
+	}
+}
+function doPrint() {
+
+	// Printing functions for ie and netscape
+	var ver = navigator.appVersion;
+	var dom = document.getElementById ? 1: 0;
+	var nIE5 = ( ver.indexOf('MSIE 5') > -1 && dom ) ? 1 : 0;
+	var nIE6 = ( ver.indexOf('MSIE 6') > -1 && dom ) ? 1 : 0;
+	var nIE7 = ( ver.indexOf('MSIE 7') > -1 && dom ) ? 1 : 0;
+	// Changed for IE8 compatibility by Moshe Levi on 05-Apr-2009: difining new variable.
+	var nIE8 = ( ver.indexOf('MSIE 8') > -1 && dom ) ? 1 : 0;
+	var nIE4 = ( document.all && !dom ) ? 1 : 0;
+	var nNS5 = ( dom && parseInt(ver) >= 5 ) ? 1 : 0;
+	var nNS4 = ( document.layers && !dom ) ? 1 : 0;
+	//Changed for IE8 compatibility by Moshe Levi on 05-Apr-2009: added the nIE8 to condition
+	if ( nIE8 || nIE7 ||  nIE6 || nIE5 || nNS5 || nNS4 ) window.print();
+	else if ( nIE4 ) IEPrint();
+	return;
+}
+
+function getCookie(name) {
+	var dc = document.cookie;	  
+	var prefix = name + '=';
+	var begin = dc.indexOf('; ' + prefix);
+	if (begin == -1) {
+		begin = dc.indexOf(prefix);
+		if (begin != 0) return null;
+	} else
+		begin += 2;
+	var end = document.cookie.indexOf(';', begin);
+	if (end == -1)
+		end = dc.length;
+	return unescape(dc.substring(begin + prefix.length, end));
+}
+function setCookie(name, value, path, expires , domain, secure) {
+	var curCookie = name + '=' + escape(value) +
+		((expires) ? '; expires=' + expires.toGMTString() : '') +
+		((path) ? '; path=' + path : '') +
+		((domain) ? '; domain=' + domain : '') +
+		((secure) ? '; secure' : '');
+	document.cookie = curCookie;
+	
+}
+function recommendTb(tbId) {
+	setCookie('Tb'+tbId, '1', 'http://www.ynet.co.il/');
+	oIframe = document.getElementById('tb_iframe');
+	Adrs = '/Ext/App/TalkBack/CdaAddTalkbackRecommendation/0,11380,L-toReplace-4905355,00.html';
+	Adrs = Adrs.replace('toReplace',tbId);
+	oIframe.src = Adrs;
+	document.getElementById('recommendationTd'+tbId).innerHTML = 'המלצתך נרשמה. תודה.';
+}
+function ReloadArticleInOpener() {
+	if (window.opener && !window.opener.closed) {
+		window.opener.location.href = 'http://www.ynet.co.il/articles/0,7340,L-4905355,00.html';
+		window.opener.focus();
+		self.close();
+	} else {
+		window.location.href = 'http://www.ynet.co.il/articles/0,7340,L-4905355,00.html';
+	};
+	return false;
+}
+</script>
+<style>.ContentTablePadding {width:100%;padding: 0px 5px 0px 5px;}</style>
+<script type='text/javascript'>var _gaq = _gaq || [];_gaq.push(['_setAccount', 'UA-10772561-7']);_gaq.push(['_setDomainName', '.ynet.co.il']);_gaq.push(["_setAllowLinker", true]);_gaq.push(["_setAllowHash", false]);_gaq.push(['_trackPageview', "/TalkBack/ViewOpenTalkBack.html?prof=1.OpenTalkBack"]);(function() {var ga = document.createElement("script");ga.type = "text/javascript";ga.async = true;ga.src = "http" + (document.location.protocol == "https:" ? "s://ssl" : "://www") + ".google-analytics.com/ga.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ga, s);})();</script>
+</head>
+<body style='margin:0 0 0 0' >
+
+<table cellpadding=0 cellspacing=0 width=408 align=center border=0 dir=rtl>
+	<tr>
+		<td align=center><img src='http://www.ynet.co.il/images/talkback/popup_talkback_title.gif'></td>
+	</tr>
+	<tr height=10>
+		<td></td>
+	</tr>
+
+		<tr>
+			<td class=text18 style='padding-left:10px;padding-right:10px' align=right><span dir=rtl><span dir=rtl><a href='http://www.ynet.co.il/home/0,7340,544,00.html' class='text12' style='color:#000000;font-weight:bold; font-size:14px;' target='_blank'>דיגיטל</a>&nbsp;<img src='http://www.ynet.co.il/images/trajarrow.gif' width='7' height='7' alt='' border=0>&nbsp;<a href='http://www.ynet.co.il/home/0,7340,546,00.html' class='text12' style='color:#000000;' target='_blank'>אינטרנט</a>&nbsp;<img src='http://www.ynet.co.il/images/trajarrow.gif' width='7' height='7' alt='' border=0>&nbsp;<a href='http://www.ynet.co.il/home/0,7340,9795,00.html' class='text12' style='color:#000000;' target='_blank'>הפיד</a></span><br /><span dir=rtl><a class=blkbigheader style='font-size:18px' href='http://www.ynet.co.il/articles/0,7340,L-4905355,00.html' target=_blank>&quot;טופר ענק של חייזר&quot; התגלה בפרו</a></span><div dir=rtl style='padding-top:10px;'><span dir=rtl style='margin-top:2; font-size:14px; color:#646464;' class='text14'>ynet<img src='http://www.ynet.co.il/images/kav.jpg' style='vertical-align: middle; padding-right: 3px;'/></span></div><div dir=rtl><div dir=rtl class='text12g'>פורסם:  10.01.17, 07:19										</div></div></span></td>
+		</tr>
+		<tr height=10>
+			<td></td>
+		</tr>
+		<tr>
+			<td style='width:100%;padding: 0px 5px 15px 5px;'>
+				<table height=20 width=100% border=0 cellpadding=0 cellspacing=0 dir=rtl>
+					<tr>
+	
+						<td align=right height=20 width=25%>
+							<table width=100% height=20 border=0 cellpadding=0 cellspacing=0 dir=rtl><tr>
+								
+								<td valign=middle height=20 width=20><a class='text12' href="javascript:if(typeof(stlkbc)!='undefined')stlkbc.replytalkback();"><img alt='תגובה לכתבה' src='http://www.ynet.co.il/Cmm/Files/images/ic_talkback2.gif' border='0' /></a></td>
+								<td valign=middle height=20 align=right style='padding-right:5px;'><a class='index' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה לכתבה</a></td>
+									
+						</tr></table></td>
+						<td align=right height=20 width=35%>
+							<table width=100% height=20 border=0 cellpadding=0 cellspacing=0 dir=rtl><tr>
+								<td valign=middle height=20 width=20 ><a href='javascript:window.focus(); window.print();' class='index'><IMG alt='הדפיסו את התגובות' src='http://www.ynet.co.il/images/index/ic_printer.gif' border='0' /></a></td>
+								<td valign=middle height=20 align=right style='padding-right:5px;'><a href='javascript:doPrint();' class='index'>הדפיסו את התגובות</a></td>
+						</tr></table></td>
+	
+						<td align=left height=20 width=40% valign=middle><a class='bluelink' href='http://www.ynet.co.il/articles/0,7340,L-4905355,00.html' onClick='return ReloadArticleInOpener();'>חזרה לכתבה</a></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class='ContentTablePadding'><table cellspacing=0 cellpadding=0 width='100%' border=0 dir=rtl bgColor='#000066' style='padding:3px 3px 3px 3px;'><tr><td><font class='leshonit'>לכתבה זו התפרסמו 89 תגובות ב-39 דיונים</font></td></tr></table></td>
+		</tr>
+		<tr height=10>
+			<td></td>
+		</tr>
+		<tr>
+			<td class='ContentTablePadding'><table width=100% cellpadding=0 cellspacing=0 dir=rtl border=0 align=right>
+			
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>1.&nbsp;יאללה שיבואו כבר ויצילו אותנו מעצמנו.... כי אנחנו שבר כלי </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>איינשטיין </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>האנושות סופה להתכלות</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>2.&nbsp;״חוקרים״ </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>ilan.s </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he><br/></div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>3.&nbsp;זה שלד של עצלן קדום </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>4.&nbsp;זה לא שלד, אלא סתם ענף עץ !! </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>רמי </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>5.&nbsp;מסקרן מאוד. יש לזרז מאוד את הבדיקה המעמיקה בארה&quot;ב. </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>סתווית קופרמן </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>6.&nbsp;זהו שלד סנפיר של יונק מימי כלשהו </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>Provoker </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>כנראה פרט השייך למשפחת הדולפינים\לוויתנים.<br/>זה גם תואם לשתל מתכת, כשנראה שימש לסימון הפרט,או כחלק מפציעה של ציד או מכשיר מעקב.<br/>מוזמנים לחפש תצלומי xray של סניפירי לוויתנים ולמצוא את הדימיון.<br/>לגבי הגולגולת, כאשר נראה את תצלום של הגולגולת נוכל לשלול שזהו שלד של יונק מימי למרות שגם אז, אפשר למצוא סיבות למציאת גולגולת שונה מזו של החיה (יכול להיות חיה אחרת שנאכלה).</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>7.&nbsp;זה מתאים לעצלן הענק שחי באיזור ונכחד </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>8.&nbsp;מסקרן מאוד. יש לזרז מאוד את הבדיקה המעמיקה בארה&quot;ב. </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>סתווית קופרמן </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>9.&nbsp;מה זה מבנה חייזרי? </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>ששי , &nbsp;</span></td>
+							<td>תל-כחבה </td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>מה זה לעזעזל מבנה חייזרי?</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>10.&nbsp;או שזה שייך לבעל חיים או שזה זיוף מושקע </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>אני </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>11.&nbsp;עוד שנה ימצאו שזה היה בדיחה </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>12.&nbsp;טפשים </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>זה אספרגוס! <br/></div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>13.&nbsp;לא יודע את סיבת המוות, אבל לפי התמונה הוא היה נשוי </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>נושא טבעת נישואין </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>14.&nbsp;מדובר ביצור דמוי הטורף שתועד בסרט של שוורצנגר למי שזוכר </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>חוקר עב&quot;מים </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>15.&nbsp;שלושה ענפים. הבנו. ואיפה ה&quot;גולגולת&quot;? </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>איזולירבנד </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>16.&nbsp;ממתי יד שלמה מורכבת מעצם אחת גדולה? </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>עידו </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>17.&nbsp;לפי התמונות זה נראה כמו אצבעות וציפורן </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>D </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>בקצה ולא טפר.</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>18.&nbsp;לחייזרים יש ציפורניים גם ? זיוף </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>19.&nbsp;אקס פיילז - תנננה נהנ נהה </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>הסוכנת סקאלי </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>20.&nbsp;זה הטופר של אי טי </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>עופר </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>21.&nbsp;זהו אדם שסבל ממחלת הענקות ועשו עליו ניסויים רפואיים </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>אריה , &nbsp;</span></td>
+							<td>חיפה </td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>זה לא נדיר שאנשים שסובלים מענקות נולדים עם מספר גדול יותר של אצבעות ובגובה 3 מטר, בגלל פגמים גנטיים... והשתלים המטאליים יכולים לציין שניסו עליו כל מיני מהלכים רפואיים עתיקים... עצם זה שעשו לו חניטה אומר שהוא היה אדם חשוב ומוערך, כנראה הוא היה תופעה רפואית מפורסמת שאנשים באו לראות, וכשמת חנטו אותו וקברו בטח באיזה טקס אלילים כלשהו... אבל לא הייתי קורא לו חייזר... בדיקות הדנ&quot;א ימצאו בדיוק מה הפגם הגנטי שהיה לו ושהוא לגמרי אנושי...</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>22.&nbsp;חוקרים רציניים מפרסמים את ממצאיהם במגזינים מקצועיים ומצרפים </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>חן </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>את בדיקותיהם ומסמכים המאשרים את אמיתיות הממצאים. הם לא מפרסמים בפייסבוק או ממאנים לציין היכן זה נמצא. ללא אמיתות הממצאים הם לא יקבלו הכרה ולא תארים מכובדים, אלא בוז, זלזול וחשדות על המצאת ממצאים ועבודה על פוטושופ.<br/>יש להם גולגולת של חייזר והם ביישנים מכדי לפרסם גם אותה ?! בולשיט!</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>23.&nbsp;רגע, אם האצבע 20 ס&quot;מ, אז מה זה אומר על איברים אחרים..? </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>JO SHMO </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>בצבא פגשתי תימנייה מוטרפת שבדקה לכולם את אורך האצבעות וכשהייתה מוצאת נתון מעניין לא הייתה מוותרת עד שבדקה מה הקורלציה לזקיפות מלאה...<br/></div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>24.&nbsp;מחצית הרגליים של עכביש ענק. </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>מכיר אותו </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>25.&nbsp;זה השלד של ET שלא הצליח להתקשר הביתה כי לקחו לו את הסמארטפון </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>Free ET </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>על האצבעות שלו יש טבעות ששמו לו צפרים שביקשו לעקוב אחריו.<br/></div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>26.&nbsp;כבר יש עדויות שזו מתיחה וזה ענף מעץ.. </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>אבל העיקר סתם לקרוא </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>27.&nbsp;רואים בבירור שזה שלד של עצלן </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>זאולוג , &nbsp;</span></td>
+							<td>איזור 51 </td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>יבשתי שחיו באזור הזה בדיוק לפני 10,000 שנה. לעצלנים גם ראש המזכיר את הדימוי המוכר של חייזרים.</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>28.&nbsp;בקרוב תפורסם הודעה שזהו שקר כלשהו </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>חי </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(11.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>אבל הידיעה לא תקבל סיקור כלשהו, כי הרבה יותר מעניין לכתוב על חייזרים מאשר על הונאות ושקרים</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>29.&nbsp;לא אמיתי </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>מי זה יינותי </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>אם זה היה אמיתי זה לא היה נראה כמו עיסת נייר דבר שני זה לא הגייוני שהצייורים שילדים בגן שמציירים חייזרים דמיוניים כאלה יהיו כאלה חייזר יכול להיות כל דבר והוא לא ממש נראה לי יהיה כמו שהילדים חושבים שהו</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>30.&nbsp;ואני חושב שאם היו לו אף ואוזנים </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>סקפטי </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(10.01.17)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>איזה כיף זה לחטט בהם עם אצבעות כאלה</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4905355-0-68-9795-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>			</table>
+			</td>
+		</tr>
+		
+			<tr height=20>
+				<td></td>
+			</tr>
+			<tr>
+				<td class='ContentTablePadding'>
+				<table cellpadding=0 cellspacing=0 border=0 width='100%' height=20 bgcolor='#f1f5fa' dir=rtl><tr><td align=right style='padding-right:2px' width=50%></td><td align=left style='padding-left:2px' width=50%><table width=100% height=20 cellpadding=0 cellspasing=0><tr><td style='height:20px;width:100%;vertical-align:middle;' align=left><a href='http://www.ynet.co.il/Ext/App/TalkBack/CdaViewOpenTalkBack/0,11382,L-4905355-2,00.html' class='index' style='line-height:10px;'>תגובות נוספות</a></td><td valign=middle width=14><a href='http://www.ynet.co.il/Ext/App/TalkBack/CdaViewOpenTalkBack/0,11382,L-4905355-2,00.html' class='index'><img width=14 height=12 src='http://www.ynet.co.il/images/stlkbcsmlarrs.gif' border=0></a></td></tr></table></td></tr></table>				</td>
+			</tr>
+				<tr height=10>
+			<td></td>
+		</tr>
+		<tr height=10 align=left class='ContentTablePadding'>
+			<td><a class='bluelink' href='http://www.ynet.co.il/articles/0,7340,L-4905355,00.html' onClick='ReloadArticleInOpener();'>חזרה לכתבה</a></td>
+		</tr>
+	</table>
+</body>
+<!-- Mirrored from www.ynet.co.il/Ext/App/TalkBack/CdaViewOpenTalkBack/0,11382,L-4905355,00.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Jan 2017 04:16:11 GMT -->
+</html>

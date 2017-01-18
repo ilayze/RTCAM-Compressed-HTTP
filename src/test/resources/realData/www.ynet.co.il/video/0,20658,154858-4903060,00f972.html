@@ -1,0 +1,448 @@
+	
+
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from www.ynet.co.il/video/0,20658,154858-4903060,00.html?obj={%22callbacks%22:{%22onLoad%22:%22pageRefreshDisable%22,%22onFinish%22:%22pageRefreshEnable%22}} by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Jan 2017 04:11:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WGHC3ZX');</script>
+<!-- End Google Tag Manager -->
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="http://player.ynet.co.il/fp65/flowplayer.min.js"></script>
+    <script src="http://player.ynet.co.il/fp65/flowplayer.hlsjs.min.js"></script>
+    
+    
+    
+    
+        <!-- 4. Add ArtiMedia FlowPlayer 6 HTML5 plugin script !-->
+        <script src="http://akamai.advsnx.net/CDN/ynet/html5/fp6/amfp6.js"></script>
+    
+
+    <script>flowplayer.conf.hlsjs={maxBufferSize:1000000, debug:false};</script>
+    <!-- Css -->
+    <link rel="stylesheet" href="http://player.ynet.co.il/fp65/skin/functional.css">
+    <style type="text/css">
+        body {margin: 0; padding: 0;}
+        .flowplayer {width: 100% !important; background-size: 100% !important;}
+        .flowplayer.ad-is-visible .fp-ui .ad-time {display: none;}
+        .fp-player .fp-ui .fp-title {display: none;}
+        .flowplayer.is-mouseover .hide {opacity: 0 !important;}
+        .flowplayer.is-mouseout .fp-timeline {display: none;}   
+        .flowplayer .fp-logo {display: none; opacity: 1 !important; top: 15px; bottom: initial;}
+        .flowplayer .fp-logo.show {display: block;}
+		.flowplayer .fp-waiting {display: none !important;}
+		.arti1-timeline {display: none !important;}
+    </style>
+</head>
+
+<body>
+
+	<!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WGHC3ZX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+	
+	
+		<div id="vastFlowPlayer" class="flowplayer"></div>
+	
+
+	
+    <script>
+    (function(x){
+
+        var QueryString = function() {
+            var query_string = {};
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (typeof query_string[pair[0]] === "undefined") {
+                    query_string[pair[0]] = decodeURIComponent(pair[1]);
+                } else if (typeof query_string[pair[0]] === "string") {
+                    var arr = [query_string[pair[0]], decodeURIComponent(pair[1])];
+                    query_string[pair[0]] = arr;
+                } else {
+                    query_string[pair[0]].push(decodeURIComponent(pair[1]));
+                }
+            }
+            return query_string;
+        }();
+
+		var loadFile = function(filename, filetype) {
+			if (filetype == "js") {
+				var fileref = document.createElement('script')
+				fileref.setAttribute("type", "text/javascript")
+				fileref.setAttribute("src", filename)
+			}
+			else if (filetype == "css") {
+				var fileref = document.createElement("link")
+				fileref.setAttribute("rel", "stylesheet")
+				fileref.setAttribute("type", "text/css")
+				fileref.setAttribute("href", filename)
+			}
+			if (typeof fileref != "undefined")
+				document.getElementsByTagName("head")[0].appendChild(fileref)
+		}
+			
+        var isMobile = function() {
+            if (navigator.userAgent.match(/Android/i) ||
+                navigator.userAgent.match(/webOS/i) ||
+                navigator.userAgent.match(/iPhone/i) ||
+                navigator.userAgent.match(/iPad/i) ||
+                navigator.userAgent.match(/iPod/i) ||
+                navigator.userAgent.match(/BlackBerry/i) ||
+                navigator.userAgent.match(/Windows Phone/i)
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+		
+        replacePath = function(url, type, isProgresive) {
+            var newUrl = url;
+            
+			
+			
+			
+            if(type == 4){//"http://ynethd-i.akamaihd.net/z/orottv/DafYomi/babakama_108.mp4/master.m3u8"
+                
+                    newUrl = url.replace(/ynethd-i.akamaihd.net/g, 'vod.ynet-cdnwiz.com');
+                    newUrl = newUrl.replace(/ynethd-f.akamaihd.net/g, 'vod.ynet-cdnwiz.com');
+                
+            } else {
+                newUrl = url.replace(/vod.ynet-cdnwiz.com/g, 'ynethd-i.akamaihd.net');
+                newUrl = url.replace(/ynethd-f.akamaihd.net\/z/g, 'ynethd-i.akamaihd.net/i');
+            }
+
+            if (newUrl.indexOf('.f4m') > -1) {
+                newUrl = newUrl.replace(/manifest.f4m/g, 'master.m3u8');
+                newUrl = newUrl.replace(/z\/cdnwiz/g, 'i/cdnwiz');
+            }
+            
+            if(isProgresive && type == 4)
+                newUrl = newUrl.replace(/vod.ynet/g, 'cdn.ynet');
+                
+            return newUrl;
+        };
+        
+        report = function(type){
+            var image = new Image(1, 1);
+			
+            if(type == 1) {
+				var url = 'http://search.ynet.co.il/Popularity/report.jsp?content='+extended.contentId+'&type='+extended.type+'&time='+extended.time+'&random='+extended.random;
+            } else {
+                var url = 'http://stats.ynet.co.il/video_view_report.php?videoId='+extended.contentId+'&articleId='+extended.articleId+'&catId='+extended.dcPath+'&ms='+extended.random;
+            }
+            image.src = url;
+			
+			
+			
+			extended.playing = true;
+        };
+		
+		onContentStart = function(){
+			
+			// only when ads are exists
+			if(typeof ArtiMediaFP6 != 'undefined'){				
+				report(1);	
+			}
+			
+			// Tag Manager 
+			dataLayer.push({
+				'event': 'video_start',
+				'related_url': extended.referrer() + '&dcPath=' + extended.dcPath,
+				'video_url': extended.progresivePath()+'&source=ynet'
+			});
+				
+			$('.fp-logo').addClass('show'); // show logo
+            if(typeof callbacks.content == 'function') // callback
+                callbacks.content();
+		};
+		
+        var playerEl = x('.flowplayer'),
+            externalObj = (QueryString.obj != undefined ? JSON.parse(unescape(QueryString.obj)) : {}),
+            localObj = {
+                build: {
+                    'player': '16-08-16',
+                    'js': "1.1"
+                },
+                contentId: '154858',
+                type: (isMobile() ? 4 : 1),
+                time: 1,
+				playing: false,
+				muted: false,
+				source: 'ynet',
+                articleId: ('4903060' != '' ? 4903060 : -1),
+                displayLogo: '1',
+                autoplay: ('1' == '1' ? true : false),
+				
+					poster: decodeURIComponent('http://images1.ynet.co.il/PicServer5/2017/01/04/7496672/tap.jpg'),
+				
+                adUnit: 'Ynet_MobileWeb_Android_preroll_channel_consumerism',
+                title: function(){
+					return this.path() + '?dcContentID='+ this.articleId +'&dcPath='+ this.dcPath +'&ref=' + this.referrer() + '&source=' + this.source;
+				},
+                path: function(){
+                    return replacePath(decodeURIComponent('http://ynethd-i.akamaihd.net/i/cdnwiz/0117/050117_1108_machon_hayezu_fix_uipeGjF3_,800,1600,.mp4.csmil/master.m3u8'), this.type, false);
+                },
+                progresivePath: function(){
+                    if('http://mediadownload.ynet.co.il/cdnwiz/0117/050117_1108_machon_hayezu_fix_uipeGjF3_800.mp4' == ''){
+                        return replacePath(decodeURIComponent('http://ynethd-i.akamaihd.net/i/cdnwiz/0117/050117_1108_machon_hayezu_fix_uipeGjF3_,800,1600,.mp4.csmil/master.m3u8'), this.type, true);
+                    }
+                    return replacePath(decodeURIComponent('http://mediadownload.ynet.co.il/cdnwiz/0117/050117_1108_machon_hayezu_fix_uipeGjF3_800.mp4'), this.type, true)
+                },
+                random: Math.floor(Math.random() * 999999),
+				isExternal: false,
+                isVast: false,
+                site: 'ynet',
+                width: (typeof externalObj.width == "undefined" ? window.innerWidth : externalObj.width),
+                height: (typeof externalObj.height == "undefined" ? window.innerHeight : externalObj.height),
+                dcPath: null,
+				referrer: function(){
+					return (window.location != window.parent.location) ? document.referrer : document.location;
+				},
+                callbacks: {
+                    onLoad: null,
+                    onContentStart: null,
+                    onFinish: null,
+                    onFullscreen: null,
+                    onFullscreenExit: null,
+					onProgress: null
+				},
+                ua: {
+                    desktop: 'UA-17826742-1',
+                    mobile: 'UA-33180179-1',
+					live:'UA-17826742-1'
+				},
+                hideEmbed: function(){
+                    // embed icon
+                    if(extended.type == 4){
+                        $('.fp-embed').addClass('hide');
+                    }
+                },
+                hasParent: function(){
+					return (window.location != window.top.location && !extended.isExternal) ? true : false;
+                },
+                urls: {
+                    js: '',
+                    css: ''
+                }
+            };
+
+            
+        // init object
+        extended = _.extend(localObj, externalObj);
+        extended = (extended.type == 4 ? _.extend(localObj, externalObj) : localObj);
+        
+		// external path
+		if(typeof extended.path === 'string') {
+			extended.path = function(){
+				return decodeURIComponent(externalObj.path);
+			};	
+		}
+		
+		// external title
+		if(typeof extended.title === 'string') {
+			extended.title = function(){
+				return decodeURIComponent(externalObj.title);
+			};	
+		}
+		
+        // set css to player element
+        playerEl.css({ 'width': extended.width, 'background-image': 'url(' + extended.poster + ')'});
+
+		// load external CSS/JS
+		if(extended.urls.css != '')			        
+			loadFile(extended.urls.css, 'css');
+		
+		if(extended.urls.js != '')			        
+			loadFile(extended.urls.js, 'js');
+		
+        // dcPath
+		try {
+			extended.dcPath = (extended.type == 1 && extended.hasParent() && typeof window.top.dcPath != 'undefined' ? window.top.dcPath : (extended.dcPath == null) ? '8.Central-1.Home' : extended.dcPath);
+			
+			
+			// add attrs to parent iframe
+			if(extended.hasParent()){
+				iframeEl = $(window.top.document).find('iframe[src*="' + window.location.pathname + '"]'),
+				autoHeight = Math.floor(extended.width / 1.8) + 'px'; // keep ratio
+				
+				iframeEl.css({ 'height': autoHeight, 'border': 0 });
+				iframeEl.attr({ 'scrolling': 'no', 'allowfullscreen': 'allowfullscreen', 'webkitallowfullscreen': 'webkitallowfullscreen', 'mozallowfullscreen': 'mozallowfullscreen' });
+			}
+		} catch(err) {
+			extended.dcPath = '8.Central-1.Home';
+		}
+        
+		
+        
+    })(jQuery);
+    </script>
+    
+    <script>
+    var callbacks = {};
+	try {
+		if(extended.hasParent() && extended.type == 1){
+			callbacks.load = window.top[extended.callbacks.onLoad];
+			callbacks.content = window.top[extended.callbacks.onContentStart];
+			callbacks.finish = window.top[extended.callbacks.onFinish];
+			callbacks.fullscreen = window.top[extended.callbacks.onFullscreen];
+			callbacks.fullscreenExit = window.top[extended.callbacks.onFullscreenExit];
+			callbacks.progress = window.top[extended.callbacks.onProgress];
+		}
+	} catch(err) {
+		
+	}
+	
+    // Init ArtiMedia plugin for all FlowPlayer instances on page
+    flowplayer(function(api, root) {
+		api.on('progress', function(e, api, time) {
+
+			if(!extended.playing) {
+
+				// only when ads are not exists
+				if(typeof ArtiMediaFP6 == 'undefined'){				
+					report(1);	
+				}
+				
+				report(2);
+				
+				if(typeof callbacks.progress == 'function')
+                callbacks.progress();
+				
+			}
+			
+			// muted
+			if(typeof iframeEl != 'undefined' && iframeEl.hasClass('muted')){
+				api.mute();
+			}
+			
+			// pause
+			if(typeof iframeEl != 'undefined' && iframeEl.hasClass('pause')){
+				api.pause();
+			}
+		});
+		
+		api.on('pause', function (e, api, video) {
+			if(typeof iframeEl != 'undefined') {
+				var	timerId = setInterval(function(){
+					// resume
+					if(iframeEl.hasClass('resume')){
+						clearInterval(timerId);
+						api.resume();
+					}
+				}, 1000);
+			}
+		});
+		
+        api.on('ready', function (e, api, video) {
+            extended.hideEmbed();
+						
+			var newDuration = Math.floor(video.duration);
+			extended.time = (!isNaN(newDuration) ? newDuration : 1);
+
+			// when there is no advertisement 
+			if(typeof ArtiMediaFP6 == 'undefined')
+				onContentStart();
+			
+            // callback
+            if(typeof callbacks.load == 'function')
+                callbacks.load();
+        });   
+        
+		api.on('fullscreen fullscreen-exit', function (e, api) {
+			if (/exit/.test(e.type)) {
+				// callback
+				if(typeof callbacks.fullscreenExit == 'function')
+					callbacks.fullscreenExit();
+			} else {
+				// callback
+				if(typeof callbacks.fullscreen == 'function')
+					callbacks.fullscreen();
+			}
+		});
+
+        api.on('contentStart', function(e, api) {
+			onContentStart();
+        });
+        
+        api.on('finish', function(e, api) {
+            // callback
+            if(typeof callbacks.finish == 'function')
+                callbacks.finish();
+        });
+        
+        // get visitor's location
+        $.get('http://ipinfo.io/', function(response) {
+            var ynetVisitor = response;
+            var videoURL = 'http://mediadownload.ynet.co.il/0614/1106141128Chul_Shkufit.mp4';
+            
+            if(ynetVisitor.country != "IL" && '0' == '1') {
+                api.load({
+                  sources: [{type: 'video/mp4', src:  videoURL}]
+                });
+            };
+        }, 'jsonp');
+        
+        
+            
+            var artiParams = {
+                vidContainer: root, // Flowplayer instance 
+                siteKey: extended.site, // Your publisher site-key
+                category: extended.dcPath // Content category
+            };
+            
+			if(typeof ArtiMediaFP6 != 'undefined'){
+				var artimediaInstance = new ArtiMediaFP6();
+				artimediaInstance.init(artiParams);
+				artimediaInstance.FPReady(api);
+			}
+        
+    });
+
+    flowplayer.conf.fullscreen = true;
+    flowplayer('#vastFlowPlayer', {
+        key: '$858384515984319',
+        
+					analytics: extended.type == 1 ? extended.ua.desktop : extended.ua.mobile,
+				
+		
+        buffering: false,
+        autoplay: extended.autoplay,
+		mouseoutTimeout: 1500,
+        
+        logo: 'http://mediadownload.ynet.co.il/flowplayerlive/ynetlogo.png',
+        
+        
+        embed: {
+            iframe: window.location.href
+        },
+        ratio: 9/16,
+        clip: {
+            sources: [{
+                type: 'application/x-mpegurl',
+                src: extended.path(),
+                title: extended.title()
+            }, {
+                type: 'video/mp4',
+                src: extended.progresivePath(),
+                title: extended.title()
+            }]
+        }
+    });
+ 	       
+	</script>
+</body>
+
+
+<!-- Mirrored from www.ynet.co.il/video/0,20658,154858-4903060,00.html?obj={%22callbacks%22:{%22onLoad%22:%22pageRefreshDisable%22,%22onFinish%22:%22pageRefreshEnable%22}} by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Jan 2017 04:11:40 GMT -->
+</html>

@@ -1,0 +1,72 @@
+<html lang=he>
+
+<!-- Mirrored from www.ynet.co.il/Ext/Comp/Ticker/Dhtml_GossipGenericTicker/0,12379,L-19989-4872,00.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Jan 2017 04:36:58 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+<head>
+<style>
+A.tickerTextA:link {COLOR: #000000; FONT-FAMILY: Arial, Arial (Hebrew), David (Hebrew), Courier New (Hebrew); FONT-SIZE: 12px; FONT-WEIGHT: normal; TEXT-DECORATION: none}
+A.tickerTextA:visited {COLOR: #000000; FONT-FAMILY: Arial, Arial (Hebrew), David (Hebrew), Courier New (Hebrew); FONT-SIZE: 12px; FONT-WEIGHT: normal; TEXT-DECORATION: none}
+A.tickerTextA:active {COLOR: #000000; FONT-FAMILY: Arial, Arial (Hebrew), David (Hebrew), Courier New (Hebrew); FONT-SIZE: 12px; FONT-WEIGHT: normal; TEXT-DECORATION: none}
+A.tickerTextA:hover {COLOR: #ff0000; FONT-FAMILY: Arial, Arial (Hebrew), David (Hebrew), Courier New (Hebrew); FONT-SIZE: 12px; FONT-WEIGHT: normal; TEXT-DECORATION: none}
+.DateCaption {COLOR: #CF454D; FONT-FAMILY: Arial, Arial (Hebrew), David (Hebrew), Courier New (Hebrew); FONT-SIZE: 12px; font-weight : 700;}
+</style>
+
+<script language=JavaScript>
+
+if (navigator.appName == 'Netscape') {
+	styleHTML = '<style>A.tickerTextA:link {COLOR: #000000; FONT-FAMILY: Arial; FONT-SIZE: 12px; FONT-WEIGHT: normal; TEXT-DECORATION: none}\nA.tickerTextA:visited {COLOR: #000000; FONT-FAMILY: Arial; FONT-SIZE: 12px; FONT-WEIGHT: normal; TEXT-DECORATION: none}\nA.tickerTextA:active {COLOR: #000000; FONT-FAMILY: Arial; FONT-SIZE: 12px; FONT-WEIGHT: normal; TEXT-DECORATION: none}\nA.tickerTextA:hover {COLOR: #ff0000; FONT-FAMILY: Arial; FONT-SIZE: 12px; FONT-WEIGHT: normal; TEXT-DECORATION: none}\n.DateCaption {COLOR: #CF454D; FONT-FAMILY: Arial; FONT-SIZE: 12px; font-weight : 700;}</style>';
+	document.write(styleHTML);
+}
+function openInnewWindow(url,width,height,toolbar) {if(toolbar==1) 
+{openWin(url,'Ynet','toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,width='+width+',height='+height)} else {openWin(url,'Ynet','toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=no,movable=yes,resizable=yes,width='+width+',height='+height)}}
+function Tck_Roll() {
+	a=document.getElementById('aTicker');
+	b=document.getElementById('bTicker');
+	a.style.right = parseInt(a.style.right)-1;
+	b.style.right = parseInt(b.style.right)-1;
+	if (parseInt(a.style.right) < -a.offsetWidth) a.style.right = a.offsetWidth;
+	if (parseInt(b.style.right) < -b.offsetWidth) b.style.right = this.window.frameElement.clientWidth; //move to the left of the frame
+}
+function Tck_startRoll() {
+	DoRoll = setInterval("Tck_Roll()", 25);
+}
+function Tck_stopRoll() {
+	clearInterval(DoRoll);
+}
+function Tck_Init()	{
+	a=document.getElementById('aTicker');
+	b=document.getElementById('bTicker');
+	a.style.right = 130;
+	b.style.right = a.offsetWidth + 130;
+}
+
+function openWin2(my_var) {
+	window.open(my_var,'NewsFlash','menubar=no,resizable=no,scrollbars=no,width=344,height=240');
+}
+function openWin(url,title,attrib) {wref=window.open(url,title,attrib);}
+
+function set_links_target(index) {
+	var mlink;
+	for (var i = 0; i < index; i++)	{
+		mlink = document.getElementById('mlink' + i);
+		var child = mlink.childNodes[0];
+		if (child.target == "")
+		{
+			child.target = '_top';
+		}
+	}
+}
+strNewsFlash = "<td width=5 valign=top style='padding-top:10; padding-right3; padding-left:3'><img src=/images/ticker_bt_blue.gif width=5></td><td><div style=white-space:nowrap><font class=DateCaption dir=rtl>19/02/2012 09:45</font>&nbsp;<span id=mlink0 style='font-family:Arial;font-size:12px;color:black;'><a href=javascript:openWin2('/Ext/Comp/Ticker/CdaGenericGossipNewsFlash/0,12377,L-281471_19989,00.html') class=tickerTextA lang=he target=_parent>מוקד הסביבה של רשות הטבע והגנים: 6911*</a></span></div></td><td width=10>&nbsp;</td><td width=5 valign=top style='padding-top:10; padding-right3; padding-left:3'><img src=/images/ticker_bt_blue.gif width=5></td><td><div style=white-space:nowrap><font class=DateCaption dir=rtl>20/02/2012 08:00</font>&nbsp;<span id=mlink1 style='font-family:Arial;font-size:12px;color:black;'><a href=javascript:openWin2('/Ext/Comp/Ticker/CdaGenericGossipNewsFlash/0,12377,L-281472_19989,00.html') class=tickerTextA lang=he target=_parent>רוצים להציל חיות בר? בואו להתנדב</a></span></div></td><td width=10>&nbsp;</td><td width=5 valign=top style='padding-top:10; padding-right3; padding-left:3'><img src=/images/ticker_bt_blue.gif width=5></td><td><div style=white-space:nowrap><font class=DateCaption dir=rtl>20/02/2012 08:00</font>&nbsp;<span id=mlink2 style='font-family:Arial;font-size:12px;color:black;'><a href=javascript:openWin2('/Ext/Comp/Ticker/CdaGenericGossipNewsFlash/0,12377,L-281473_19989,00.html') class=tickerTextA lang=he target=_parent>מצאתם חיית בר פצועה הזקוקה לטיפול?</a></span></div></td><td width=10>&nbsp;</td><td width=5 valign=top style='padding-top:10; padding-right3; padding-left:3'><img src=/images/ticker_bt_blue.gif width=5></td><td><div style=white-space:nowrap><font class=DateCaption dir=rtl>20/01/2012 08:15</font>&nbsp;<span id=mlink3 style='font-family:Arial;font-size:12px;color:black;'><a href=javascript:openWin2('/Ext/Comp/Ticker/CdaGenericGossipNewsFlash/0,12377,L-281474_19989,00.html') class=tickerTextA lang=he target=_parent>היכן להעביר חיות בר לטיפול רפואי?</a></span></div></td><td width=10>&nbsp;</td><td width=5 valign=top style='padding-top:10; padding-right3; padding-left:3'><img src=/images/ticker_bt_blue.gif width=5></td><td><div style=white-space:nowrap><font class=DateCaption dir=rtl>20/02/2012 08:30</font>&nbsp;<span id=mlink4 style='font-family:Arial;font-size:12px;color:black;'><a href=javascript:openWin2('/Ext/Comp/Ticker/CdaGenericGossipNewsFlash/0,12377,L-281475_19989,00.html') class=tickerTextA lang=he target=_parent>מה עושים עד להבאת החיה לבית החולים?</a></span></div></td><td width=10>&nbsp;</td><td width=5 valign=top style='padding-top:10; padding-right3; padding-left:3'><img src=/images/ticker_bt_blue.gif width=5></td><td><div style=white-space:nowrap><font class=DateCaption dir=rtl>20/02/2012 08:45</font>&nbsp;<span id=mlink5 style='font-family:Arial;font-size:12px;color:black;'><a href=javascript:openWin2('/Ext/Comp/Ticker/CdaGenericGossipNewsFlash/0,12377,L-281476_19989,00.html') class=tickerTextA lang=he target=_parent>כללים חשובים לאחר מציאת חיית בר - חלק 1</a></span></div></td><td width=10>&nbsp;</td><td width=5 valign=top style='padding-top:10; padding-right3; padding-left:3'><img src=/images/ticker_bt_blue.gif width=5></td><td><div style=white-space:nowrap><font class=DateCaption dir=rtl>20/02/2012 09:00</font>&nbsp;<span id=mlink6 style='font-family:Arial;font-size:12px;color:black;'><a href=javascript:openWin2('/Ext/Comp/Ticker/CdaGenericGossipNewsFlash/0,12377,L-281477_19989,00.html') class=tickerTextA lang=he target=_parent>כללים חשובים לאחר מציאת חיית בר - חלק 2</a></span></div></td><td width=10>&nbsp;</td><td width=5 valign=top style='padding-top:10; padding-right3; padding-left:3'><img src=/images/ticker_bt_blue.gif width=5></td><td><div style=white-space:nowrap><font class=DateCaption dir=rtl>20/02/2012 09:15</font>&nbsp;<span id=mlink7 style='font-family:Arial;font-size:12px;color:black;'><a href=javascript:openWin2('/Ext/Comp/Ticker/CdaGenericGossipNewsFlash/0,12377,L-281478_19989,00.html') class=tickerTextA lang=he target=_parent>כללים חשובים לאחר מציאת חיית בר - חלק 3</a></span></div></td><td width=10>&nbsp;</td>";
+strDivContent = '<table id=aTable onMouseOver=\"Tck_stopRoll();\" onMouseOut=\"Tck_startRoll();\" width=1040 height=24 cellspacing=0 cellpadding=0 border=0 dir=rtl><tr>'+strNewsFlash+'</tr></table>';
+</script>
+</head>
+<body style='margin:0; background-image:url(http://www.ynet.co.il/images/gossip_generic_ticker_content_bg.gif); background-position:top right;' dir=rtl onload='Tck_Init();Tck_startRoll();'>
+<div id=aTicker style='position:absolute;border: 0px solid blue;'></div>
+<div id=bTicker style='position:absolute;border: 0px solid red;'></div>
+<script language=javascript>document.getElementById('bTicker').innerHTML = strDivContent;</script>
+<script language=javascript>set_links_target('8');</script>
+</body>
+
+<!-- Mirrored from www.ynet.co.il/Ext/Comp/Ticker/Dhtml_GossipGenericTicker/0,12379,L-19989-4872,00.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Jan 2017 04:36:58 GMT -->
+</html>

@@ -1,0 +1,31 @@
+  function bw_load(ti, ts, ne, FirstLineColor) {
+    var s = document.getElementById('tbld_'+ti).value;
+    var to = document.getElementById('table_'+ti);
+    while (to.rows.length > 1) to.deleteRow(1);
+    if (s != "") {
+      var cn = to.getAttribute('fn');
+      if (cn > 0) {
+        var sa = s.split('^');
+        for (var i = 0; i < Math.ceil(ts/cn); i++) {
+          ro = to.insertRow(i+1);
+		  if (typeof(FirstLineColor) != 'undefind' && FirstLineColor == "white") {
+	          ro.bgColor = (to.rows.length%2==0)?'#f7f7ff':'#bdd3e7';
+		  } else {
+			  ro.bgColor = (to.rows.length%2==0)?'#bdd3e7':'#f7f7ff';
+		  }
+          for (var j = 0; j < cn; j++) {
+            var padding = 10*parseInt(to.rows[0].cells[j].getAttribute('pad'));
+            var cellObj = ro.insertCell(j);
+            cellObj.className = 'bwtd text13';
+            if (ne != 1) {
+              cellObj.innerHTML = "<div contenteditable='true' generalLinkId='"+sa[(i*cn + j)*2+1]+"' style='padding-right:"+padding+"px'>"+sa[(i*cn + j)*2]+"</div>";
+            } else {
+              cellObj.innerHTML = "<div style='padding-right:"+padding+"px'>"+sa[(i*cn + j)*2]+"</div>";
+            }         
+          }          
+        }     
+      }
+    }
+  }
+  function bw_copyto(ti,io) {document.getElementById('tbld_'+ti).value=io.value;}
+  function bw_copyfrom(ti,io) {io.value=document.getElementById('tbld_'+ti).value;}

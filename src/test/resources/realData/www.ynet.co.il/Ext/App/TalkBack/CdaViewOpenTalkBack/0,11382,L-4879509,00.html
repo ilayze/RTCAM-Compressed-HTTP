@@ -1,0 +1,848 @@
+<html lang=he>
+
+<!-- Mirrored from www.ynet.co.il/Ext/App/TalkBack/CdaViewOpenTalkBack/0,11382,L-4879509,00.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Jan 2017 04:18:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+<meta name='description' content='תגובות שברולט קרוז בנהיגה ראשונה - שדרוג אמריקאי  | מבחני דרכים והשקות Ynet'>
+<title>תגובות שברולט קרוז בנהיגה ראשונה - שדרוג אמריקאי  | מבחני דרכים והשקות Ynet</title><LINK REL="stylesheet" TYPE="text/css" HREF="http://www.ynet.co.il/styles/ie.css" TITLE="ynet"><LINK REL='stylesheet' TYPE='text/css' HREF='http://www.ynet.co.il/styles/ie.css' TITLE='ynet'>
+<LINK REL="stylesheet" TYPE="text/css" HREF="http://www.ynet.co.il/styles/ie.css" TITLE="ynet">
+<STYLE TYPE="TEXT/CSS">
+<!--
+.text20rb {
+         FONT-SIZE: 20px; COLOR: #FF0000; FONT-WEIGHT: bold;
+}
+.text14gb {
+         FONT-SIZE: 14px; COLOR: #CCCCCC; FONT-WEIGHT: bold;
+}
+-->
+</STYLE>
+<SCRIPT language=javascript>
+function MSIE_VER() {
+	agt=navigator.userAgent.toLowerCase();
+	pos=agt.indexOf('msie')+1;
+	if (pos)
+		return agt.charAt(pos+4);
+	return 0
+}
+
+
+		
+			function pcardFocus(url,is_userid,show_talkbacks) {
+				
+				if (typeof(is_userid)!='undefined') {
+					if ((typeof(show_talkbacks)!='undefined')&&(show_talkbacks==true)) {
+						var url='http://www.ynet.co.il/home/0,7340,L-5034-TOREPLACE,00.html'.replace('TOREPLACE',''+url);
+					} else {
+						var url='http://www.ynet.co.il/home/0,7340,L-5031-TOREPLACE,00.html'.replace('TOREPLACE',''+url);
+					};
+				};				
+				
+				function pcardFocusTry(x) {
+					if (x<20) {
+						
+						try {
+							newPcardWindow=window.open(url,'pcardNewWin' + x,'location=yes,scrollbars=yes,toolbar=yes,menubar=yes,resizable=yes,height=550,width=770');
+							if (window.focus) {newPcardWindow.focus()}
+						}
+						catch(err) {
+							pcardFocusTry(x + 1);
+						}
+					}
+				}
+				
+				pcardFocusTry(0);
+
+			}function openWin(url,title,attrib) {
+	wref=window.open(url,title,attrib);
+	if (MSIE_VER()>=5)
+		wref.focus();
+}
+function openInnewWindow(url,width,height,toolbar,WinName) {
+	var TheLeft=(screen.availWidth - width)/2;
+	var TheTop=(screen.availHeight - height)/2;
+	if (WinName=='') {
+		WinName='Ynet talk back response';
+	}
+	if (toolbar==1) {
+		openWin(url,WinName,'toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,width='+width+',height='+height+',left='+TheLeft+',top='+TheTop);
+	} else {
+		openWin(url,WinName,'toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=no,movable=yes,resizable=no,width='+width+',height='+height+',left='+TheLeft+',top='+TheTop);
+	}
+}
+function doPrint() {
+
+	// Printing functions for ie and netscape
+	var ver = navigator.appVersion;
+	var dom = document.getElementById ? 1: 0;
+	var nIE5 = ( ver.indexOf('MSIE 5') > -1 && dom ) ? 1 : 0;
+	var nIE6 = ( ver.indexOf('MSIE 6') > -1 && dom ) ? 1 : 0;
+	var nIE7 = ( ver.indexOf('MSIE 7') > -1 && dom ) ? 1 : 0;
+	// Changed for IE8 compatibility by Moshe Levi on 05-Apr-2009: difining new variable.
+	var nIE8 = ( ver.indexOf('MSIE 8') > -1 && dom ) ? 1 : 0;
+	var nIE4 = ( document.all && !dom ) ? 1 : 0;
+	var nNS5 = ( dom && parseInt(ver) >= 5 ) ? 1 : 0;
+	var nNS4 = ( document.layers && !dom ) ? 1 : 0;
+	//Changed for IE8 compatibility by Moshe Levi on 05-Apr-2009: added the nIE8 to condition
+	if ( nIE8 || nIE7 ||  nIE6 || nIE5 || nNS5 || nNS4 ) window.print();
+	else if ( nIE4 ) IEPrint();
+	return;
+}
+
+function getCookie(name) {
+	var dc = document.cookie;	  
+	var prefix = name + '=';
+	var begin = dc.indexOf('; ' + prefix);
+	if (begin == -1) {
+		begin = dc.indexOf(prefix);
+		if (begin != 0) return null;
+	} else
+		begin += 2;
+	var end = document.cookie.indexOf(';', begin);
+	if (end == -1)
+		end = dc.length;
+	return unescape(dc.substring(begin + prefix.length, end));
+}
+function setCookie(name, value, path, expires , domain, secure) {
+	var curCookie = name + '=' + escape(value) +
+		((expires) ? '; expires=' + expires.toGMTString() : '') +
+		((path) ? '; path=' + path : '') +
+		((domain) ? '; domain=' + domain : '') +
+		((secure) ? '; secure' : '');
+	document.cookie = curCookie;
+	
+}
+function recommendTb(tbId) {
+	setCookie('Tb'+tbId, '1', 'http://www.ynet.co.il/');
+	oIframe = document.getElementById('tb_iframe');
+	Adrs = '/Ext/App/TalkBack/CdaAddTalkbackRecommendation/0,11380,L-toReplace-4879509,00.html';
+	Adrs = Adrs.replace('toReplace',tbId);
+	oIframe.src = Adrs;
+	document.getElementById('recommendationTd'+tbId).innerHTML = 'המלצתך נרשמה. תודה.';
+}
+function ReloadArticleInOpener() {
+	if (window.opener && !window.opener.closed) {
+		window.opener.location.href = 'http://www.ynet.co.il/articles/0,7340,L-4879509,00.html';
+		window.opener.focus();
+		self.close();
+	} else {
+		window.location.href = 'http://www.ynet.co.il/articles/0,7340,L-4879509,00.html';
+	};
+	return false;
+}
+</script>
+<style>.ContentTablePadding {width:100%;padding: 0px 5px 0px 5px;}</style>
+<script type='text/javascript'>var _gaq = _gaq || [];_gaq.push(['_setAccount', 'UA-10772561-7']);_gaq.push(['_setDomainName', '.ynet.co.il']);_gaq.push(["_setAllowLinker", true]);_gaq.push(["_setAllowHash", false]);_gaq.push(['_trackPageview', "/TalkBack/ViewOpenTalkBack.html?prof=1.OpenTalkBack"]);(function() {var ga = document.createElement("script");ga.type = "text/javascript";ga.async = true;ga.src = "http" + (document.location.protocol == "https:" ? "s://ssl" : "://www") + ".google-analytics.com/ga.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ga, s);})();</script>
+</head>
+<body style='margin:0 0 0 0' >
+
+<table cellpadding=0 cellspacing=0 width=408 align=center border=0 dir=rtl>
+	<tr>
+		<td align=center><img src='http://www.ynet.co.il/images/talkback/popup_talkback_title.gif'></td>
+	</tr>
+	<tr height=10>
+		<td></td>
+	</tr>
+
+		<tr>
+			<td class=text18 style='padding-left:10px;padding-right:10px' align=right><span dir=rtl><span dir=rtl><a href='http://www.ynet.co.il/home/0,7340,550,00.html' class='text12' style='color:#000000;font-weight:bold; font-size:14px;' target='_blank'>רכב</a>&nbsp;<img src='http://www.ynet.co.il/images/trajarrow.gif' width='7' height='7' alt='' border=0>&nbsp;<a href='http://www.ynet.co.il/home/0,7340,2758,00.html' class='text12' style='color:#000000;' target='_blank'>מבחני דרכים והשקות</a></span><br /><span dir=rtl><a class=blkbigheader style='font-size:18px' href='http://www.ynet.co.il/articles/0,7340,L-4879509,00.html' target=_blank>שברולט קרוז בנהיגה ראשונה - שדרוג אמריקאי</a></span><div dir=rtl style='padding-top:10px;'><span dir=rtl style='margin-top:2; font-size:14px; color:#646464;' class='text14'>הלל פוסק<img src='http://www.ynet.co.il/images/kav.jpg' style='vertical-align: middle; padding-right: 3px;'/></span></div><div dir=rtl><div dir=rtl class='text12g'>פורסם:  18.11.16, 09:13										</div></div></span></td>
+		</tr>
+		<tr height=10>
+			<td></td>
+		</tr>
+		<tr>
+			<td style='width:100%;padding: 0px 5px 15px 5px;'>
+				<table height=20 width=100% border=0 cellpadding=0 cellspacing=0 dir=rtl>
+					<tr>
+	
+						<td align=right height=20 width=25%>
+							<table width=100% height=20 border=0 cellpadding=0 cellspacing=0 dir=rtl><tr>
+								
+								<td valign=middle height=20 width=20><a class='text12' href="javascript:if(typeof(stlkbc)!='undefined')stlkbc.replytalkback();"><img alt='תגובה לכתבה' src='http://www.ynet.co.il/Cmm/Files/images/ic_talkback2.gif' border='0' /></a></td>
+								<td valign=middle height=20 align=right style='padding-right:5px;'><a class='index' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה לכתבה</a></td>
+									
+						</tr></table></td>
+						<td align=right height=20 width=35%>
+							<table width=100% height=20 border=0 cellpadding=0 cellspacing=0 dir=rtl><tr>
+								<td valign=middle height=20 width=20 ><a href='javascript:window.focus(); window.print();' class='index'><IMG alt='הדפיסו את התגובות' src='http://www.ynet.co.il/images/index/ic_printer.gif' border='0' /></a></td>
+								<td valign=middle height=20 align=right style='padding-right:5px;'><a href='javascript:doPrint();' class='index'>הדפיסו את התגובות</a></td>
+						</tr></table></td>
+	
+						<td align=left height=20 width=40% valign=middle><a class='bluelink' href='http://www.ynet.co.il/articles/0,7340,L-4879509,00.html' onClick='return ReloadArticleInOpener();'>חזרה לכתבה</a></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class='ContentTablePadding'><table cellspacing=0 cellpadding=0 width='100%' border=0 dir=rtl bgColor='#000066' style='padding:3px 3px 3px 3px;'><tr><td><font class='leshonit'>לכתבה זו התפרסמו 210 תגובות ב-119 דיונים</font></td></tr></table></td>
+		</tr>
+		<tr height=10>
+			<td></td>
+		</tr>
+		<tr>
+			<td class='ContentTablePadding'><table width=100% cellpadding=0 cellspacing=0 dir=rtl border=0 align=right>
+			
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>1.&nbsp;16,975 $ שזה בשקלים 65,000 ש&quot;ח זה מחיר הקרוז בארצות הברית. </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>MR.  JONES , &nbsp;</span></td>
+							<td>U.S.A </td>
+							<td>&nbsp;</td>
+							<td>(18.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>בישראל אותו האוטו בדיוק מ-130,000ש&quot;ח ???. (הפרש של  65,000 ש&quot;ח).</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>2.&nbsp;10 כריות אויר? </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>אבי , &nbsp;</span></td>
+							<td>ירושלים </td>
+							<td>&nbsp;</td>
+							<td>(18.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>אני מבין איפה יש מקום ל 7 כריות. 2 מקדימה 4 בצדדים ועוד אחת מאחור,<br/>איפה יש מקום לעוד 3 כריות?</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>3.&nbsp;אסטרא לנוטלי טעם טוב? </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>שואל בשביל חבר </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(18.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>4.&nbsp;ל 1 היקר </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>נהג </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(18.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>תלונות על מחירי רכבים ,דלק,אחזקה , ביטוחים מחייה ובכלל רק לממשלה שלך . יחי משלם המיסים .</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>5.&nbsp;קיבלתי בספקות מהעבודה לפני שנתיים קרוז טורבו. בנגוד לתדמית י </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>ערן </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(18.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>6.&nbsp;רק 400 ליטר מטען </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(18.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>לאוטו שאמור לשרת משפחה<br/>זה לא חכם כל כך בהנחה שרוב המשפחתיות מדובר על 20 אחוז יותר ומעלה.<br/></div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>7.&nbsp;סוף כל סוף </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>יוסי </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(18.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>נמאס מהטויוטה הפשוטה מהסקודה והיונדאי החלשות.  שיחקתם אותה GM</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>8.&nbsp;פשש... ואוו! שברולט מתחילים להפגיז סוף סוף.כל דגם חדש יותר מ </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>גיל </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(18.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>9.&nbsp;אחלה קרוז באמת משייטת </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>בת אל תבורי , &nbsp;</span></td>
+							<td>בית שאן </td>
+							<td>&nbsp;</td>
+							<td>(18.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>נראית מעולההההההה</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>10.&nbsp;לא &quot;הורדת משקל מלפנים&quot; </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>אבשלום חום </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(18.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>לא הורדת משקל, אלא הפחתת משקל.<br/>הורדת משקל=לקחת משקל ולהוריד אותו במדרגות או מהמדף...<br/>להפחית משקל=דיאטה.</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>11.&nbsp;היתה לי בליסינג עד לפני שנתיים, מכונית פח. </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>אחת היחידות , &nbsp;</span></td>
+							<td>שהצטערתי שלקחתי </td>
+							<td>&nbsp;</td>
+							<td>(18.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>אפילו בליסינג. נסעה רע, וים תקלות, בול כמו שכתוב.</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>12.&nbsp;קרוז טורבו אמריקאית </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>אסף שומר , &nbsp;</span></td>
+							<td>ירושלים </td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>אני רכשתי לפני שלוש שנים את הקרוז טורבו  1.4 שיוצרה בארהב, כמו הדגם הנכנס. זה הרכב הכי טוב, הכי מהנה לנהיגה שהיה לי וחוץ מתקלה קטנה רק טיפולים שגם היו זולים.</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>13.&nbsp;מדהים כמה תעשיית רכב התקדמה </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>מכונית עממית מציגה ביצועים שלפני 15-20 שנה היה ניתן לקבל רק במכונית על. </div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>14.&nbsp;במילה אחת, מחכה לך קרוז... </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td>ירושלים </td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>15.&nbsp;משהו בה מזכיר את דגמי הסיוויק של השנים 2006-2010 שנמכרו בארץ </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>אלכס </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>16.&nbsp;נראית נהדר! </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>מאוריציו </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>מבפנים ומהחוץ!<br/>כמו מאליבו קטנה!<br/>שדרוג רציני מהדגם היוצא.</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>17.&nbsp;כאילו מה? אף נתון על צריכת דלק? </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>18.&nbsp;קנסומר ריפורט שיבח מאוד הרכב, במיוחד השקט </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>תום , &nbsp;</span></td>
+							<td>ים </td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>נוחות נסיעה ודואג את הרכב בין הטובים בקבוצה</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>19.&nbsp;ראיתם פעם שברולט ישנה על הכביש? 5 שנים ולפח... </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>אדם </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>20.&nbsp;בתור בעלים של קרוז טורבו 2014, הרכב לא רע בכלל </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>שמיים וארץ לעומת הביזיון של 2009</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>21.&nbsp;יחסי הציבור של GM עובדים כאן קשה עם טוקבקים מפוברקים </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>עיצוב זה לא הכל </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>130 אלף שקל ל&quot;דייהו&quot; משופרת (השברולט מבוססת על מפעלי דייהו קוריאה).<br/>צריכת דלק גרועה, תא מטען זעיר, מרווח ראש מאחור לא קיים, גירים כושלים.<br/><br/>הרבה פח מנופח על רכב מאוד מאוד בינוני שמבוסס על טכנולוגיה קוריאנית, וגם זו לא מהמובילות.</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>22.&nbsp;מכונית יפה חזקההה בנויה לתלפיותת!   </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>שברווולט קרוז. </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>3</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>23.&nbsp;נהג </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>משה מרחובות </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>קרוז טורבו 1400 סמק מצויינת אך הקרוז 1600 סמק היית כבדה מלא תקלות ולא שמרה על המחיר לעומת זאת הקרוז 1400 טורבו כן שומרת על המחיר לא פחות ממאזדה או קורולה לפי מחירון של יצחק לוי קונים בזול מוכרים בזול והדגם החדש נראה פיצוץ ויתן תחרות אמיתית לקוריאניות שלדעתי לא שוות את המחיר</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>24.&nbsp;עוד לא שכחנו את הצרות של הקרוזים -זבל-130?הצחקתם אותי </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>מני , &nbsp;</span></td>
+							<td>נתניה </td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>25.&nbsp;היבואן מעכשיו רק דויד עיני </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>מאיר </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>תזהרו ותבדקו היטב איזה חלפים מספקים במוסכי היבואן</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>26.&nbsp;אוקיי, נהגתי בה וזו ההתרשמות </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>יוסי </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>למען ההגינות אני עובד ב umi, וגם אני ישראלי ממוצע שסבל רבות מהקרוז 1.6, אבל ואבל גדול!<br/>בחיאת צאו שניה מהמקלדת קחו אותה לנסיעה ותראו איזה עוצמה נוחות מול הסקודות קורולות למיניהם, וזו קרוז אמריקאית לא קוריאנית, ולגבי הסטיגמה? באמת אין מה לעשות נגד זה</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>27.&nbsp;שברולט  קרוז 100 אחוז </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>יצחק </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>נסעתי בקרוז טורבו 3 וחצי שנים והחלפתי לפני כשנה שוב לשברולט קרוז טורבו, הרכב מצויין, נוח בנהיגה ובנסיעה, בטוח שבהחלפה הבאה, אחזור שוב לשברולט קרוז. היו לי רכבים שונים בעבר ואני מרוצה מאוד מהשברולט.<br/></div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>28.&nbsp;לקח 6 חודשים למכור את הקרוז הישנה (2011) ובמחיר מצחיק... </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>רוני , &nbsp;</span></td>
+							<td>ירושלים </td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>וזאת לאחר כתבה כי דגם &quot;הקרוז החדש&quot; של 2011 התגבר על בעיית תיבת ההילוכים (בפועל לא התגבר!!!!) וכו&#39; וכו&#39;...קשה להאמין לכתבות המקצועיות האלה. אני שברולט לא קונה ולא ממליץ כל עוד לא הוכח אחרת.</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>29.&nbsp;אין לה סיכוי בתמחור הנועחי </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>ארח </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>ב-20,000 פחות הייתה עשויה להיות מעניינת.</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>30.&nbsp;רק מזדה 3 ספיריט  </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>ארתור </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(19.11.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>חברים - בתקציב הזה רק מזגה 3 2 ליטר ספיריט. פעם נהגת תמיד אהבת.  ביצועים , עיצוב ובעיקר הנאה מנהיגה. <br/></div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4879509-0-68-2758-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>			</table>
+			</td>
+		</tr>
+		
+			<tr height=20>
+				<td></td>
+			</tr>
+			<tr>
+				<td class='ContentTablePadding'>
+				<table cellpadding=0 cellspacing=0 border=0 width='100%' height=20 bgcolor='#f1f5fa' dir=rtl><tr><td align=right style='padding-right:2px' width=50%></td><td align=left style='padding-left:2px' width=50%><table width=100% height=20 cellpadding=0 cellspasing=0><tr><td style='height:20px;width:100%;vertical-align:middle;' align=left><a href='http://www.ynet.co.il/Ext/App/TalkBack/CdaViewOpenTalkBack/0,11382,L-4879509-2,00.html' class='index' style='line-height:10px;'>תגובות נוספות</a></td><td valign=middle width=14><a href='http://www.ynet.co.il/Ext/App/TalkBack/CdaViewOpenTalkBack/0,11382,L-4879509-2,00.html' class='index'><img width=14 height=12 src='http://www.ynet.co.il/images/stlkbcsmlarrs.gif' border=0></a></td></tr></table></td></tr></table>				</td>
+			</tr>
+				<tr height=10>
+			<td></td>
+		</tr>
+		<tr height=10 align=left class='ContentTablePadding'>
+			<td><a class='bluelink' href='http://www.ynet.co.il/articles/0,7340,L-4879509,00.html' onClick='ReloadArticleInOpener();'>חזרה לכתבה</a></td>
+		</tr>
+	</table>
+</body>
+<!-- Mirrored from www.ynet.co.il/Ext/App/TalkBack/CdaViewOpenTalkBack/0,11382,L-4879509,00.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Jan 2017 04:18:06 GMT -->
+</html>

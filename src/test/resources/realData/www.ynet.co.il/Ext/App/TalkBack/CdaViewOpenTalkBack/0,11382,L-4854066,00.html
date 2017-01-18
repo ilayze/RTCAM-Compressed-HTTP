@@ -1,0 +1,410 @@
+<html lang=he>
+
+<!-- Mirrored from www.ynet.co.il/Ext/App/TalkBack/CdaViewOpenTalkBack/0,11382,L-4854066,00.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Jan 2017 04:35:09 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+<meta name='description' content='תגובות זה הזמן להתגרש: השקרים שתוקעים אותנו  | מאמר דף בית Ynet'>
+<title>תגובות זה הזמן להתגרש: השקרים שתוקעים אותנו  | מאמר דף בית Ynet</title><LINK REL="stylesheet" TYPE="text/css" HREF="http://www.ynet.co.il/styles/ie.css" TITLE="ynet"><LINK REL='stylesheet' TYPE='text/css' HREF='http://www.ynet.co.il/styles/ie.css' TITLE='ynet'>
+<LINK REL="stylesheet" TYPE="text/css" HREF="http://www.ynet.co.il/styles/ie.css" TITLE="ynet">
+<STYLE TYPE="TEXT/CSS">
+<!--
+.text20rb {
+         FONT-SIZE: 20px; COLOR: #FF0000; FONT-WEIGHT: bold;
+}
+.text14gb {
+         FONT-SIZE: 14px; COLOR: #CCCCCC; FONT-WEIGHT: bold;
+}
+-->
+</STYLE>
+<SCRIPT language=javascript>
+function MSIE_VER() {
+	agt=navigator.userAgent.toLowerCase();
+	pos=agt.indexOf('msie')+1;
+	if (pos)
+		return agt.charAt(pos+4);
+	return 0
+}
+
+
+		
+			function pcardFocus(url,is_userid,show_talkbacks) {
+				
+				if (typeof(is_userid)!='undefined') {
+					if ((typeof(show_talkbacks)!='undefined')&&(show_talkbacks==true)) {
+						var url='http://www.ynet.co.il/home/0,7340,L-5034-TOREPLACE,00.html'.replace('TOREPLACE',''+url);
+					} else {
+						var url='http://www.ynet.co.il/home/0,7340,L-5031-TOREPLACE,00.html'.replace('TOREPLACE',''+url);
+					};
+				};				
+				
+				function pcardFocusTry(x) {
+					if (x<20) {
+						
+						try {
+							newPcardWindow=window.open(url,'pcardNewWin' + x,'location=yes,scrollbars=yes,toolbar=yes,menubar=yes,resizable=yes,height=550,width=770');
+							if (window.focus) {newPcardWindow.focus()}
+						}
+						catch(err) {
+							pcardFocusTry(x + 1);
+						}
+					}
+				}
+				
+				pcardFocusTry(0);
+
+			}function openWin(url,title,attrib) {
+	wref=window.open(url,title,attrib);
+	if (MSIE_VER()>=5)
+		wref.focus();
+}
+function openInnewWindow(url,width,height,toolbar,WinName) {
+	var TheLeft=(screen.availWidth - width)/2;
+	var TheTop=(screen.availHeight - height)/2;
+	if (WinName=='') {
+		WinName='Ynet talk back response';
+	}
+	if (toolbar==1) {
+		openWin(url,WinName,'toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,width='+width+',height='+height+',left='+TheLeft+',top='+TheTop);
+	} else {
+		openWin(url,WinName,'toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=no,movable=yes,resizable=no,width='+width+',height='+height+',left='+TheLeft+',top='+TheTop);
+	}
+}
+function doPrint() {
+
+	// Printing functions for ie and netscape
+	var ver = navigator.appVersion;
+	var dom = document.getElementById ? 1: 0;
+	var nIE5 = ( ver.indexOf('MSIE 5') > -1 && dom ) ? 1 : 0;
+	var nIE6 = ( ver.indexOf('MSIE 6') > -1 && dom ) ? 1 : 0;
+	var nIE7 = ( ver.indexOf('MSIE 7') > -1 && dom ) ? 1 : 0;
+	// Changed for IE8 compatibility by Moshe Levi on 05-Apr-2009: difining new variable.
+	var nIE8 = ( ver.indexOf('MSIE 8') > -1 && dom ) ? 1 : 0;
+	var nIE4 = ( document.all && !dom ) ? 1 : 0;
+	var nNS5 = ( dom && parseInt(ver) >= 5 ) ? 1 : 0;
+	var nNS4 = ( document.layers && !dom ) ? 1 : 0;
+	//Changed for IE8 compatibility by Moshe Levi on 05-Apr-2009: added the nIE8 to condition
+	if ( nIE8 || nIE7 ||  nIE6 || nIE5 || nNS5 || nNS4 ) window.print();
+	else if ( nIE4 ) IEPrint();
+	return;
+}
+
+function getCookie(name) {
+	var dc = document.cookie;	  
+	var prefix = name + '=';
+	var begin = dc.indexOf('; ' + prefix);
+	if (begin == -1) {
+		begin = dc.indexOf(prefix);
+		if (begin != 0) return null;
+	} else
+		begin += 2;
+	var end = document.cookie.indexOf(';', begin);
+	if (end == -1)
+		end = dc.length;
+	return unescape(dc.substring(begin + prefix.length, end));
+}
+function setCookie(name, value, path, expires , domain, secure) {
+	var curCookie = name + '=' + escape(value) +
+		((expires) ? '; expires=' + expires.toGMTString() : '') +
+		((path) ? '; path=' + path : '') +
+		((domain) ? '; domain=' + domain : '') +
+		((secure) ? '; secure' : '');
+	document.cookie = curCookie;
+	
+}
+function recommendTb(tbId) {
+	setCookie('Tb'+tbId, '1', 'http://www.ynet.co.il/');
+	oIframe = document.getElementById('tb_iframe');
+	Adrs = '/Ext/App/TalkBack/CdaAddTalkbackRecommendation/0,11380,L-toReplace-4854066,00.html';
+	Adrs = Adrs.replace('toReplace',tbId);
+	oIframe.src = Adrs;
+	document.getElementById('recommendationTd'+tbId).innerHTML = 'המלצתך נרשמה. תודה.';
+}
+function ReloadArticleInOpener() {
+	if (window.opener && !window.opener.closed) {
+		window.opener.location.href = 'http://www.ynet.co.il/articles/0,7340,L-4854066,00.html';
+		window.opener.focus();
+		self.close();
+	} else {
+		window.location.href = 'http://www.ynet.co.il/articles/0,7340,L-4854066,00.html';
+	};
+	return false;
+}
+</script>
+<style>.ContentTablePadding {width:100%;padding: 0px 5px 0px 5px;}</style>
+<script type='text/javascript'>var _gaq = _gaq || [];_gaq.push(['_setAccount', 'UA-10772561-7']);_gaq.push(['_setDomainName', '.ynet.co.il']);_gaq.push(["_setAllowLinker", true]);_gaq.push(["_setAllowHash", false]);_gaq.push(['_trackPageview', "/TalkBack/ViewOpenTalkBack.html?prof=1.OpenTalkBack"]);(function() {var ga = document.createElement("script");ga.type = "text/javascript";ga.async = true;ga.src = "http" + (document.location.protocol == "https:" ? "s://ssl" : "://www") + ".google-analytics.com/ga.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ga, s);})();</script>
+</head>
+<body style='margin:0 0 0 0' >
+
+<table cellpadding=0 cellspacing=0 width=408 align=center border=0 dir=rtl>
+	<tr>
+		<td align=center><img src='http://www.ynet.co.il/images/talkback/popup_talkback_title.gif'></td>
+	</tr>
+	<tr height=10>
+		<td></td>
+	</tr>
+
+		<tr>
+			<td class=text18 style='padding-left:10px;padding-right:10px' align=right><span dir=rtl><span dir=rtl><a href='http://www.ynet.co.il/home/0,7340,1069,00.html' class='text12' style='color:#000000;font-weight:bold; font-size:14px;' target='_blank'>אסטרולוגיה</a>&nbsp;<img src='http://www.ynet.co.il/images/trajarrow.gif' width='7' height='7' alt='' border=0>&nbsp;<a href='http://www.ynet.co.il/home/0,7340,1251,00.html' class='text12' style='color:#000000;' target='_blank'>מאמר דף בית</a></span><br /><span dir=rtl><a class=blkbigheader style='font-size:18px' href='http://www.ynet.co.il/articles/0,7340,L-4854066,00.html' target=_blank>זה הזמן להתגרש: השקרים שתוקעים אותנו</a></span><div dir=rtl style='padding-top:10px;'><span dir=rtl style='margin-top:2; font-size:14px; color:#646464;' class='text14'>שלי רום<img src='http://www.ynet.co.il/images/kav.jpg' style='vertical-align: middle; padding-right: 3px;'/></span></div><div dir=rtl><div dir=rtl class='text12g'>פורסם:  13.09.16, 10:55										</div></div></span></td>
+		</tr>
+		<tr height=10>
+			<td></td>
+		</tr>
+		<tr>
+			<td style='width:100%;padding: 0px 5px 15px 5px;'>
+				<table height=20 width=100% border=0 cellpadding=0 cellspacing=0 dir=rtl>
+					<tr>
+	
+						<td align=right height=20 width=25%>
+							<table width=100% height=20 border=0 cellpadding=0 cellspacing=0 dir=rtl><tr>
+								
+								<td valign=middle height=20 width=20><a class='text12' href="javascript:if(typeof(stlkbc)!='undefined')stlkbc.replytalkback();"><img alt='תגובה לכתבה' src='http://www.ynet.co.il/Cmm/Files/images/ic_talkback2.gif' border='0' /></a></td>
+								<td valign=middle height=20 align=right style='padding-right:5px;'><a class='index' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4854066-0-68-1251-0--0,00.html",490,400,0,"addTbWin")'>תגובה לכתבה</a></td>
+									
+						</tr></table></td>
+						<td align=right height=20 width=35%>
+							<table width=100% height=20 border=0 cellpadding=0 cellspacing=0 dir=rtl><tr>
+								<td valign=middle height=20 width=20 ><a href='javascript:window.focus(); window.print();' class='index'><IMG alt='הדפיסו את התגובות' src='http://www.ynet.co.il/images/index/ic_printer.gif' border='0' /></a></td>
+								<td valign=middle height=20 align=right style='padding-right:5px;'><a href='javascript:doPrint();' class='index'>הדפיסו את התגובות</a></td>
+						</tr></table></td>
+	
+						<td align=left height=20 width=40% valign=middle><a class='bluelink' href='http://www.ynet.co.il/articles/0,7340,L-4854066,00.html' onClick='return ReloadArticleInOpener();'>חזרה לכתבה</a></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class='ContentTablePadding'><table cellspacing=0 cellpadding=0 width='100%' border=0 dir=rtl bgColor='#000066' style='padding:3px 3px 3px 3px;'><tr><td><font class='leshonit'>לכתבה זו התפרסמו 22 תגובות ב-10 דיונים</font></td></tr></table></td>
+		</tr>
+		<tr height=10>
+			<td></td>
+		</tr>
+		<tr>
+			<td class='ContentTablePadding'><table width=100% cellpadding=0 cellspacing=0 dir=rtl border=0 align=right>
+			
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>1.&nbsp;השקרים שתוקעים אותנו? </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(13.09.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>&quot; אני מחפשת מישהו שיבין אותי ויאהב אותי&quot; ושוב השקר הזה<br/>כי היא מחפשת לוכד שטרות מקצועי ומגאייוור של תשלומי משכנתא ושופינג. ושוב שוב שוב, ושוב השקר הזה.</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4854066-0-68-1251-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>2.&nbsp;ליקוי שמיקוי </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>רן </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(13.09.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>תפסיקו לרחף , יש מציאות !</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4854066-0-68-1251-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>3.&nbsp;אין כל קשר בין אהבה לזוגיות חתונה וילדים. </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>צבי האשכנזי , &nbsp;</span></td>
+							<td>חיפה </td>
+							<td>&nbsp;</td>
+							<td>(13.09.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>זוגיות זו אשליה של וויתורים, חתונה זו הסתבכות וילדים זו אכזבה שמתבררת אחרי שגידלת אותם והם נוטשים לטובת מישהו אחר. כל עוד אתה בקשר שנוצר מתוך אהבה על תקלקל את זה בחתונה ילדים ומשכנתא .</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4854066-0-68-1251-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>4.&nbsp;בקיצור..חפירות </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(13.09.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4854066-0-68-1251-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>5.&nbsp;אם יש התאמה של 70%  זה המון !! </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>אין 100% , &nbsp;</span></td>
+							<td>נשוי ותיק </td>
+							<td>&nbsp;</td>
+							<td>(13.09.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>ידועה הבדיחה על בחור שחיפש אישה שתהייה מאהבת טובה, אימא טובה לילדים ותדע להחזיק את הבית. <br/> <br/>אמרו לו שהוא זקוק ל 3 נשים.<br/><br/><br/><br/> </div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4854066-0-68-1251-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>6.&nbsp;מענה לטקסט בפנים : או שאשתו סמנכ&quot;לית בכירה, מרוויחה יפה </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>שמעתי את הסיבה ממנו </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(13.09.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>מקושרת ומסדרת לו קשרים, כתבות ועוד ועוד....בקיצור קוראים לזה אינטרס ! קחי את הרגליים ותתרחקי מאדם כזה. ( נצלן ! )<br/><br/>כשאת מצפה שהוא יעזוב את הבית שלו עבורך (יתגרש) זה לא עניין של מה בכך עבורו, למרות שהוא מבטיח לך שוב ושוב. את לא מבינה, איך לוקח לו כל כך הרבה זמן לצאת ממקום שכבר מזמן, לא טוב לו שם – דעי שהאדם שאת נמצאת אתו, כנראה חזק בעולם הרגש. קשה לו לעזוב את המשפחה שלו ולמרות שהוא יודע שזה נגמר, הוא עדין מרגיש שה&#39;אמת&#39; תשבור אותם.<br/> </div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4854066-0-68-1251-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>7.&nbsp;הלא נורמלי נהפך להיות נורמלי. פשוט הזוי. </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>הליקוי הוא בראש שלך! , &nbsp;</span></td>
+							<td>כתבה פח </td>
+							<td>&nbsp;</td>
+							<td>(14.09.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>הליקוי הוא בראש שלך!<br/>סבא וסבתא שלי חיו מעל 80 שנה ביחד בזוגיות למופת שראויה להערצה.<br/><br/>את עוד גורם שהורס את מה שנשאר מהאנשים הנורמליים.<br/><br/>תתקני את הליקוי.</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4854066-0-68-1251-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>8.&nbsp;מבלבלת את המוח . ממש יעוץ להרס משפחות. </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'></span></td>
+							<td></td>
+							<td></td>
+							<td>(14.09.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4854066-0-68-1251-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>9.&nbsp;הבחורה בתמונה חמודה </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>גבי </span></td>
+							<td></td>
+							<td>&nbsp;</td>
+							<td>(14.09.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4854066-0-68-1251-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>
+					<tr bgColor='#FFFFFF'><td><div style='height:7px;'></div></td></tr>
+					<tr bgColor='#F1F5FA'><td>
+						<table cellpadding=0 cellspacing=0 width=100% align=center border=0>
+						<tr>
+						<td style='padding-left:12px; padding-right:3px;padding-top:5px;padding-bottom:10px;' width=100%>
+							<div style='overflow:hidden; width:100%'>
+								<div id=titleDiv class=text12b  lang=he>10.&nbsp;תמצאי את הסיבה </div>
+				<div style='height:3px; overflow:hidden'></div>
+				<div style='padding-right:15px'>
+					<table cellpadding=0 cellspacing=0 dir=rtl>
+						<tr>
+							<td><span class='text12g'>יואב , &nbsp;</span></td>
+							<td>ירושלים </td>
+							<td>&nbsp;</td>
+							<td>(14.09.16)</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+				<div style='padding-right:15px' class=text12 lang=he>מדוע השקרים נכנסו למערכת היחסים? תמצאו את הסיבה לכך.</div>
+				<div style='height:2px; overflow:hidden'></div><DIV style='OVERFLOW: hidden; HEIGHT: 24px'><TABLE cellSpacing='0' cellPadding='0' width='100%'><TR><TD><TABLE><TR><TD><DIV style='OVERFLOW: hidden; WIDTH: 8px'>&nbsp;</DIV></TD><TD><IMG src='http://www.ynet.co.il/images/stlkbcreply.gif' border='0' /></TD><TD><DIV style='OVERFLOW: hidden; WIDTH: 1px'>&nbsp;</DIV></TD><TD><A class='index' style='FONT-WEIGHT: bold' href='javascript:var x = openInnewWindow("/YediothPortal/Ext/TalkBack/CdaTalkBack/0,2497,4854066-0-68-1251-0--0,00.html",490,400,0,"addTbWin")'>תגובה חדשה</A></TD></TR></TABLE></TD><TD align='left'></TD></TR></TABLE></DIV></td></tr></table>			</table>
+			</td>
+		</tr>
+				<tr height=10>
+			<td></td>
+		</tr>
+		<tr height=10 align=left class='ContentTablePadding'>
+			<td><a class='bluelink' href='http://www.ynet.co.il/articles/0,7340,L-4854066,00.html' onClick='ReloadArticleInOpener();'>חזרה לכתבה</a></td>
+		</tr>
+	</table>
+</body>
+<!-- Mirrored from www.ynet.co.il/Ext/App/TalkBack/CdaViewOpenTalkBack/0,11382,L-4854066,00.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Jan 2017 04:35:09 GMT -->
+</html>
