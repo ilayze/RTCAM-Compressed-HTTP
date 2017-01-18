@@ -1,0 +1,2005 @@
+(function() {
+
+	window.CmmAppVideoApi = {
+		_videos:{},
+		_nextPlayerId:0,
+		_players:{},
+		_debug:false,
+		
+				_log:function(){
+			if (this._debug && window.console) {
+				Function.prototype.apply.call(console.log, console, arguments);
+			};
+		}, 
+		_getNewPlayer:function(){
+			this._nextPlayerId++;
+			var id=this._nextPlayerId;
+			this._players[id]={
+				_vars : {},
+				id:id,
+				visible : function() {
+					return yq('#yntfpcontainer'+this.id).is(':visible');
+				},
+				
+												init : function() {
+					this._vars = {};
+					this.isUserTriggeredEvent = true;
+
+					// reset carambola status
+					window._carambolaData = new Object();
+				},
+
+				
+				pause : function() {
+					this.isUserTriggeredEvent = false;
+					this.flowplayer.pause();
+					this.isUserTriggeredEvent = true;
+				},
+				resume : function() {
+					this.isUserTriggeredEvent = false;
+					this.flowplayer.resume();
+					this.isUserTriggeredEvent = true;
+				},
+				setVar : function(name, value) {
+					this._vars[name] = value;
+				},
+				getVar : function(name) {
+					return this._vars[name];
+				}
+			};
+			return this._players[id];
+		},
+		_getPlayer:function(id){
+			return this._players[id];
+		},
+		_getVideo:function(id){
+			return this._videos[id];
+		},
+		_invalid:function(arg, errorTxt) {
+			if(arg == undefined || arg == null || arg == '') {
+				//if(errorTxt && this._debug) {alert(errorTxt)};
+				return true;
+			} else {
+				return false;
+			};
+		},
+		_ajax:{
+			go:function(A,C){var B=this._gX();if(!B){return}B.open("GET",A,true);B.setRequestHeader("User-Agent","XMLHTTP/1.0");B.setRequestHeader("If-Modified-Since","Fri, 31 Dec 1999 00:00:00 GMT");B.onreadystatechange=function(){if((B.readyState==4)&&((B.status==200)||(B.status==304))){C(B)
+			}};if(B.readyState==4){return}B.send(null)},_XF:[function(){return new XMLHttpRequest()},function(){return new ActiveXObject("Msxml2.XMLHTTP")},function(){return new ActiveXObject("Msxml3.XMLHTTP")},function(){return new ActiveXObject("Microsoft.XMLHTTP")
+			}],_gX:function(){var B=false;for(var A=0;A<this._XF.length;A++){try{B=this._XF[A]()}catch(C){continue}break}return B}
+		},
+		_htmlescape:function(str){
+			return this._stringmap([
+				'&','&amp;',
+				'<','&lt;',
+				'>','&gt;',
+				String.fromCharCode(39),'&#39;',
+				String.fromCharCode(34),'&quot;'
+			],str);
+		},
+		_flowplayerescape:function(str){
+			return this._htmlescape(str);
+		},
+		_stringmap:function(map,str){
+
+			for (var i=0;i<map.length;i=i+2) {
+				var k=map[i];
+				var v=map[i+1];
+				str=str.replace(new RegExp(k,'g'),v);
+			};
+			return str;
+		},
+		_isAudio:function(player){
+			return (player.type.search(/audio/i) != -1);
+		},
+
+				explorerDocumentTitleFix : function(action, timeout) {
+			var documentTitle = document.title.replace(/#.*/, '');
+			if (action && timeout) {
+				action();
+				setTimeout(function(){
+					document.title = documentTitle;
+				}, timeout);
+			} else {
+				document.title = documentTitle;
+			}
+		},
+		
+				// Custom event, triggered right after loadPlayer is called and a player object is obtained
+		_onBeforePlayerLoad: function(player){
+			if(player.contentManager){
+				player.contentManager.fireEvent('onBeforePlayerLoad');
+			};
+		},
+		_onPlayerLoad: function(player){
+						if (!this._isAudio(player) && this.CONST.TaboolaEnabled && typeof window.TRC === 'undefined' && this.CONST.TaboolaLoaderStandAloneScriptSrc) {
+				var taboolaLoader = document.createElement('script');
+				taboolaLoader.type = 'text/javascript';
+				taboolaLoader.src = this.CONST.TaboolaLoaderStandAloneScriptSrc;
+				document.getElementsByTagName('head')[0].appendChild(taboolaLoader);
+			}
+
+			this.explorerDocumentTitleFix();
+
+			player.flowplayer.unmute();
+			player.contentManager.fireEvent('onPlayerLoad');
+		},
+		_onPlayerSeek: function(player){
+			player.contentManager.fireEvent('onPlayerSeek', {isUserTriggered : player.isUserTriggeredEvent});
+			
+		},
+
+		_onPlayerPause: function(player){
+			player.contentManager.fireEvent('onPlayerPause', {isUserTriggered : player.isUserTriggeredEvent});
+		},
+		_onPlayerResume: function(player){
+			
+			player.contentManager.fireEvent('onPlayerResume', {isUserTriggered : player.isUserTriggeredEvent});
+			
+			if (player.getVar('showCarambolaOnPlayerResume')) {
+				carambolaShow();
+				player.setVar('showCarambolaOnPlayerResume', false);
+			};
+			
+		},
+
+		_onClipBeforeBegin:function(player){
+			player.contentManager.fireEvent("onClipBeforeBegin");
+		},
+		
+		_onClipStart:function(player,clip){
+			var self = this;
+						if (typeof(window.pageRefreshDisable)=='function'){
+				window.pageRefreshDisable();
+			};
+			
+						if(player.type != "picmanagerPreview") {
+				player.flowplayer.getPlugin('play').show();
+			};
+
+	
+			
+						if (player.params.seek == undefined) {
+																var clipDuration = 0;
+				
+				if (!(isNaN(+player.video.clipDuration))) {
+                  if (player.video.clipDuration=="") {
+                       var a=player.flowplayer.getClip()
+                        var clipDuration = a.duration }    else {
+					clipDuration = parseInt(player.video.clipDuration, 10);}
+																	}
+					
+				if (!this._isAudio(player)) {
+										if (this.CONST.TaboolaEnabled && this.CONST.TaboolaSyndicationUrl && typeof window.TRC !== 'undefined' && typeof window.TRC.playVideo === 'function') {
+						var taboolaVideoUrl = (new Array(this.CONST.TaboolaSyndicationUrl, '0,,', player.videoId, ',00.html')).join('');
+						window.TRC.playVideo(player.videoId, taboolaVideoUrl);
+					}
+				}
+				
+				if (clipDuration) {
+				
+				this._reportPopularity(player, clipDuration);
+				}
+				
+				if(player.video.erateId != undefined && player.video.erateId != '') {
+					var url=http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/this.CONST.FlowplayerErateUrl;
+					url+='?eventType=1';
+					url+='&toolId='+player.video.erateId;
+					url+='&random='+((new Date()).getTime());
+					//(document.createElement('img')).src=url;
+				};
+			}
+			
+			if(player.hasDecoration){
+				player.decorationEnabled = true;
+				player.clipPlaying = true;
+				/** HOT player displays it's decoration during first 20 seconds of playback */
+				if (player.type === "hot" || player.type === "stage") {
+					this._persistDecoration(player, true);
+					var decorationLength = 20000;
+					setTimeout(function(){
+						self._persistDecoration(player, false);
+					}, decorationLength);
+				}
+			};
+			if ( typeof player.flowplayer.setVolume == 'function') 	player.flowplayer.setVolume(50);
+			player.contentManager.fireEvent('onClipStart');
+		},
+
+		_onFinish:function(player,clip){
+			
+			if (typeof(window.pageRefreshEnable)=='function'){
+				window.pageRefreshEnable();
+			}
+			if(this._isAudio(player)){
+								
+				var playlist = player.video.playlist;
+				var index = (clip.index + 1) % playlist.length;
+				yq('#audio_player_'+player.id+' .audio_name').html(playlist[index].name);
+				yq('#audio_player_'+player.id+' .audio_image').html(playlist[index].imgHtml);
+				
+								yq('#audio_player_'+player.id+' .audio_image object').css('display', 'block');
+
+			} else {
+								var fp = player.flowplayer;
+				fp.getPlugin("play").hide();
+				if(fp.isFullscreen()) {
+					fp.toggleFullscreen();
+				};
+				
+				if(player.hasDecoration){
+					player.decorationEnabled = false;
+					player.clipPlaying = false;
+					this._disableDecoration(player);
+				};
+
+				if(!player.params.noPostScreen){
+					var postScreenHtml = this._getPostScreenHtml(player);
+					if(postScreenHtml != ""){
+						document.getElementById('fpPostScreen'+player.id).innerHTML=postScreenHtml;
+						document.getElementById('fpPostScreen'+player.id).style.display='block';
+						//document.getElementById('yntfpcontainer'+player.id).style.display='none';
+						var decoration = document.getElementById('fpDecoration'+player.id);
+						if(decoration){
+							decoration.style.display='none';
+						};
+					};
+				};
+				
+				if(typeof player.params.onFinish == 'function'){
+					player.params.onFinish();
+				};
+				player.contentManager.fireEvent('onClipFinish');
+			};
+		},
+		_onCuepoint : function(player, clip, cuepoint) {
+			if (cuepoint == 100) {
+				if (player.params.seek != undefined) {
+					player.flowplayer.seek(player.params.seek);
+					
+										player.params.seek = undefined;
+				};
+			};
+
+			player.contentManager.fireEvent("onCuepoint", cuepoint);
+		},
+		_onClickPlayAgain:function(playerId){
+			var player=this._getPlayer(playerId);
+			player.params.autoStart = true;
+			this._loadPlayer(player);
+		}, 
+		_onClickSendToFriend:function(playerId){
+			var player=this._getPlayer(playerId);
+			if (yq.inArray(player.type, ['article', 'article1024', 'headline', 'headlineVideos', 'TopStory', 'TopStoryWide', 'TopStoryArticle']) >= 0) {
+				if (yq.inArray(player.type, ['article1024', 'TopStory', 'TopStoryWide', 'TopStoryArticle']) >= 0) {
+					var linkSrc = window.CmmAppVideoApi.CONST.SendToFriendArticle1024Link;
+					var width = 525;
+					var height = 480;
+				} else {
+					var linkSrc = window.CmmAppVideoApi.CONST.SendToFriendArticleLink;
+					var width = 400;
+					var height = 510;
+				};
+
+				openInnewWindow(linkSrc.replace('TOREPLACE',player.video.articleId),width,height,0);
+			} else if (player.type=="VideoChannel" || player.type=="galleries") {
+				openInnewWindow(window.CmmAppVideoApi.CONST.SendToFriendVideoChannelLink.replace('TOREPLACE',player.video.id),400,510,0);
+			} else {
+				openInnewWindow(window.CmmAppVideoApi.CONST.SendToFriendLink.replace('TOREPLACE',player.video.id),400,510,0);
+			};
+		},
+		_onFlashFail:function(player){
+			var container = document.getElementById(player.params.destId);
+			var html = [];
+			
+			playerType = this._isAudio(player) ? 'אודיו' : 'וידאו';
+			
+			html.push('<div style="margin-top:'+ (player.height/2 - 35) +'px;text-align:right;direction:rtl;padding:10px;font-size:14px;color:#c11;text-align:center;background-color: #F5F5F5;border:1px solid #E3E3E3;">');
+				html.push('<img style="vertical-align:bottom;" src="http://www.ynet.co.il/images/error_icon.png" />&nbsp;');
+				html.push('נגן ה' + playerType + ' דורש התקנה של גרסת פלאש עדכנית!');
+				html.push('<br/>');
+				html.push('<a style="color:grey;text-decoration:underline;" href="http://get.adobe.com/flashplayer/" target="_blank">לחץ כאן להורדה</a>');
+			html.push('</div>');
+			
+			container.innerHTML = html.join('');
+		},
+		_onHiroAdStart:function(player, info){
+			this._log('_onHiroAdStart', info);
+			player.isUserTriggeredEvent = false;
+						
+			carambolaHide();
+		},
+		_onHiroAdComplete:function(player, info){
+			if (info.product != 'Mid') {
+				carambolaShow();
+			} else {			
+				player.setVar('showCarambolaOnPlayerResume', true);
+			}
+			
+			player.isUserTriggeredEvent = true;
+			
+			this._log('_onHiroAdComplete', info);
+		},
+		
+				_carambolaPopup : function(player, url, target) {
+			window.open(url,target,"toolbar=yes, location=yes, directories=no, statusbar=yes, menubar=yes, scrollbars=yes, resizable=yes, copyhistory=yes, width=600, height=400");    
+    
+			return 1;
+		},
+		_carambolaPause : function(player) {
+			player.pause();
+		},
+						_carambolaActiveSignal : function(player) {
+			var pauseAd = player.contentManager.getContent('PauseAd');
+			if (pauseAd) {
+				pauseAd.disable();
+			}
+		},
+		_onMotorolaPopupClick : function(player) {
+			if (window._gaq && window.dcPath) {
+				_gaq.push(['_trackEvent', 'MotorolaPlayerPopup', 'PopupClicked', dcPath]);
+			};
+		},
+		_onMotorolaPopupDisplay : function(player) {
+			if (window._gaq && window.dcPath) {
+				_gaq.push(['_trackEvent', 'MotorolaPlayerPopup', 'PopupDisplayed', dcPath]);
+			};
+		},
+		
+				
+				
+		_getPostScreenHtml:function(player){
+			if(player.type == "article" || player.type == "article1024"){
+				return this._getArticlePostScreenHtml(player, 90, 0);
+			} else if(player.type == "headline" || player.type == "headlineVideos"){
+				return this._getHeadlinePostScreenHtml(player);
+			} else if(player.type == "hot"){
+								return "";
+				//return this._getHotPostScreenHtml(player);
+			} else if(player.type == "VideoChannel"){
+				return this._getVideoChannelPostScreenHtml(player);
+			} else if (player.type == "galleries"){
+				return this._getGalleryScreenHtml(player);			
+			} else if(player.type == "TopStory" || player.type == "TopStoryWide" || player.type == "TopStoryArticle" || player.type == "articlePnaiPlus"){
+								return this._getTopStoryPostScreenHtml(player);
+			} else {
+				return "";
+			};
+		},
+		_getPostScreenButtons:function(player) {
+			var res = [];
+			res.push('<div style="margin:0 auto;width:152px;" >');
+				res.push('<a href="javascript:CmmAppVideoApi._onClickSendToFriend('+player.id+')" style="display:block;float:right;margin:0 0 0 23px;"><img border=0 width=53 height=80 src="http://www.ynet.co.il/images/flowplayer/fpHotSendToFriend.gif"></img></a>');
+				res.push('<a href="javascript:CmmAppVideoApi._onClickPlayAgain(' + player.id + ')" style="display:block;float:right;margin:0 23px 0 0;"><img border=0 width=53 height=80 src="http://www.ynet.co.il/images/flowplayer/fpHotPlayAgain.gif"></img></a>');
+				res.push('<div style="clear:both;"></div>');
+			res.push('</div>');
+			return res.join('');
+		},
+		_getGalleryScreenHtml:function(player) {
+			var res = [];
+			var FacebookShareUrl = CmmAppVideoApi._getFacebookShareUrl(player);
+			res.push('<div class="video_wrap_div ' + player.type + '" style="color:white;background-color:transparent;width:100%;height:100%;text-align:center;direction:rtl;position:relative;"><img src='http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/+player.video.imgPath+' style="position:absolute;width:980px;height:100%;z-index:-1;left:0px;-webkit-filter:blur(2px);-moz-filter: blur(2px);filter: blur(2px);"');
+				res.push('<div style="margin:0 auto;width:495px;height:155px;">');
+					res.push('<a href="javascript:openInnewWindow(\''+FacebookShareUrl+'\')" style="display:block;float:right;margin:230px 260px 0 44px;"><img border=0 width=109 height=115 src="http://www.ynet.co.il/images/gallery-f.png"></img></a>');
+					res.push('<a href="javascript:CmmAppVideoApi._onClickPlayAgain(' + player.id + ')" style="display:block;float:right;margin:230px 23px 0 44px;"><img border=0 width=109 height=115 src="http://www.ynet.co.il/images/gallery-play.png"></img></a>');
+					res.push('<a href="javascript:CmmAppVideoApi._onClickSendToFriend('+player.id+')" style="display:block;float:right;margin:230px 23px 0 44px;"><img border=0 width=109 height=115 src="http://www.ynet.co.il/images/gallery-send.png"></img></a>');
+					res.push('<div style="clear:both;"></div>');
+				res.push('</div>');
+
+				res.push('<div style="width:360px;margin:0 auto;">');
+				if (player.video.relatedVideos && player.video.relatedVideos.length>0) {
+					for(var i = 0; i < Math.min(player.video.relatedVideos.length, 2); i++) {
+						var relvid=player.video.relatedVideos[i];
+						res.push('<div onclick="window.location=\''+relvid.pagePath+'\'" style="overflow:hidden;cursor:pointer;display:block;padding:7px;margin-top:11px;background-color:#4b4b4b;text-align:right;">');
+							res.push('<img border=0 style="float:right;width:90px;height:60px;" src="http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/' + relvid.imgPath + '">');
+							res.push('<p style="float:right;margin:0 12px 0 0;padding:0;width:240px;height:60px;overflow:hidden;color:white;font-size:13px;font-weight:bold;">');
+								res.push('<span>' + this._htmlescape(relvid.title) + '</span>');
+							res.push('</p>');
+							res.push('<div style="clear:both;"></div>');
+						res.push('</div>'); 
+					};
+				};
+				res.push('</div>');
+			res.push('</div>');
+			return res.join('');
+		},
+		
+		_getHotPostScreenHtml:function(player){
+			var res = [];
+			res.push('<div style="color:white;background-color:black;width:100%;height:100%;text-align:center;direction:rtl;">');
+				res.push('<div style="margin:0 auto;width:152px;height:155px;">');
+					res.push('<a href="javascript:CmmAppVideoApi._onClickSendToFriend('+player.id+')" style="display:block;float:right;margin:70px 0 0 23px;"><img border=0 width=53 height=80 src="http://www.ynet.co.il/images/flowplayer/fpHotSendToFriend.gif"></img></a>');
+					res.push('<a href="javascript:CmmAppVideoApi._onClickPlayAgain(' + player.id + ')" style="display:block;float:right;margin:70px 23px 0 0;"><img border=0 width=53 height=80 src="http://www.ynet.co.il/images/flowplayer/fpHotPlayAgain.gif"></img></a>');
+					res.push('<div style="clear:both;"></div>');
+				res.push('</div>');
+
+				res.push('<div style="width:360px;margin:0 auto;">');
+				if (player.video.relatedVideos && player.video.relatedVideos.length>0) {
+					for(var i = 0; i < Math.min(player.video.relatedVideos.length, 2); i++) {
+						var relvid=player.video.relatedVideos[i];
+						res.push('<div onclick="window.location=\''+relvid.pagePath+'\'" style="overflow:hidden;cursor:pointer;display:block;padding:7px;margin-top:11px;background-color:#4b4b4b;text-align:right;">');
+							res.push('<img border=0 style="float:right;width:90px;height:60px;" src="http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/' + relvid.imgPath + '">');
+							res.push('<p style="float:right;margin:0 12px 0 0;padding:0;width:240px;height:60px;overflow:hidden;color:white;font-size:13px;font-weight:bold;">');
+								res.push('<span>' + this._htmlescape(relvid.title) + '</span>');
+							res.push('</p>');
+							res.push('<div style="clear:both;"></div>');
+						res.push('</div>'); 
+					};
+				};
+				res.push('</div>');
+			res.push('</div>');
+			return res.join('');
+		},
+		_getArticlePostScreenHtml:function(player, relativeWidth, contentMargin){
+			var res = [];
+			var textAlign=this.CONST.siteDir=='ltr'? 'left':'right';
+			res.push('<div style="width:'+player.width+'px;height:'+player.height+'px;text-align:center;direction:'+this.CONST.siteDir+';background:url('http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/+this.CONST.YnetVideoLogoSrc+') no-repeat 15px 15px black;">');
+				res.push('<div style="padding-top:30px;">');
+					res.push(this._getPostScreenButtons(player));
+				res.push('</div>');
+				res.push('<div style="width:'+relativeWidth+'%;margin:'+contentMargin+' auto 0 auto;">');
+				if (player.video.relatedVideos && player.video.relatedVideos.length>0) {
+					for(var i = 0; i < Math.min(player.video.relatedVideos.length, 2); i++) {
+						var relvid=player.video.relatedVideos[i];
+						res.push('<div onclick="window.location=\''+relvid.pagePath+'\'" style="overflow:hidden;cursor:pointer;display:block;padding:7px;margin-top:11px;background-color:#4b4b4b;text-align:'+textAlign+'">');
+							res.push('<div style="height:65px;overflow:hidden;">');
+								res.push('<p style="margin:0;padding:0;overflow:hidden;color:white;font-size:13px;font-weight:bold;">');
+									res.push('<span>' + this._htmlescape(relvid.title) + '</span>');
+								res.push('</p>');
+								res.push('<p style="margin:0;padding:0;overflow:hidden;color:white;font-size:13px;font-weight:normal;">');
+									res.push('<span>' + this._htmlescape(relvid.subTitle) + '</span>');
+								res.push('</p>');
+							res.push('</div>');
+						res.push('</div>');
+					};
+				};
+				res.push('</div>');
+			res.push('</div>');
+			return res.join('');
+		},
+		_getHeadlinePostScreenHtml:function(player){
+			var res=[];
+			res.push('<div style="width:'+player.width+'px;height:'+player.height+'px;text-align:center;direction:rtl;background:url('http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/+this.CONST.YnetVideoLogoSrc+') no-repeat 15px 15px black;">');
+				res.push('<div style="padding-top:'+Math.floor(player.height/3)+';" >');
+					res.push(this._getPostScreenButtons(player));
+				res.push('</div>');
+			res.push('</div>');
+			return res.join('');
+		},
+		
+				_getTopStoryPostScreenHtml:function(player){
+			var res=[];
+			res.push('<div style="width:'+player.width+'px;height:'+player.height+'px;text-align:center;direction:rtl;background:' + (!this.CONST.disableLogo ? 'url('http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/+this.CONST.YnetVideoLogoSrc+') no-repeat 15px 15px black;' : 'black;') + '">');
+				res.push('<div style="padding-top:'+Math.floor(player.height/2)+'px;" >');
+					res.push('<div style="margin:-40px auto 0 auto;" >');
+						res.push('<a href="javascript:CmmAppVideoApi._onClickPlayAgain(' + player.id + ')" ><img border=0 width=53 height=80 src="http://www.ynet.co.il/images/flowplayer/fpHotPlayAgain.gif"></img></a>');
+					res.push('</div>');
+				res.push('</div>');
+			res.push('</div>');
+			return res.join('');
+		},
+		_getVideoChannelPostScreenHtml:function(player){
+			return this._getArticlePostScreenHtml(player, 80, 40);
+		},
+		_initContainer:function(player){
+			var isAudio = this._isAudio(player);
+			if (!player.containerInitialized || player.params.resizePlayerContainer) {
+				var html = [];
+				// flash audio player size definition
+				if (isAudio) {										
+					var width = this.CONST.AudioPlayerDimensions[player.type].width;
+					var height = this.CONST.AudioPlayerDimensions[player.type].height;
+				} else {
+					var width = player.width;
+					var height = player.height;
+				}
+				
+				html.push('<div class="fpMain" style="position:relative;width:' + player.width + 'px;height:' + player.height + 'px;overflow:hidden;">');	
+					var containerHtml = '<div id="yntfpcontainer'+player.id+'" style="width:' + width + 'px;height:' + height + 'px;overflow:hidden;"></div>';			
+					if (isAudio){
+						containerHtml = '<div id="yntfpcontainer'+player.id+'" style="height:' + height + 'px;overflow:hidden;"></div>';			
+						html.push(this._getAudioPlayerHtml(player,containerHtml));
+					} else {
+						html.push('<div id="fpPostScreen'+player.id+'" class="fpPostScreen" style="width:' + player.width + 'px;height:' + height + 'px;overflow:hidden;display:none;"></div>');
+						html.push(containerHtml);
+						html.push(this._initDecoration(player));
+						html.push(this._initContent(player));
+						html.push('<style>.fpPostScreen a:active, .fpPostScreen a:hover {outline:none;}</style>');					
+					};
+				html.push('</div>');
+				document.getElementById(player.params.destId).innerHTML=html.join('');
+				player.containerInitialized=true;
+			} else {
+				document.getElementById('yntfpcontainer'+player.id).style.display='block';
+				if (!isAudio){
+					document.getElementById('fpPostScreen'+player.id).style.display='none';
+					if(player.hasDecoration){
+						document.getElementById('fpDecorationContent'+player.id).innerHTML=this._getDecorationHtml(player);
+					};
+				};
+			};
+			if (!isAudio){
+				this._updateSharingFooter(player);
+			};
+		},
+		
+		/** returns "http://www.facebook.com/sharer.php?u={escaped target url}" to use as facebook sharing link */
+		_getFacebookShareUrl:function(player){
+			var playerType = player.type;
+			var video = player.video;
+			var targetPath = null;
+			if ((playerType === "article" || playerType === "headline" || player.type == "article1024") && video.articlePath) {
+				targetPath = video.articlePath;
+			} else if ((playerType === "hot" || player.type === "stage") && video.pagePath) {
+				targetPath = video.pagePath;
+			}
+			
+			else if (playerType === "flp6_Hot" ){
+			targetPath =  location.pathname ;
+			} else if ((player.type === "galleries") && video.id) {
+				targetPath = window.CmmAppVideoApi.CONST.VideoIdChannelSrc.replace('TOREPLACE',video.id);
+			}
+			if (targetPath && targetPath.length) {
+				var loc = window.location;
+				var fbSharer = new Array("http://www.facebook.com/sharer.php?u=", loc.protocol, "//", loc.hostname, escape(targetPath));
+				return fbSharer.join('');
+			} else {
+				return '';
+			}
+		},
+
+		_updateSharingFooter:function(player){
+			var params = player.params;
+			var yqFooter = yq("div.sharingFooter", yq("div#" + params.destId).parent());
+			if (!yqFooter.length)
+			{
+				return;
+			}
+			if(this._getFacebookShareUrl(player)!="") {
+				yq("a.sf_fb", yqFooter).attr("href", this._getFacebookShareUrl(player));
+			}            
+			yq("input[name=articleId]", yqFooter).attr("value", params.artId);
+			var videoEmbedCode=this.getVideoEmbedCode(player.video);
+			if (videoEmbedCode.length>0) {
+				yq("textarea.sf_embed_code", yqFooter).attr("value", videoEmbedCode);
+			};
+		},
+		
+		_getAudioPlayerHtml:function(player,containerHtml) {
+			var html = [];
+			html.push("<div style='height:35px;direction:rtl;text-align:right;overflow:hidden;'>");
+				html.push("<div class='audio_player_txt_container' style='padding:17px 6px 0 0;'>");
+					html.push("<span class='audio_name' style='font:bold 13px Arial;color:#414141';></span>");
+				html.push("</div>");
+			html.push("</div>");
+			html.push("<div class=audioplayer_title_container style='width:"+(player.width-65)+"px'>");
+				
+				PlayerVideoName = "";
+				if (player.video.name != ''){
+					var PlayerVideoName = this._htmlescape(player.video.name);
+				} else {
+					var PlayerVideoName = this._htmlescape(player.video.oldName);
+				}
+				html.push("<div class=audioplayer_title>"+PlayerVideoName+"</div>");
+			html.push("</div>");
+			
+			html.push("<div class='ynet_audio_player" + (this.displayHtmlPlayer() ? ' ynet_audio_player_html' : ' audio_player_flash') + "' id='audio_player_"+player.id+"'>");							
+				html.push("<div class='audioplayer_left_side'></div>");
+				html.push("<div class='audioplayer_right_side'></div>");
+				html.push("<div class='audioplayer_middle'>");
+				if (!navigator.userAgent.match(/(iPod|iPhone|iPad)/)){
+					html.push("<div class=audioplayer_volume>");				
+						html.push("<div class=audioplayer_on-off>");
+								html.push("<div class='audioplayer_button audioplayer_mute'></div>");                
+								html.push("<div class='audioplayer_button audioplayer_unmute'></div>");  
+						html.push("</div>");
+						
+						html.push("<div class=audioplayer_level>");
+							for (i=1;i<=10;i++) {
+								html.push("<div class='audioplayer_level_button audioplayer_off' level="+i+"></div>");				
+							}
+						html.push("</div>");
+					html.push("</div>");
+				}
+					html.push("<div class='audioplayer_big_button'></div>");						
+					 html.push("<div class='audioplayer_playback'>");				
+						 html.push("<div class='audioplayer_button audioplayer_play'></div>");                
+						 html.push("<div class='audioplayer_button audioplayer_pause'></div>");        
+					 html.push("</div>");	
+					
+					html.push("<div class=audioplayer_seeker>");
+						html.push(containerHtml);
+					html.push("</div>");									
+					
+				html.push("</div>");
+				
+
+			html.push("</div>");
+			
+		
+			return html.join('');
+		},
+
+				
+		_initDecoration:function(player){
+			var html = [];
+			if(player.type == 'article' || player.type == 'article1024'  ){
+				player.decorationHeight = 18;
+			}else if(player.type == 'headline'){
+				player.decorationHeight = 42;
+			} else if (player.type === 'hot' || player.type === 'stage') {
+				player.decorationHeight = 21;
+			} else if (player.type === 'VideoChannel') {
+				   player.decorationHeight = 79;
+			} else if (player.type === 'articlePnaiPlus') {
+				player.decorationHeight = 48;
+			};
+				player.decorationTop = player.decorationHeight + this.CONST.FlowplayerControlBarHeight;
+				player.decorationTop = player.decoratioFlp6nTop ? player.decorationHeight - 10 : player.decorationTop;
+				html.push('<div id="fpDecoration'+player.id+'" style="position:relative;display:none;height:'+player.decorationHeight+'px;top:-'+player.decorationTop+'px;left:0;overflow:hidden;">');
+				html.push('<div id="fpDecorationContent'+player.id+'" style="position:relative;height:'+player.decorationHeight+'px;top:'+player.decorationHeight+'px;left:0;z-index:100;overflow:hidden;font-family:Arial;color:white;direction:'+this.CONST.siteDir+';text-align:'+this.CONST.siteAlign+'">');
+				html.push(this._getDecorationHtml(player));
+				html.push('</div>');
+				html.push('</div>');
+
+			return html.join('');
+		},
+		_getDecorationHtml:function(player){
+			if(player.type == 'article' || player.type == 'article1024' ){
+				return this._getArticleDecoration(player);
+			} else if(player.type == 'headline'){
+				return this._getHeadlineDecoration(player);
+			} else if (player.type === 'hot' || player.type === "stage") {
+				return this._getHotDecoration(player);
+			} else if (player.type === 'VideoChannel') {
+				return this._getVideoChannelDecoration(player);
+			} else if (player.type === 'articlePnaiPlus') {
+				return this._getPnaiPlusDecoration(player);
+			} else {
+				return '';
+			};
+		},
+		_getPnaiPlusDecoration:function(player){
+			var html = [];
+			var height = player.decorationHeight;
+			html.push('<div style="position:relative;overflow:hidden;height:'+height+'px;">');	
+				html.push('<div style="z-index:1;width:'+player.width+'px;height:'+height+'px;overflow:hidden;opacity:0.5;filter:alpha(opacity=50);background-color:black;"></div>');
+				html.push('<div style="z-index:2;width:'+player.width+'px;height:'+height+'px;line-height:'+height+'px;overflow:hidden;position:relative;top:-'+player.decorationHeight+'px;left:0;">');
+					html.push('<p style="direction:rtl;padding:0;margin-right:10px;color:white;font-size:20px;font-weight:bold;">'+this._htmlescape(player.video.credits)+'</p>');
+				html.push('</div>');
+			html.push('</div>');
+			return html.join('');
+		},
+		_getArticleDecoration:function(player){
+			var html = [];
+			var height = player.decorationHeight;
+			html.push('<div class="fpMain" style="position:relative;overflow:hidden;height:'+height+'px;">');	
+				html.push('<div style="z-index:1;width:'+player.width+'px;height:'+height+'px;overflow:hidden;opacity:0.5;filter:alpha(opacity=50);background-color:black;"></div>');
+				html.push('<div style="z-index:2;width:'+player.width+'px;height:'+height+'px;line-height:'+height+'px;overflow:hidden;position:relative;top:-'+player.decorationHeight+'px;left:0;">');
+					html.push('<p style="direction:rtl;padding:0;margin-right:10px;color:white;font-size:10px;">'+this._htmlescape(player.video.credits)+'</p>');
+				html.push('</div>');
+			html.push('</div>');
+			return html.join('');
+		},
+		_getHeadlineDecoration:function(player,height){
+			var html = [];
+			var height = player.decorationHeight;
+			html.push('<div style="position:relative;overflow:hidden;height:'+height+'px;">');	
+				html.push('<div style="z-index:1;width:'+player.width+'px;height:'+height+'px;opacity:0.5;filter:alpha(opacity=50);background-color:black;overflow:hidden;"></div>');
+				html.push('<div style="z-index:2;width:'+player.width+'px;height:'+height+'px;position:relative;top:-'+player.decorationHeight+'px;left:0;color:white;overflow:hidden;cursor:pointer;" onclick="window.location.href=\''+this._htmlescape(player.video.articlePath)+'\';">');
+					html.push('<div style="height: 20px; overflow: hidden;"><p style="margin:4px 5px;text-align:right;font-weight:bold;">'+this._htmlescape(player.video.articleTitle)+'</p></div>');
+					html.push('<div style="height: 20px; overflow: hidden;padding: 0 5px 0 5px;">');
+						html.push('<p style="float:left;width:90px;margin:0;padding:0;text-align:left;font-weight:bold;overflow:hidden;">לכתבה המלאה...</p>');
+						html.push('<p style="float:right;width:150px;height:12px;margin:0;padding:0;font-size:10px;overflow:hidden;">'+this._htmlescape(player.video.credits)+'</p>');
+					html.push('</div>');
+				html.push('</div>');
+			html.push('</div>');
+			return html.join('');
+		},
+		_getHotDecoration:function(player,vidId){ 
+			videoId = vidId || 0 ;
+			player.type = videoId == 0 ? player.type  : 'flp6_Hot';
+			var html = new Array();
+			var height = player.decorationHeight;
+
+			if (videoId) {
+			html.push("<div style='position:relative;top:-17px;outline:0;overflow:hidden;direction:ltr;text-align:left;width:" +player.width + "px;background-image: url(http://www.ynet.co.il/images/video/HOT_video_fb_share.png);'>");
+				}else {
+
+			html.push("<div style='position:relative;outline:0;overflow:hidden;direction:ltr;text-align:left;width:" +player.width + "px;height:"+height+"px;background-image: url(http://www.ynet.co.il/images/video/HOT_video_fb_share.png);'>");
+				}
+			html.push("<a title='facebook' href='http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/" + this._getFacebookShareUrl(player)+ "' target='_blank' style='display:block;width:75px;height:21px;'></a>");
+			html.push("</div>");
+			return html.join('');
+		},
+		_getVideoChannelDecoration:function(player,height){
+			var html = [];
+			var height = player.decorationHeight;
+			html.push('<div style="position:relative;overflow:hidden;height:'+height+'px;">');	
+				html.push('<div style="z-index:1;width:'+player.width+'px;height:'+height+'px;opacity:0.5;filter:alpha(opacity=50);background-color:black;overflow:hidden;"></div>');
+				html.push('<div style="z-index:2;margin:4px 10px;position:relative;top:-'+player.decorationHeight+'px;left:0;color:white;');
+				if(player.video.articlePath) {
+					html.push('cursor:pointer;" onclick="window.location.href=\''+this._htmlescape(player.video.articlePath)+'\';');
+				};	
+				html.push('">');
+					html.push('<p style="margin:0;height:20px;overflow:hidden;font-size:16px;font-weight:bold;">'+this._htmlescape(player.video.title)+'</p>');
+					html.push('<p style="margin:0;height:31px;overflow:hidden;font-size:13px;line-height:15px;">'+this._htmlescape(player.video.subTitle)+'</p>');
+					html.push('<p style="margin-top:3px;height:20px;overflow:hidden;font-size:11px;line-height:14px;">');
+						if(player.video.articlePath) {
+							if(player.video.articleAuthor) {
+								html.push('<span>'+this._htmlescape(player.video.articleAuthor)+', </span>');
+							};
+							html.push('<span>פורסם: </span>');
+							html.push('<span>'+this._htmlescape(player.video.articleLaunchDate)+' </span>');
+							html.push('<a style="font-size:11px;color:red;text-decoration:underline;" href="http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/'+this._htmlescape(player.video.articlePath)+'">לכתבה המלאה</a> ');
+							html.push('<span>('+this._htmlescape(player.video.articleComments)+' תגובות) </span>');
+						};
+					html.push('</p>');
+				html.push('</div>');
+			html.push('</div>');
+			return html.join('');
+		},
+		_enableDecoration:function(player){
+			document.getElementById('fpDecoration' + player.id).style.display = 'block';
+		},
+		_disableDecoration:function(player){
+			document.getElementById('fpDecoration' + player.id).style.display = 'none';
+		},
+		_showDecoration:function(player){
+			this._enableDecoration(player);
+			yq('#fpDecorationContent' + player.id).stop().animate({
+				top:0
+			}, 500);
+		},
+		_hideDecoration:function(player){
+			var _this = this;
+			yq('#fpDecorationContent' + player.id).stop().animate({
+				top:player.decorationHeight
+			}, 500,function(){
+				_this._disableDecoration(player);
+			});
+		},
+		/** persists player's decoration, according to (boolean) persistValue */
+		_persistDecoration:function(player, persistValue){
+			if (player.hasDecoration) {
+				/** disable/enable automatic decoration & display/hide it manually */
+				player.decorationEnabled = !persistValue;
+				if (persistValue) {
+					this._showDecoration(player);
+				} else if (!player.mouseInPlayer) {
+					this._hideDecoration(player);
+				}
+			}
+		},
+		
+				_addDecorationConf:function(player,conf){
+			player.hasDecoration = false;
+			var decorationTypes = [
+				'article'
+				,'article1024'
+				,'headline'
+				,'hot'
+				,'VideoChannel'
+				,'HomepagePlayer'
+				,'LightBoxArticlePlayer'
+				,'stage'
+				,'TopStory'
+				,'TopStoryWide'
+				,'TopStoryArticle'
+				,'articlePnaiPlus'
+			];
+			
+			if(yq.inArray(player.type, decorationTypes) >= 0){
+				var _this = this;
+				
+				if(player.type == "article" || player.type == "article1024" || player.type == "articlePnaiPlus"){
+					if(player.video.credits == ""){
+						return conf;
+					};
+				} else if(player.type == "headline"){
+					if(player.video.credits == "" && player.video.articleTitle == ""){
+						return conf;
+					};
+				} else if ((player.type === "hot" || player.type === "stage") && !player.video.pagePath) {
+					return conf;
+				}
+				
+				player.hasDecoration = true;
+				player.decorationEnabled = false;
+				player.clipPlaying = false;
+				player.mouseInPlayer = false;
+
+				yq('#yntfpcontainer'+player.id).parent().hover(
+					function(){
+						player.mouseInPlayer = true;
+						if(player.clipPlaying){
+							player.contentManager.fireEvent('onPlayerMouseOver');
+							if(player.decorationEnabled){
+								_this._showDecoration(player);
+							};
+						};
+					},
+					function(event){
+						player.mouseInPlayer = false;
+						if(player.clipPlaying){
+							player.contentManager.fireEvent('onPlayerMouseOut');
+							if(player.decorationEnabled){
+								_this._hideDecoration(player);
+							};
+						};						
+					}
+				);
+				conf.onFullscreen = function(){
+					if(player.clipPlaying){
+						player.contentManager.fireEvent('onPlayerFullscreen');
+						_this._hideDecoration(player);
+						player.decorationEnabled = false;
+					};
+				};
+				conf.onFullscreenExit = function(){
+					if(player.clipPlaying) {
+						player.decorationEnabled = true;
+					};
+				};
+				conf.onBeforeLoad = function(){
+					//_this._disableDecoration(player);
+				};
+				/*conf.clip.onPause=function(){
+					player.clipPlaying = false;
+					_this._disableDecoration(player);
+				};
+				conf.clip.onResume=function(){
+					player.clipPlaying = true;
+					_this._enableDecoration(player);
+				};*/
+			};
+			return conf;
+		},
+		_addAdsConf:function(player,conf){
+			
+			var _this=this;
+			var is_no_ads = player.video.is_no_ads || player.params.is_no_ads || this.CONST.noAds;
+			var isCarambolaEnabled = !is_no_ads && player.type == 'hot';
+						
+			if (this.CONST.site=='hot') {
+				var flavor='HOT';
+			} else if (this.CONST.site=='ynet' || this.CONST.site=='stage' || this.CONST.site=='pplus') {
+				var flavor='YNET';
+			} else if (this.CONST.site=='mekomy') {
+				var flavor='Mynet';
+				isCarambolaEnabled = false;
+			} else if (this.CONST.site=='laisha') {
+				var flavor='Laisha';
+			} else {
+				is_no_ads=true;
+			};
+	
+			isCarambolaEnabled = false;
+			
+			if (is_no_ads) {
+			
+								if (!player.video.isInvalid) {
+					conf.clip.onFinish=function(clip){
+						_this._onFinish(player);
+						_this._onClipFinish(player);
+					};
+				};
+				player.hiroLoaded = false;
+			} else {
+				
+			if (player.params.isArtimediaFlag=="1"   || this.CONST.isArtimediaFlag ) {
+					if (!player.video.isInvalid) {
+						conf.plugins.amta={
+						url:"http://mediadownload.ynet.co.il/fp3218/amta_plugin_20314.swf",
+						siteKey: "ynet",
+						category: window.dcPath ? window.dcPath : "0.noDcpathOnPage"
+										};
+					player.hiroLoaded = false;
+					conf.clip.onFinish=function(clip){
+						_this._onFinish(player);
+						_this._onClipFinish(player);
+					
+					};
+					
+					}
+			}
+			else {
+		
+								conf.plugins.hiro={
+					url: this.CONST.FlowplayerHiroPluginSrc,
+					site_id: player.video.categoryId,
+					flavor: flavor,
+					AllowRegScreen: true,
+					zIndex: 2
+				};
+				
+								if (!player.video.isInvalid) {
+					conf.plugins.hiro.onFinish = function(){
+						_this._onHiroAdComplete(player, {product : 'Post'});
+						_this._onFinish(player);
+					};
+					conf.plugins.hiro.onHiroAdStart = function(info){
+						_this._onHiroAdStart(player, info);
+					};
+					conf.plugins.hiro.onHiroAdComplete = function(info){
+						_this._onHiroAdComplete(player, info);
+					};
+
+					conf.clip.onFinish=function(){
+						if(player.hasDecoration){
+							_this._disableDecoration(player);
+							player.clipPlaying=false;
+						};
+						player.contentManager.fireEvent('onClipFinish');
+						
+						_this._onClipFinish(player);
+					};
+				};
+
+				player.hiroLoaded = true;
+				}
+			};
+			
+						if (!player.video.isInvalid && isCarambolaEnabled) {
+				conf.plugins.carambola = { 
+					url: this.CONST.FlowplayerCarambolaPluginSrc, 
+					urlClient: this.CONST.FlowplayerCarambolaPluginClientSrc, 
+					fixStage: true, 
+					debugMode: false, 
+					showSoundtrackButton: false, 
+					pid : this.CONST.FlowplayerCarambolaPublisherId,
+					sMovieIdentifier: player.video.fakeCarambolaSMovieIdentifier || player.video.relativePath,
+					useJs: 1,
+					popupJsFunc: 'CmmAppVideoApi_carambolaPopup_' + player.id,
+					pauseJsFunc: 'CmmAppVideoApi_carambolaPause_' + player.id,
+					signalActiveLayerJsFunc: 'CmmAppVideoApi_carambolaActiveSignal_' + player.id
+				};
+				var _player=player;
+				window['CmmAppVideoApi_carambolaPopup_' + player.id] = function(url,target) {
+					_this._carambolaPopup(_player,url,target);
+				};
+				window['CmmAppVideoApi_carambolaPause_' + player.id] = function() {
+					_this._carambolaPause(_player);
+				};
+				window['CmmAppVideoApi_carambolaActiveSignal_' + player.id] = function() {
+					_this._carambolaActiveSignal(_player);
+				};
+			};
+				
+			return conf;
+		},
+		_addClipConf:function(player,conf){
+			var wUrl= window.location.href
+			conf.clip.url = player.video.path;
+		if 	 ( player.video.substitutepath.search('/manifest.f4m') != -1  )  {	
+				conf.clip.url = player.video.substitutepath  
+				conf.plugins.akamai = { url: this.CONST.FlowplayerAkamaiPluginSrc_HDN2 };
+			conf.clip.provider = 'akamai';
+			conf.clip.type = 'video';
+			} else 	if (this._isHDN2Supported(player)) {
+				conf.plugins.akamai = { url: this.CONST.FlowplayerAkamaiPluginSrc_HDN2 };
+				conf.clip.provider = 'akamai';
+				conf.clip.type = 'video';
+			} else if (conf.clip.url.search('rtmp://') != -1) {
+				conf.clip.provider = 'rtmp';
+				conf.plugins.akamai = { url: this.CONST.FlowplayerAkamaiPluginSrc };
+				conf.plugins.rtmp = { url: this.CONST.FlowplayerRtmpPluginSrc };
+			}  else {
+				conf.clip.provider = 'http';
+			};
+			if 	 ( conf.clip.url.search('_ynetLogo_') != -1  )  {	
+						this.CONST.disableLogo=1															
+																		}
+		if (player.video.origin)	{														
+			if 	 ( player.video.origin.search('flv') != -1  )  {	
+				conf.clip.url = player.video.cleanMajorpath }	}
+			if (player.type == 'TopStoryWide') {
+				conf.clip.scaling = 'scale';
+			} else if(this.CONST.VideoWideFormatEnabled || player.type == 'hot' || player.type == 'stage'){
+				conf.clip.scaling = 'fit';
+			} 
+			return conf;
+		},
+		_addLogoConf:function(player,conf){
+			if(!this.CONST.disableLogo && yq.inArray(player.type, [
+				"article"
+				,"videos"
+				,"article1024"
+				,"headline"
+				,"headlineVideos"
+				,"HomepagePlayer"
+				,"LightBoxArticlePlayer"
+				,"TopStory"
+				,"TopStoryWide"
+				,"TopStoryArticle"
+				,"galleries",
+				,"sixColVidXnet",
+				"articlePnaiPlus"
+			]) >= 0)
+			{
+					conf.logo = {
+						url: this.CONST.YnetVideoLogoSrc,
+						top: 15,
+						left: 15,
+						fullscreenOnly: false
+				};
+			};
+			return conf;
+		},
+		_addControlsConf:function(player,conf){
+			conf.plugins.controls = {
+				zIndex: 1
+			};
+			
+			var _this = this;
+			
+			if (this.CONST.isMotorolaDesign) {
+				conf.plugins.controls.url = this.CONST.FlowplayerControlsPluginSrc_Motorolla;
+				conf.plugins.controls.autoHide = 'fullscreen';
+				conf.plugins.controls.height = 55;
+				conf.plugins.controls.logoPopupUrl = this.CONST.FlowplayerMotorolaLogoPopupUrl;
+				conf.plugins.controls.logoPopupLink = this.CONST.FlowplayerMotorolaLogoPopupLink;
+				
+				if(player.type=="headline") {
+					conf.plugins.controls.buttonsBackgroundWidth = 45;
+					conf.plugins.controls.pause = false;
+					conf.plugins.controls.play = false;
+					conf.plugins.controls.stop = false;
+					conf.plugins.controls.toggleplay = true;
+					conf.plugins.controls.spacing = { all: 2, fullscreen: 5, scrubber: 0, mute: -10, volume: 10, time: 0, stop: 25, toggleplay: 4};
+					conf.plugins.controls.volumeBackgroundWidth = 92;
+				};
+				
+				conf.plugins.controls.onPopupClicked = function() {
+					_this._onMotorolaPopupClick(player);
+				};
+				
+				conf.plugins.controls.onPopupDisplayed = function() {
+					_this._onMotorolaPopupDisplay(player);
+				};
+				
+			} else {
+				conf.plugins.controls.url = this.CONST.FlowplayerControlsPluginSrc;
+				conf.plugins.controls.autoHide = 'fullscreen';
+				if(player.type=="headline") {
+					conf.plugins.controls.time=false;
+				} else if (yq.inArray(player.type, [
+					"TopStory"
+					,"TopStoryWide"
+					,"TopStoryArticle"
+				]) >= 0)
+				{
+					conf.plugins.controls.autoHide = true;
+				}
+			};
+			
+			return conf;
+		},
+		_addPlaylistConf:function(player,conf){
+			var _this = this;
+			conf.playlist = [];
+
+			if (this._isHDN2Supported(player)) {
+				conf.clip = {
+					provider : 'akamai',
+					type : 'video'
+				};
+			};
+			
+			var playlist = player.video.playlist;
+			if(playlist.length == 0){playlist.push(player.video);};
+			for(var i = 0; i < playlist.length; i++){
+				conf.playlist.push({
+					url:playlist[i].path,
+					autoPlay:(i>0),
+					
+					onBegin:function(clip){_this._onClipStart(player,clip);},
+					onFinish:function(clip){_this._onFinish(player,clip);}
+				});
+			};
+
+			return conf;
+		},
+		_addAdvisionConf:function(player,conf){
+			var changedDcPath = '';
+			var changedDcTags = '';
+			var checkedDcContentID = '';
+			if(window.dcContentID) {
+				checkedDcContentID = parseInt(window.dcContentID) || '';
+			}
+			if(window.dcTags) {
+				changedDcTags =	(window.dcTags).join(',');
+				if(typeof checkedDcContentID == 'number') {
+					changedDcTags = changedDcTags+',';
+				}
+			}
+			if(window.dcPath) {
+				changedDcPath =	(window.dcPath).replace(/\./g, ',');
+				if(changedDcTags.length || typeof checkedDcContentID == 'number') {
+					changedDcPath = changedDcPath+',';
+				}
+			}
+			conf.plugins.amta = {
+				url: this.CONST.FlowplayerAdvisionPluginSrc,
+				siteKey: 'ynet',
+				keywords: changedDcPath+changedDcTags+checkedDcContentID
+			};
+			return conf;
+		},
+		_addStatisticsConf:function(player,conf){
+			conf.plugins.gatracker = {
+				url: this.CONST.FlowplayerAnalyticsPluginSrc,
+				// labels: {
+					// start: 'Start',
+					// play: 'Play',
+					// pause: 'Pause',
+					// resume: 'Resume',
+					// seek: 'Seek',
+					// stop: 'Stop',
+					// finish: 'Finish',
+					// mute: 'Mute',
+					// unmute: 'Unmute',
+					// fullscreen: 'Full Screen',
+					// fullscreenexit: 'Full Screen Exit'
+				// },
+				// trackingMode: 'AS3',
+				// googleId: this.CONST.FlowplayerAnalyticsPluginId
+				events: {
+					all: true
+				},
+				accountId: this.CONST.FlowplayerAnalyticsPluginId
+			};
+			return conf;
+		},
+		_addEventsConf:function(player,conf){
+			var self = this;
+			
+			conf.clip.onCuepoint = new Array([0, 100], function(clip, cuepoint) {
+												if (cuepoint == 0 && player.params.autoStart === false && !player.getVar('dontPausePlayerOnCuepoint0')) {
+					player.setVar('dontPausePlayerOnCuepoint0', true);
+					player.pause();
+				} else {
+					self._onCuepoint(player, clip, cuepoint);
+				}
+			});
+			
+			conf.clip.onBeforeBegin = function(clip){
+				self._onClipBeforeBegin(player, clip);
+			};
+			
+			
+			if (player.params.isArtimediaFlag=="1"  || this.CONST.isArtimediaFlag ) {
+			conf.onVideoStart = function(clip) {self._onClipStart(player, clip);}
+				} else {
+			conf.clip.onStart = function(clip){
+				self._onClipStart(player, clip);
+			};
+			}
+				
+				
+
+			
+				
+			conf.onLoad = function(){self._onPlayerLoad(player); };
+			conf.onPause = function() {self._onPlayerPause(player);};
+			conf.onResume = function() {self._onPlayerResume(player);};
+			conf.onSeek = function() {self._onPlayerSeek(player);};
+			conf.onBeforeSeek = function() {self._onPlayerBeforeSeek(player);};
+			conf.onStop = function() {self._onPlayerStop(player);};
+			
+			return conf;
+		},
+		
+		_addAudioPluginsConf:function(player,conf){
+			if (this._isHDN2Supported(player)) {
+				conf.plugins.akamai = {
+					url : this.CONST.FlowplayerAkamaiPluginSrc_HDN2
+				};
+			} else {
+				conf.plugins.audio = {
+					url: this.CONST.FlowplayerAudioPluginSrc
+				};
+			}
+			return conf;
+		},
+		_initContent: function(player,conf){
+			var self = this;
+
+			if(!player.contentManager){
+				player.contentManager = new this.ContentManager(player);
+				
+				var splash = player.contentManager.getContent('Splash');
+
+			};
+			return player.contentManager.getHtml();
+		},
+		_getConf:function(player){
+						var _this=this;			
+			var conf = { 
+				key: this.CONST.FlowplayerAppKey,
+				debug: false,
+				canvas: {
+					backgroundColor: '#000000',
+					backgroundGradient: 'none'
+				},
+				clip: {
+					autoPlay: true,
+					bufferLength: 5,
+					autoBuffering: true,
+					eventCategory: window.dcPath || 'undefined'
+				},
+				plugins: {}
+			};				
+			
+									conf.play={display:'none'};
+						
+			conf=this._addAdsConf(player,conf);
+			conf=this._addClipConf(player,conf);
+			conf=this._addControlsConf(player,conf);
+						if (!player.video.isInvalid) {
+				conf=this._addEventsConf(player,conf);
+				if(this.CONST.FlowplayerAdvisionPluginIsActive==1) {
+					conf=this._addAdvisionConf(player,conf);
+				}
+				conf=this._addStatisticsConf(player,conf);
+				conf=this._addLogoConf(player,conf);
+				if(!player.params.dontShowDecoration){
+				   conf=this._addDecorationConf(player,conf);
+				}
+			};
+			
+			return conf;
+		},
+		_getAudioConf:function(player){			
+			var _this=this;
+			var conf = {
+				debug:false,
+				key: this.CONST.FlowplayerAppKey,
+				plugins: {
+					controls: {
+						url: this.CONST.FlowplayerControlsPluginSrc_Audio,						
+						autoHide: false,
+						fullscreen:false,
+						play:false,
+						volume:false,
+						time:true,
+						mute:false,
+						background: 'url(/images/audio/audioPlayerFlashMiddle.jpg)',						
+						height:this.CONST.AudioPlayerDimensions[player.type].height,								
+						scrubberHeightRatio:0.6,
+						scrubberBarHeightRatio:0.55,
+						volumeSliderHeightRatio:0.4,
+						volumeBarHeightRatio:0.2,
+						tooltips:{scrubber:false,volume:false},
+						backgroundColor: 'transparent',
+						backgroundGradient: 'none',
+						buttonColor: '#ffffff',
+						progressColor: '#c11315',
+						progressGradient: [0.6, 0.2, 0],
+						sliderColor: '#ffffff',
+						volumeColor: '#009cca',						
+						timeColor: '#ffffff',
+						durationColor: '#ffffff'
+					}
+				},
+				onLoad: function() {
+					this.unmute();
+					yq('#audio_player_'+player.id+' .fp_audio_player').animate({
+						opacity: 1
+					}, 700);					
+					yq('#audio_player_'+player.id+' .audio_name').html(player.video.name);	
+
+					if (player.audioPlayerController) {
+						player.audioPlayerController.onPlayerLoad();
+					};
+				},
+				onFinish:function(){
+					player.flowplayer.getPlugin("play").hide();
+                    yq('#audio_player_'+player.id+' .audioplayer_button.audioplayer_pause').hide().siblings().show();
+
+				}
+			};
+
+			conf=this._addAudioPluginsConf(player,conf);
+			conf=this._addStatisticsConf(player,conf);
+			conf=this._addPlaylistConf(player,conf);
+			return conf;
+		},
+		
+				
+		_loadPlayer:function(player){
+			
+			var FlowPlayerSixIframeFlg = '';
+			if (parseInt(this.CONST.FlowPlayer6iframeFlg))  FlowPlayerSixIframeFlg = 1 ;
+			if  (yq.browser.msie && yq.browser.version <= 8)  { FlowPlayerSixIframeFlg = 0}
+			if ( FlowPlayerSixIframeFlg &&  player.type != 'VideoChannel' ) {
+			
+			this._loadFlowplayer6Ifrm(player)
+			return;
+			};
+			if (this._invalid(player.params, 'loadPlayer: missing params')
+				|| this._invalid(player.params.destId, 'loadPlayer: missing params.destId')
+				|| this._invalid(document.getElementById(player.params.destId), 'loadPlayer: missing container div ' + player.params.destId))	{
+				return;
+			};			
+			var video=this._getVideo(player.videoId);
+			if(!video) {
+				this._loadPlayerAjax(player);
+				return;
+			};			
+			player.video=video;			
+						if (video.geoType == 'local' && !video.gotSecuredData) {
+								this._getSecuredData(player);
+				return;
+			}
+			
+			
+			if (this._invalid(video, 'loadPlayer: video not found - must call CmmAppVideoApi.addVideo with the video details')
+				|| this._invalid(video.path, 'loadPlayer: missing path for videoId='+player.videoId)
+				|| (!this._isAudio(player) && this._invalid(video.categoryId, 'loadPlayer: missing categoryId for videoId='+player.videoId))) {
+				return;
+			};
+			var isHtmlPlayer = this.displayHtmlPlayer();
+			
+			
+			if ( FlowPlayerSixIframeFlg &&  player.type == 'VideoChannel' ) {
+			this._loadFlowplayer6Ifrm(player)
+			return;
+			};
+			
+			if(!isHtmlPlayer ){
+				this._initContainer(player);
+			};
+			
+			
+			
+			if (this._isAudio(player)){												
+				player.audioPlayerController = new YnetAudioPlayer.PlayerController(yq("#"+player.params.destId));	
+			};
+			
+			
+			if (isHtmlPlayer){
+				this._loadHtmlPlayer(player);
+			} else {
+			var LightBoxFlg = '';
+			if (this.CONST.FlowPlayer6iframeLightBoxFlg)  LightBoxFlg = 1 ;
+			if ( player.type == 'HomepagePlayer' && LightBoxFlg ) {
+			this._loadFlowplayer6Ifrm(player)
+
+			}  else  this._loadFlashPlayer(player)       //this._loadFlashPlayer(player);  this._loadFlowplayer6Ifrm(player) 
+
+		
+			
+			};
+			
+		},
+		
+				_getSecuredData : function(player) {
+			var self = this;
+			
+			this._doSecuredDataAjax(player, function(player, data){
+				player.video.gotSecuredData = true;
+
+				if (data && data.length) {
+					player.video.isInvalid = false;
+					player.video.path = data[0];
+					player.video.htmlPath = data[1];
+					player.video.relativePath = data[2];
+				} else {
+					player.video.isInvalid = true;
+					
+					var errorImageSrc = '';
+					if (self.CONST.VideoRestrictedContentImageSrc) {
+						errorImageSrc = self.CONST.VideoRestrictedContentImageSrc.replace('PLAYERTYPE', player.type);
+					}
+					
+					player.video.path = errorImageSrc;
+					player.video.iphonePath = errorImageSrc;
+				};
+				
+				self._loadPlayer(player);
+			});
+		},
+		
+				_doSecuredDataAjax : function(player, callback) {
+			var self = this;
+			
+			var url = http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/window.CmmAppVideoApi.CONST.SecuredDataJsonUrl;
+			url = http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/url.replace('videoId',player.videoId);
+			
+			paramsIndex = document.location.href.indexOf('?');
+			if (paramsIndex != -1) {
+				url += document.location.href.slice(paramsIndex);
+			};
+			
+			this._ajax.go(url,function(res){
+				var dataArray = null;
+				
+				if (res && res.responseText) {
+					self._log('Secured data response text', res.responseText);
+					
+					var filteredStringMatch = res.responseText.match(/#(.*)#/);
+					
+					if (filteredStringMatch && filteredStringMatch[1]) {
+						var arrayString = filteredStringMatch[1];
+						dataArray = arrayString.split('#');
+					};
+				}
+
+				self._log('Secured data array', dataArray);
+				
+				callback(player, dataArray);
+			});
+		},
+		
+		_loadFlashPlayer:function(player){	
+		
+			var self = this;
+			var conf={};
+			
+			var videoId = player.videoId;
+			var articleId = player.params.artId;
+			var catId = window.dcPath;
+			var sSitePrefix = this.CONST.site;
+
+			if(this._isAudio(player)) {				
+				conf=this._getAudioConf(player);
+			} else {
+				conf=this._getConf(player);
+			};
+			
+			this._log('Flowplayer configuration object:', conf);
+			
+			player.flowplayer=flowplayer(document.getElementById('yntfpcontainer'+player.id),{
+				src:this.CONST.FlowplayerPlayerSrc,
+				wmode:'opaque',
+				allowScriptAccess:'always',
+				version: [10, 0],
+				onFail: function(){self._onFlashFail(player);}
+			},conf);
+			
+            /* set volume */
+            //setTimeout(function(){
+               // player.flowplayer.setVolume(50);
+           // }, 1500);
+
+			if (player.params.isVideoViewreportON=="1" || this.CONST.isVideoViewreportON) {
+					yq.ajax({
+						url:" http://" + this.CONST.VideoViewreportUrlPhpDomaim + "/video_view_report.php?articleId="+articleId+"&catId="+catId+"&videoId="+videoId+"&ms="+new Date().getTime()
+						// old triger- url:"/hot/Ext/Comp/VideoViewReport/CdaVideoViewReport/0,20562,,00.html?articleId="+articleId+"&catId="+catId+"&videoId="+videoId+"&ms="+new Date().getTime()
+					});
+				
+			}
+		},
+		
+		_checkReportedPopularity:function(player, clipDuration) {
+			if (!player.video.reporetedPopularity) {
+				this._reportPopularity(player, clipDuration);
+				player.video.reporetedPopularity = true;
+			}
+		},
+		
+		_reportPopularity:function(player, clipDuration) {
+				var url=http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/this.CONST.PopularityReportStatisticsServer;
+				url+='?content='+player.video.id;
+				url+='&type=1';
+				url+='&time='+Math.round(clipDuration);
+				url+='&random='+((new Date()).getTime());
+				(document.createElement('img')).src=url;
+		},
+		
+		
+		
+		_loadFlowplayer6Ifrm:function(player){			
+			player.ContentStartedFlg = 0;
+			var _this=this;
+			var artclId= ""
+			var container = document.getElementById(player.params.destId);
+			var videoId = player.videoId;
+			artclId= "-"+player.params.artId;
+			var tmpcrlstr= videoId + artclId
+			 videoURL = "/video/0,20658,tmpId,00.html".replace(/tmpId/g, tmpcrlstr);
+			var PlrType = player.type ?   player.type : "" ;
+			var playerId =  player.id ?   player.id : "" ;
+			 var mrgn = PlrType.indexOf('VideoChannel') > -1 ? " margin-top: 11.76%;" : ""
+			//if (PlrType == 'hot')  { yq('#vidObjVideo>iframe').css({'top':'-10px','position':'relative'}) }
+			//document.querySelector('#vidObjVideo>iframe').style.height='378px';
+			if (_this.CONST.site=='mekomy') { yq('.sharingFooter').css({'top':'-10px','position':'relative'}) }
+			var plrTypArr= ['hot','HomepagePlayer','LightBoxArticlePlayer','VideoChannel']
+			plrTypArr = plrTypArr.toString();
+			var autoPly =  plrTypArr.indexOf(PlrType) > -1 ?  true : "" ;
+		
+			window.IfrmLCntrlVidFin = function(){
+			if		(	plrTypArr.indexOf(PlrType) > -1	) CmmAppVideoApi._players[playerId].params.onFinish();		
+				if (typeof(window.pageRefreshDisable)=='function'){
+				window.pageRefreshDisable();
+				}
+			}
+	
+			window.ContentStarted= function(){ player.ContentStartedFlg = 1; }
+			var obj = {
+				callbacks: {
+					 "onLoad": "pageRefreshEnable",
+					 "onFinish": "IfrmLCntrlVidFin",
+					 "onContentStart":"ContentStarted"									
+				} ,  "autoplay":autoPly 
+				
+			}
+			if (	PlrType.indexOf('VideoChannel') > -1) {	var objUrl= "<iframe src='http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/"+videoURL+ "?obj=%22+JSON.stringify(obj)+%22' style='width: 100%;"+mrgn+"' ></iframe>"
+			player.decoratioFlp6nTop= 1;
+			this._initContainerFlp6(player,objUrl); } else {
+			container.innerHTML  = "<iframe src='http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/"+videoURL+ "?obj=%22+JSON.stringify(obj)+%22' style='width: 100%;border:0;overflow:hidden;"+mrgn+"' ></iframe>";
+			if (player.type == "hot" ) {	container.innerHTML+= _this._getHotDecoration(player,videoId)
+				}
+		   }	
+		
+		},
+			
+			_initContainerFlp6:function(player,objUrl){
+			var _this = this;
+			var isAudio = this._isAudio(player);
+			if (!player.containerInitialized || player.params.resizePlayerContainer) {
+				var html = [];
+				// flash audio player size definition
+				if (isAudio) {										
+					var width = this.CONST.AudioPlayerDimensions[player.type].width;
+					var height = this.CONST.AudioPlayerDimensions[player.type].height;
+				} else {
+					var width = player.width;
+					var height = player.height;
+				}
+				
+				html.push('<div class="fpMain" style="position:relative;width:' + player.width + 'px;height:' + player.height + 'px;overflow:hidden;">');	
+					var containerHtml = '<div id="yntfpcontainer'+player.id+'" style="width:' + width + 'px;height:' + height + 'px;overflow:hidden;">';			
+					if (isAudio){
+						containerHtml = '<div id="yntfpcontainer'+player.id+'" style="height:' + height + 'px;overflow:hidden;"></div>';			
+						html.push(this._getAudioPlayerHtml(player,containerHtml));
+					} else {
+						html.push('<div id="fpPostScreen'+player.id+'" class="fpPostScreen" style="width:' + player.width + 'px;height:' + height + 'px;overflow:hidden;display:none;"></div>');
+						html.push(containerHtml);
+						html.push(objUrl+'</div>')
+						html.push(this._initDecoration(player));
+						html.push(this._initContent(player));
+						html.push('<style>.fpPostScreen a:active, .fpPostScreen a:hover {outline:none;}</style>');					
+					};
+				html.push('</div>');
+				document.getElementById(player.params.destId).innerHTML=html.join('');
+				player.containerInitialized=true;
+			
+			yq('#yntfpcontainer'+player.id).parent().hover(
+					function(){
+						player.mouseInPlayer = true;
+						if(player.ContentStartedFlg){
+							player.contentManager.fireEvent('onPlayerMouseOver');
+							//if(player){
+								_this._showDecoration(player);
+							//};
+						};
+					},
+					function(event){
+						player.mouseInPlayer = false;
+						if(player.ContentStartedFlg ){
+							player.contentManager.fireEvent('onPlayerMouseOut');
+							//if(player){
+								_this._hideDecoration(player);
+							//};
+						};						
+					}
+				);
+			
+			
+			} else {
+				document.getElementById('yntfpcontainer'+player.id).style.display='block';
+				if (!isAudio){
+					document.getElementById('fpPostScreen'+player.id).style.display='none';
+					if(player.hasDecoration){
+						document.getElementById('fpDecorationContent'+player.id).innerHTML=this._getDecorationHtml(player);
+					};
+				};
+			};
+			if (!isAudio &&  typeof player.contentManager.pool != 'undefined'){
+				player.contentManager.pool[0].init()
+				player.contentManager.pool[0].update()
+			
+			};
+		},
+		
+		
+	
+		
+		_loadHtmlPlayer:function(player){			
+			var container = document.getElementById(player.params.destId);
+			var video=this._getVideo(player.videoId);
+			
+			if (container && video){
+				var html = "";
+								if(this._isAudio(player)) {					
+						var audioPlayer='';
+						 audioPlayer += " <span class=audioplayer_gutter style='width:"+(player.width-235)+"px'>";
+							 audioPlayer += "<span class=audioplayer_played></span>";	
+							 audioPlayer += "<span class=audioplayer_loading></span>";
+							 audioPlayer += "<span class='audioplayer_handle ui-slclasser-handle'></span>";
+						 audioPlayer += "</span>";												
+						audioPlayer += "<div class='audioplayer_timeleft'>";						
+						audioPlayer += "</div>";
+						
+					audioPlayer += "<audio>";
+							audioPlayer += "<source src="http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/+video.iphonePath+" type='audio/mpeg'>";
+							audioPlayer += "</source>";
+						audioPlayer += "</audio>";																					
+					html += this._getAudioPlayerHtml(player,audioPlayer);																				
+					container.style.height = 'auto';	
+					container.innerHTML = html;							
+					if (player.audioPlayerController) {
+						player.audioPlayerController.onPlayerLoad();
+					};
+					yq(container).find('audio').get(0).addEventListener('playing', function() { 
+					var clipDuration=yq(container).find('audio').get(0).duration;
+					self._checkReportedPopularity(player, clipDuration);
+					});
+				} else if (player.video.iphonePath.search(new RegExp('[.](png|gif|jpg|jpeg)' + String.fromCharCode(36), 'i')) >= 0) {
+					html += "<img";
+					html += " width='"+player.width+"'";
+					html += " height='"+player.height+"'";
+					html += " src='http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/"+video.iphonePath+"'";
+					html += "/>";
+					
+					container.innerHTML = html;
+				} else {
+					if (typeof(window.pageRefreshDisable)=='function'){
+						window.pageRefreshDisable();
+					};
+					html += "<video class='RespVideo'";
+					html += " style='direction:ltr;text-align:left;background-color:black;'";
+					html += " width='"+player.width+"'";
+					html += " height='"+player.height+"'";
+					html += " src='http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/"+video.iphonePath+"'";
+					html += " controls ";
+					html += " poster='http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/" + this._htmlescape(player.video.imgPath) +"'";
+					html += ">Sorry, unable to play video.</video>";
+					container.innerHTML = html;
+					
+					yq(container).find('video').get(0).addEventListener('playing', function() { 
+					var clipDuration=yq(container).find('video').get(0).duration;
+					self._checkReportedPopularity(player, clipDuration);
+					});
+				}
+			};
+		},
+		_loadPlayerAjax:function(player) {
+			var _this=this;
+			
+			if (window.location.hostname=='m.ynet.co.il') {
+				url='http://m.ynet.co.il/GetAudioContent.aspx';
+				var urlParams=window.CmmAppVideoApi.CONST.AjaxItemsUrl;
+				var firstIndex=urlParams.lastIndexOf("/");
+				var lastIndex=urlParams.length;
+				urlParams=urlParams.substr(firstIndex+1,lastIndex);
+				url=url+"?params="+urlParams;
+			} else {
+				url=window.CmmAppVideoApi.CONST.AjaxItemsUrl; 				
+			}			
+			url = url.replace('videoId',player.videoId);	
+			var articleId = player.params.artId || 0;
+			url = url.replace('articleId',articleId);
+			url = url.replace('type',player.type);
+			this._ajax.go(url,function(res){
+				var videoData=res.responseText;
+				try {
+					eval('var obj='+videoData.match(/{.*}/)[0]);
+				} catch (e) {
+					var obj=null;
+				};
+				if(obj!=null) {
+					_this.addVideo(player.videoId,obj);							
+					_this._loadPlayer(player);
+					if(typeof player.params.onAjaxSuccess == 'function'){
+						player.params.onAjaxSuccess();
+					};
+				};
+			});
+		},
+		_getPlayerFromExistingContainer:function(paramsDestId){
+			var player=false;
+			for(var playerId in this._players){
+				if (this._players[playerId].params.destId==paramsDestId) {
+					var player=this._players[playerId];
+					break;
+				};
+			};
+			if (player!==false && document.getElementById('yntfpcontainer'+player.id)) {
+				return player;
+			} else {
+				return false;
+			};
+		},
+
+				
+		addVideo: function(vidId,vidObj) {
+			vidObj.id=vidId;
+			this._videos[vidId] = vidObj;
+		},
+		addVideos: function(videos) {
+			for (var k in videos) {
+				this.addVideo(videos[k].id, videos[k]);
+			};
+		},
+		loadPlayer: function(type,videoId,width,height,params) {
+			this._log('loadingPlayer ', params.destId);
+			var player=this._getPlayerFromExistingContainer(params.destId);				
+			if (player===false) {
+				var player=this._getNewPlayer();
+				player.type=type;
+				player.videoId=videoId;
+				player.params=params;
+			} else {
+				player.videoId=videoId;
+				player.params=params;
+			};
+			
+			var dimensions = this.CONST.PlayerDimensions[type];				
+			if (params.resizePlayerContainer) {
+				player.width = params.setPlayerToFullSize ? dimensions.width : width;
+				player.height = params.setPlayerToFullSize ? dimensions.height : height;
+				
+				if (!params.autoHideControlBar && params.setPlayerToFullSize) {
+					player.height += this.CONST.FlowplayerControlBarHeight;
+				}
+			} else {
+				player.width = dimensions ? dimensions.width : width;
+				player.height = dimensions ? dimensions.height : height;
+				
+				if (!params.autoHideControlBar) {
+					player.height += this.CONST.FlowplayerControlBarHeight;
+				}
+			}			
+			
+			player.init();
+			this._onBeforePlayerLoad(player);
+			this._loadPlayer(player);
+		},
+		
+		onPausePlayer: function(destId) {
+			var player=this._getPlayerFromExistingContainer(destId);
+			player.pause();
+		},
+		
+						unloadPlayer : function(containerId) {
+			this._log('unloadingPlayer ', containerId);
+			
+			var player = this._getPlayerFromExistingContainer(containerId);
+			if (player) {
+				
+				// IE bug fix (video continues to play after it's hidden)
+				// this call makes the player.flowplayer object unusable
+				if(document.all){
+					yq('#' + containerId + ' object').remove();
+				};
+			} else  {
+			if(typeof yq == 'function'){
+			var f = yq('#' + containerId  + '> iframe' )
+			if (   typeof f == 'object' && f.length )   {  f[0].remove('innerHtml') } ;
+			                 }
+					}
+		},
+		
+				stopPlayback:function(destId) {
+			var player=this._getPlayerFromExistingContainer(destId);
+			if (player && document.getElementById('yntfpcontainer'+player.id)) {
+				flowplayer(document.getElementById('yntfpcontainer'+player.id), this.CONST.FlowplayerPlayerSrc, {});
+			}
+		},
+		
+				getTime:function(paramsDestId) {
+			var player=this._getPlayerFromExistingContainer(paramsDestId);
+			if (player) {
+				return player.flowplayer.getTime();
+			}
+			return false;
+		},
+				seek:function(paramsDestId, seconds) {
+			var player=this._getPlayerFromExistingContainer(paramsDestId);
+			if (player && seconds) {
+				player.flowplayer.seek(seconds);
+				return true;
+			}
+			return false;
+		},
+		getFlashVersion:function() {
+			var replaceRegexp = new RegExp(String.fromCharCode(92)+'D+','g');
+			var matchRegexp = new RegExp('^,?(.+),?' + String.fromCharCode(36));
+			try {
+				try {
+					  var axo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.6');
+					  try { axo.AllowScriptAccess = 'always'; }
+					  catch(e) { return '6,0,0'; }
+					} catch(e) {}
+					return new ActiveXObject('ShockwaveFlash.ShockwaveFlash').GetVariable(String.fromCharCode(36) + 'version').replace(replaceRegexp, ',').match(matchRegexp)[1];
+			} catch(e) {
+				try {
+					if(navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin){
+						return (navigator.plugins["Shockwave Flash 2.0"] || navigator.plugins["Shockwave Flash"]).description.replace(replaceRegexp, ',').match(matchRegexp)[1];
+					}
+				} catch(e) {}
+			}
+			return '0,0,0';
+		},
+		
+		displayHtmlPlayer:function(){
+			var domain = window.document.domain; 
+            if((domain.indexOf('xnet') == 0 || typeof isMobile != 'undefined' ) && !(/iPad/).test(navigator.userAgent) ){
+				return hasFlash;
+			}
+			
+			var version = this.getFlashVersion().split(',').shift();
+			var hasFlash=version=='0'?true:false;
+			return hasFlash;
+			return navigator.userAgent.match(/(iPod|iPhone|iPad)/);
+		},
+		
+		getVideoEmbedCode:function(video) {
+			var embed = new Array();
+			if (video.embedConfig) {
+				embed.push("<object wmode='transparent' width='400' height='300' type='application/x-shockwave-flash' data='http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js/" + this._htmlescape(this.CONST.FlowplayerPlayerSrc) + "'>");
+				embed.push("<param name='movie' value='" + this._htmlescape(this.CONST.FlowplayerPlayerSrc) + "'/>");
+				embed.push("<param name='flashvars' value='config=" + this._htmlescape(video.embedConfig) + "'/>");
+				embed.push("<param name='allowfullscreen' value='true'/>");
+				embed.push("<param name='allowscriptaccess' value='always'/>");
+				embed.push("<param name='quality' value='high'/>");
+				embed.push("<param name='cachebusting' value='true'/>");
+				embed.push("<param name='bgcolor' value='#000000'/>");
+				embed.push("<param name='wmode' value='transparent'/>");
+				embed.push("</object>");
+			};
+			return embed.join("");
+		},
+		
+		showFakePlayer: function(playerType, videoId, contId, width, height, imgPath, onclick) {
+			var container = yq('#' + contId);
+			var fakePlayer = container.find('.fpFakePlayer');
+			var flashPlayer = container.find('.fpFlashPlayer');
+
+			if (fakePlayer.length == 0) {
+				var ctrlBarHeight = this.CONST.FlowplayerControlBarHeight;
+				var videoHeight = height - ctrlBarHeight;
+				var ctrlBarImageSrc = '/images/flowplayer/fpControlPanel' + width + '%TYPE%.png';
+				if (playerType == 2 || playerType == 3) {
+					var ctrlBarImageSrc = '/images/matrixplayer/matrixPanel' + width + '%TYPE%.png';
+				}
+				
+				if (this.CONST.isMotorolaDesign) {
+					ctrlBarImageSrc = ctrlBarImageSrc.replace('%TYPE%', '_M');
+					
+					var ctrlBarPlayButtonMarginTop = 8;
+					var ctrlBarPlayButtonMarginLeft = 44;
+					var ctrlBarPlayButtonWidth = 37;
+					var ctrlBarPlayButtonHeight = 37;
+				} else {
+					ctrlBarImageSrc = ctrlBarImageSrc.replace('%TYPE%', '');
+					
+					var ctrlBarPlayButtonMarginTop = 5;
+					var ctrlBarPlayButtonMarginLeft = 18;
+					var ctrlBarPlayButtonWidth = 12;
+					var ctrlBarPlayButtonHeight = 15;
+				}
+				
+				var html = [];
+				html.push("<div class='fpFakePlayer' style='width:"+width+"px;height:"+height+"px;overflow:hidden;'>");
+					html.push("<div style='width:"+width+"px;height:"+videoHeight+"px;overflow:hidden;'>");
+						html.push("<img class='fpOpeningImage' width=100% height=100% />");
+						html.push("<div style='margin-top:" + -((videoHeight / 2) + 40) +"px;'>");
+							html.push("<div style='text-align:center;'>");
+								html.push("<img class='fpPlayButton' style='cursor:pointer;' src='http://www.ynet.co.il/images/flowplayer/fpPlayButtonBig.png'\"/>");
+							html.push("</div>");
+						html.push("</div>");
+					html.push("</div>");
+					html.push("<div style='background:url(\"" + ctrlBarImageSrc + "\") no-repeat;height:" + ctrlBarHeight + "px;direction:ltr;text-align:left;'>");
+						html.push("<div class='fpPlayButton' style='cursor:pointer;display:inline-block;margin:"+ctrlBarPlayButtonMarginTop+"px 0 0 "+ctrlBarPlayButtonMarginLeft+"px;width:"+ctrlBarPlayButtonWidth+"px;height:"+ctrlBarPlayButtonHeight+"px;'></div>");
+					html.push("</div>");
+				html.push("</div>");
+				
+				container.append(yq(html.join('')));
+				fakePlayer = container.find('.fpFakePlayer');
+			};
+			if (flashPlayer.length == 0) {
+				var html = [];
+				html.push("<div id='fpFlashPlayer" + this._nextPlayerId++ + "' class='fpFlashPlayer' style='width:"+width+"px;height:"+height+"px;overflow:hidden;'>");
+				html.push("</div>");
+				
+				container.append(yq(html.join('')));
+				flashPlayer = container.find('.fpFlashPlayer');
+			};
+			
+			if(this.displayHtmlPlayer()){
+				fakePlayer.hide();
+				flashPlayer.show();
+				onclick();
+			} else {
+				container.find('.fpPlayButton').unbind('click').click(onclick);
+				container.find('.fpOpeningImage').attr('src', imgPath);
+				fakePlayer.show();
+				flashPlayer.hide();
+			};
+		},
+		
+		showFlashPlayer : function(contId, type, videoId, width, height, params) {
+			var container = yq('#' + contId);
+			var flashPlayerId = container.find('.fpFlashPlayer').attr('id');
+			
+			container.find('.fpFakePlayer').hide();
+			container.find('.fpFlashPlayer').show();
+			
+			params.destId = flashPlayerId;
+			this.loadPlayer(type, videoId, width, height, params);
+		},
+		
+		stopFlashPlayer : function(contId, showFake) {
+			var container = yq('#'+contId);
+			var flashPlayerId = container.find('.fpFlashPlayer').attr('id');
+			if (flashPlayerId) {
+				this.stopPlayback(flashPlayerId);
+			};
+			if(showFake){
+				container.find('.fpFlashPlayer').hide();
+				container.find('.fpFakePlayer').show();
+			};
+		},
+		
+		setCookie : function(name, val, days, path) {
+			if (days) {
+			   var date = new Date( days * 86400000 + (new Date()).getTime());
+			   var expires = ';expires='+date.toGMTString()+'; path='+path+';';
+			} else {
+				var expires = '; path='+path+';';
+			}
+			
+			document.cookie = name+'='+val+expires;
+		},
+		
+		readCookie : function(name) {
+			var nameEQ = name + '=';
+			var ca = document.cookie.split(';');
+			
+			for(var i=0;i < ca.length;i++) {
+			   var c = ca[i];
+			   while (c.charAt(0)==' ') c = c.substring(1,c.length);
+			   if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+			}
+			
+			return null;
+		},
+		
+		_isHDN2Supported : function(player) {
+
+			return player.video.path.search(/^http:\/\/ynethd-f\.akamaihd\.net\/z.+manifest\.f4m/) != -1;
+		}
+	};
+	
+			window._carambolaData = new Object();
+        
+	window.setCarambolaData = function(prop, val)
+	{
+		_carambolaData[prop] = val;
+	}
+	
+		window.carambolaShow = function()
+	{
+		if (_carambolaData["isReady"] != undefined && !_carambolaData["visible"]) {
+			flowplayer()._api().fp_css("carambola", {carambolaEvent: '{enablePlugin:true}'});
+			flowplayer().getPlugin("carambola").show();
+			_carambolaData["visible"] = true;
+			CmmAppVideoApi._log('carambola visible');
+		}
+	}
+
+	window.carambolaHide = function()
+	{
+		if (_carambolaData["isReady"] != undefined && _carambolaData["visible"]) {
+			flowplayer()._api().fp_css("carambola", {carambolaEvent: '{enablePlugin:false}'});
+			flowplayer().getPlugin("carambola").hide();
+			_carambolaData["visible"] = false;
+			CmmAppVideoApi._log('carambola hidden');
+		}
+	}
+
+})();

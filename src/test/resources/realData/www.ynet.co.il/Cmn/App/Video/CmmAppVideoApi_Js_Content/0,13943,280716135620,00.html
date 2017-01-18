@@ -1,0 +1,731 @@
+(function() {
+
+		CmmAppVideoApi.DecorationTypes = {
+		Credit: {
+			height : 18,
+			pinDuration : 23700,
+			getHtml : function(){
+				var html = [];
+				var credits = yq.trim(this.player.video.credits);
+				if (credits.length) {
+					html.push('<p style="padding:0;margin:2px 10px 0;color:white;font-size:10px;">'+CmmAppVideoApi._htmlescape(credits)+'</p>');
+				};
+				return html.join('');
+			}
+		},
+		
+		TopStory: {
+			height : 79,
+			top : 0,
+			getHtml : function(){
+				var html = [];
+				html.push('<p style="direction: rtl; margin: 4px 16px; text-align: right; font-weight: bold; color: rgb(255, 255, 255); font-size:23px; height: 29px; line-height: 27px; overflow: hidden; display: block; text-decoration: none; font-family: arial;">' + this.player.params.overlayTitle + '</p>'+'<p style="direction: rtl; margin: 0px 16px; text-align: right; font-weight: normal; color: rgb(255, 255, 255); font-size: 14px; height: 32px; line-height: 16px; overflow: hidden; display: block; text-decoration: none; font-family: arial;">' + this.player.params.overlaySubTitle + '</p>');
+				return html.join('');
+			}
+		},
+		
+		Default: {
+			height : 18,
+			getHtml : function(){return '<span style="color:white;">default decoration</span>'}
+		}
+	};
+	
+	CmmAppVideoApi.SplashTypes = {
+		laisha : {
+			src : '/images/ynet_video_buffering_splash_laisha.swf'
+		},
+		pplus : {
+			src : '/images/pnai_plus_video_buffering_splash.swf'
+		},
+		Default: {
+			src : '/images/ynet_video_buffering_splash.swf'
+		},
+		
+		get : function(key) {
+			if (this[key]) {
+				return this[key];
+			} else {
+				return this.Default;
+			}
+		}
+	};
+	
+		CmmAppVideoApi.ContentTypes = {
+				FacebookButton : function(){
+			this.name = 'FacebookButton';
+			this.top = 20;
+			this.width = 92;
+			this.height = 30;
+			this.buttonSrc = '/images/fb_button.png';
+			this.buttonOverSrc = '/images/fb_button_over.png';
+			this.pinDuration = 23700;
+			
+			switch (this.player.type) {
+				case 'LightBoxArticlePlayer':
+				case 'TopStory':
+				case 'TopStoryWide':
+					this.right = 20;
+					break;
+				default:
+					this.left = 20;
+			}
+
+			this.getHtml = function(){
+				this.initialized = false;
+				var html = [];
+				html.push('<a href=http://www.ynet.co.il/"#\" target=\"_blank\">');
+					html.push('<img src=http://www.ynet.co.il/"' + this.buttonSrc + '\" />');
+				html.push('</a>');
+				return this._super.getHtml.call(this, html.join(''));
+			};
+			this.init = function(){
+				var _this = this;
+				this._super.init.call(this);
+				if(!this.initialized){
+					this.contentDomElement.find('img').hover(
+						function(){
+							yq(this).attr('src', _this.buttonOverSrc);
+						},
+						function(){
+							yq(this).attr('src', _this.buttonSrc);
+						}
+					);
+					this.initialized = true;
+				};
+			};
+			this.show = function(reload){
+				this._super.show.call(this);
+				if(reload){
+					var _this = this;
+					this.pin(function(){
+						_this.hide();
+					});
+				};
+			};
+			this.update = function(){
+				this.contentDomElement.find('a').attr('href',
+					CmmAppVideoApi.CONST.FacebookSharingUrl.replace('MYURL', encodeURI(this.player.video.facebookPagePath))
+				);
+			};
+			
+						this.getEventList = function(){
+				return ['onClipStart', 'onClipFinish', 'onPlayerMouseOver', 'onPlayerMouseOut', 'onPlayerFullscreen'];
+			};	
+		},
+		
+				Splash : function(){
+			this.name = 'Splash';
+			this.top = 0;
+			this.left = 0;
+			this.width = "100%";
+			this.height = "100%";
+			this.pinDuration = 3700;
+			this.zIndex = 10;
+			
+			this.splashDetails = CmmAppVideoApi.SplashTypes.get(CmmAppVideoApi.CONST.site);
+			this.show = function(){ 
+				var self = this;
+				var html = new Array();
+				html.push("<object width='", this.width, "' height='", this.height, "' wmode='opaque' loop='false' scale='noborder' bgcolor='#000000' type='application/x-shockwave-flash' data="http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js_Content/, this.splashDetails.src,">");
+				html.push(	"<param name='movie' value='", this.splashDetails.src, "'/>");
+				html.push(	"<param name='loop' value='false'/>");
+				html.push(	"<param name='bgcolor' value='#000000'>");
+				html.push(	"<param name='scale' value='noborder'>");
+				html.push(	"<param name='wmode' value='opaque'>");
+				html.push("</object>");
+				
+				CmmAppVideoApi.explorerDocumentTitleFix(function(){
+					self.contentDomElement.html(html.join('')).show();
+				}, 100);
+
+			};
+			this.init = function(){
+				this._super.init.call(this);
+				this.enabled = false;
+			};
+			this.onClipBeforeBegin = function(arg){
+				var _this = this;
+				if (!this.player.hiroLoaded || this.enabled){
+										this.show();
+					this.pin(function(){
+						//_this.player.contentManager.fireEvent('onClipStart');
+						_this.hide(true);
+						_this.resumeClip();
+						
+						if (typeof _this._onFinishCallback == 'function') {
+							_this._onFinishCallback();
+						};
+						
+												setTimeout(function(){
+							_this.resumeClip();
+						}, 200);
+					});
+				} else {
+										this.enabled = true;
+				};
+			};
+			this.onCuepoint = function(cuepoint){
+								if(cuepoint == 0 && this.pinned){
+					this.pauseClip();
+				};
+			};
+			this.pauseClip = function(){
+				var playButton = this.player.flowplayer.getPlugin('play');
+				if (playButton) {
+					playButton.css({opacity : 0});
+				};
+				
+				this.player.pause();
+			};
+			this.resumeClip = function(){
+				if (this.player.visible()) {
+					var playButton = this.player.flowplayer.getPlugin('play');
+					
+					this.player.resume();
+
+					if (playButton) {
+						playButton.css({opacity : 1});
+					};
+				};
+			};
+			
+			this.setOnFinishCallback = function(callback){
+				this._onFinishCallback = callback;
+			};
+			
+			this.getDuration = function(){
+				return this.pinDuration;
+			};
+			
+						this.getEventList = function(){
+				return ['onClipBeforeBegin', 'onCuepoint'];
+			};	
+		},
+		
+				Decoration : function(){
+			for (var decorationType in CmmAppVideoApi.DecorationConfig) {
+				var decoration = CmmAppVideoApi.DecorationConfig[decorationType];
+				if (!decoration.players || yq.inArray(this.player.type, decoration.players) >=0) {
+					if (!decoration.sites || yq.inArray(CmmAppVideoApi.CONST.siteName, decoration.sites) >= 0) {
+						this.decoration = CmmAppVideoApi.DecorationTypes[decorationType];
+						break;
+					};
+				};
+			};
+			if (!this.decoration) {this.decoration = CmmAppVideoApi.DecorationTypes.Default;};
+			
+			this.name = 'Decoration';
+			this.height = this.decoration.height;
+			this.left = 0;
+			this.width = "100%";
+			this.pinDuration = this.decoration.pinDuration;
+			
+			this.init = function(){
+				if (typeof this.decoration.top == 'undefined') {
+					this.top = this.player.height - this.height - CmmAppVideoApi.CONST.FlowplayerControlBarHeight;
+				} else {
+					this.top = this.decoration.top;
+				}
+				this._super.init.call(this);
+			};
+			this.getHtml = function(){
+				var html = [];
+				html.push('<div>');
+					html.push('<div style="z-index:1;height:'+this.height+'px;overflow:hidden;opacity:0.5;filter:alpha(opacity=50);background-color:black;"></div>');
+					html.push('<div class="content_decoration_html" style="z-index:2;height:'+this.height+'px;overflow:hidden;position:relative;top:-'+this.height+'px;direction:rtl;text-align:right;">');
+					html.push('</div>');
+				html.push('</div>');
+				
+				return this._super.getHtml.call(this, html.join(''));
+			};
+			
+			this.update = function() {
+				var decorationHtml = this.decoration.getHtml.call(this);
+				if (decorationHtml.length) {
+					this.contentDomElement.find('.content_decoration_html').html(decorationHtml);
+				} else {
+					this.enabled = false;
+				};
+			};
+
+			this.show = function(reload) {
+				this._super.show.call(this);
+				if(reload && this.pinDuration){
+					var _this = this;
+					this.pin(function(){
+						_this.hide();
+					});
+				};
+			};
+			
+						this.getEventList = function(){
+				return ['onClipStart', 'onClipFinish', 'onPlayerMouseOver', 'onPlayerMouseOut', 'onPlayerFullscreen'];
+			};			
+		},
+		
+				PauseAd : function(){
+			this.name = 'PauseAd';
+			this.width = "100%";
+			this.height = this.player.height - CmmAppVideoApi.CONST.FlowplayerControlBarHeight;
+			this.top = 0;
+			this.left = 0;
+			this.zIndex = 9999;
+
+						this.init = function() {
+				this._super.init.call(this);
+				var _this = this;
+				
+				if (!this._initialized) {
+															this._images = CmmAppVideoApi.CONST.PauseAdImages[this.player.type];
+					if (this._images && this._images.length) {
+												this._currentImageIndex = CmmAppVideoApi.readCookie('PauseAdNextImageIndex' + this.player.type);
+						if (this._currentImageIndex == null) {
+							this._currentImageIndex = Math.floor(Math.random() * this._images.length);
+						}
+						
+												this._currentImageIndex %= this._images.length;
+						
+						this.contentDomElement.click(function(){
+							_this._onAdClick(_this._currentImageIndex);
+						});
+						
+						this._adEnabled = true;
+					} else {
+												this._adEnabled = false;
+					}
+
+					this._initialized = true;
+				}
+			};
+			
+						this.update = function(){
+				var image = this._images[this._currentImageIndex];
+				var href = image.href.replace('%CACHEBUSTER%', (new Date()).getTime());
+				
+				var html = '';
+				html += '<a href="http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js_Content/' + href + '" target=_blank style="display:block;width:100%;height:100%;">';
+					html += '<img src="http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js_Content/'+ image.src + '" style="width:100%;height:100%;border:none;"/>';
+				html += '</a>';
+				
+				this.contentDomElement.html(html);
+			};
+			
+						this.onPlayerPause = function(event){
+				if (this._adEnabled && event.isUserTriggered) {
+					this.show(true);
+					this._onAdShow(this._currentImageIndex);
+					this._currentImageIndex = this._getNextImageIndex();
+					
+										CmmAppVideoApi.setCookie('PauseAdNextImageIndex' + this.player.type, this._currentImageIndex);
+				};
+			};
+			this.onPlayerResume = function(event){
+				if (this._adEnabled && event.isUserTriggered) {
+					this.player.flowplayer.getPlugin('play').css('opacity', 0);
+					this.hide(true);
+					this.update();
+				};
+			};
+			this.onPlayerSeek = function(event){
+				this.onPlayerResume(event);
+			};
+			this.enable = function(event){
+				this._adEnabled = true;
+			};
+			this.disable = function(event){
+				this._adEnabled = false;
+			};
+			
+						this._getNextImageIndex = function() {
+				return (this._currentImageIndex + 1) % this._images.length;
+			};
+			
+			this._onAdShow = function(imageIndex) {
+				if (window._gaq) {
+					_gaq.push(['_trackEvent', 'Pause Button Slide', 'Pause Campaign' + (imageIndex + 1) + ' Pause', document.location.href]);
+				};
+				
+				var image = this._images[imageIndex];
+								if (image && image.statUrl) {
+					var statUrl = image.statUrl.replace('%CACHEBUSTER%', (new Date()).getTime());
+					(document.createElement('img')).src = statUrl;
+				};
+				
+			};
+			this._onAdClick = function(imageIndex) {
+				if (window._gaq) {
+					_gaq.push(['_trackEvent', 'Pause Button Slide', 'Pause Campaign' + (imageIndex + 1) + ' Click', document.location.href]);
+				};
+			};
+			
+						this.getEventList = function(){
+				return ['onPlayerPause', 'onPlayerResume', 'onPlayerSeek'];
+			};
+		},
+		
+				FlashUpgradeMessage : function(){
+			this.name = 'FlashUpgradeMessage';
+			this.top = 0;
+			this.left = 0;
+			this.width = "100%";
+			if (this.player.type == 'headline') {
+				this.height = "60px";
+			} else {
+				this.height = "58px";
+			}
+			
+			this.init = function(reload){
+				if (!this.initialized) {
+					this._super.init.call(this);
+					
+					if (this._isShowWarning()) {
+						var self = this;
+						this.contentDomElement.find('.flash_upgrade_msg_close').click(function(){
+							self.hide(true);
+							self.enabled = false;
+						});
+					} else {
+						this.enabled = false;
+					}
+					
+					this.initialized = true;
+				};
+			};
+			
+			this.getHtml = function() {
+				var html = [];
+				
+				if (this.player.type == 'headline') {
+					var warningImgMargin = '5px';
+					var warningImgWidth = 222;
+					var warningImgSrc = '/images/flowplayer/fpFlashWarningSmall.png';
+					var waringImgHeight = 50;
+					var linkWidth = 78;
+					var linkHeight = 15;
+					var linkTop = 30;
+					var linkLeft = 70;
+				} else {
+					var warningImgMargin = '5px auto';
+					var warningImgWidth = 354;
+					var warningImgSrc = '/images/flowplayer/fpFlashWarning.png';
+					var waringImgHeight = 48;
+					var linkWidth = 94;
+					var linkHeight = 20;
+					var linkTop = 25;
+					var linkLeft = 116;
+				}
+				
+				html.push('<div style="height:' + this.height + ';text-align:center;direction:rtl;overflow:hidden;">');
+					html.push('<div style="height:' + this.height + ';background-color:black;opacity:0.7;filter:alpha(opacity=70);"></div>');
+					html.push('<div style="position:relative;top:-' + this.height + ';width:100%;">');
+						html.push('<div style="position:relative;width:' + warningImgWidth + 'px;height:' + waringImgHeight + 'px;margin:'+ warningImgMargin + ';">');
+							html.push('<img src='http://www.ynet.co.il/Cmn/App/Video/CmmAppVideoApi_Js_Content/+ warningImgSrc +' />');
+							html.push('<a href=http://get.adobe.com/flashplayer/ target=_blank style="position:absolute;top:' + linkTop + 'px;left:' + linkLeft +'px;display:block;width:' + linkWidth + 'px;height:' + linkHeight + 'px;text-decoration:none;background-image:url(http://www.ynet.co.il/images/ws.gif);" ></a>');
+							html.push('<a href=javascript:void(0) class=flash_upgrade_msg_close style="position:absolute;top:0;left:-20px;width:13px;height:13px;background:url(/images/flowplayer/fpFlashWarningCloseBtn.png);overflow:hidden;text-decoration:none;" ></a>');
+						html.push('</div>');
+					html.push('</div>');
+				html.push('</div>');
+				
+				return this._super.getHtml.call(this, html.join(''));
+			};
+			
+			this.show = function(){
+				if (this.enabled) {
+					var self = this;
+					
+					this.pinDuration = 30000;
+
+					var splash = this.player.contentManager.getContent('Splash');
+					if (splash) {
+						this.pinDuration += splash.getDuration();
+					};
+					
+					setTimeout(function(){
+						self._super.show.call(self);
+
+						self.pin(function(){
+							self.hide(true);
+							self.enabled = false;
+						});
+					}, 400);
+				};
+			};
+			
+			this._isShowWarning = function(){
+				var res = false;
+				
+				if (typeof CmmAppVideoApi.CONST.FlowplayerFlashVersionWarningThreshold != 'undefined') {
+					var flashVersionArray = CmmAppVideoApi.getFlashVersion().split(',');
+					var flashVersionNum = parseFloat(''+flashVersionArray.slice(0,2).join('.'));
+					
+					if (flashVersionNum) {
+						res = flashVersionNum < CmmAppVideoApi.CONST.FlowplayerFlashVersionWarningThreshold;
+					};
+				};
+
+				return res;
+			};
+			
+						this.getEventList = function(){
+				return ['onClipStart'];
+			};	
+		}
+	};
+	
+						CmmAppVideoApi.Content = function(type, player){
+		this._super = CmmAppVideoApi.Content.prototype;
+		this.player = player;
+		this.superInitialized = false;
+		this.initialized = false;
+		this.enabled = false;
+		this.pinned = false;
+		this.suspended = false;
+		this.containerId = 'fpContent_' + type + player.id;
+		this.contentDomElement = null;
+		
+		var instance = null;
+		try{
+			var content = CmmAppVideoApi.ContentTypes[type];
+			content.prototype = this;
+			instance = new content();
+		} catch(e){}
+
+		return instance;
+	};
+
+	CmmAppVideoApi.Content.prototype = {
+		getName : function(){
+			return this.name;
+		},
+		
+				getHtml : function(content){
+			this.superInitialized = false;
+			var html = [];
+			html.push('<div id=\"' + this.containerId + '\">'+(content?content:'')+'</div>');
+			return html.join('');
+		},
+		
+				init : function(){
+			if (!this.superInitialized) {
+				this.contentDomElement = yq('#'+this.containerId);
+				this.contentDomElement.css({
+					display: 'none',
+					position: 'absolute',
+					top: this.top,
+					right: this.right,
+					bottom: this.bottom,
+					left: this.left,
+					width: this.width,
+					height: this.height,
+					zIndex: this.zIndex,
+					overflow: 'hidden'
+				});
+				this.contentDomElement.find('img').css({
+					border: 'none'
+				});
+				this.superInitialized = true;
+			};
+			this.enabled = true;
+			this.pinned = false;
+			this.suspended = false;
+		},
+						hide : function(force){
+			if(force || (this.enabled && !this.suspended && !this.player.mouseInPlayer)){
+				this.contentDomElement.hide();
+			};
+		},
+						show : function(force){
+			if(force || (this.enabled && !this.suspended)){
+								this.contentDomElement.hide().show();
+			};
+		},
+						pin : function(onTimeout){
+			var _this = this;
+			if(this.timeoutId){clearTimeout(this.timeoutId)};
+			this.timeoutId = setTimeout(function(){
+				_this.enabled = true;
+				_this.pinned = false;
+				onTimeout();
+			}, this.pinDuration);
+			this.enabled = false;
+			this.pinned = true;
+		},
+		suspend : function(){
+			this.suspended = true;
+		},
+		resume : function(){
+			this.suspended = false;
+		},		
+				
+						onBeforePlayerLoad : function(){
+			if(this.superInitialized){
+				this.hide(true);
+			};
+		},
+				onPlayerLoad : function(){
+			this.init();
+			if (this.update) {this.update()};
+		},
+		
+				onDecorationMouseEnter : function(){
+			this.enabled = false;
+		},
+		onDecorationMouseLeave : function(){
+			if(!this.pinned){
+				this.enabled = true;
+				this.hide();
+			};
+		},
+		
+				onClipStart : function(){
+			this.show(true);
+		},
+		onClipFinish : function(){
+			this.hide(true);
+		},
+		onPlayerMouseOver : function(){
+			this.show();
+		},
+		onPlayerMouseOut : function(){
+			this.hide();
+		},
+		onPlayerFullscreen : function(){
+			if(!this.pinned){
+				this.hide(true);
+			};
+		}
+	}
+	
+			CmmAppVideoApi.ContentManager = function(player){
+				this.pool = [];
+		
+				this._eventRegistry = {};
+		
+				this._vars = {};
+		
+				this._mandatoryEvents = ['onBeforePlayerLoad', 'onPlayerLoad', 'onDecorationMouseEnter', 'onDecorationMouseLeave'];
+		
+				this._reset = function(content){
+			this._vars = {};
+		};
+		
+				this.add = function(content){
+			if (content) {
+				this._registerContentEvents(content);
+				this.pool.push(content);
+			};
+		};
+		
+				this._registerContentEvents = function(content){
+						var contentEvents = content.getEventList();
+			
+						contentEvents = contentEvents.concat(this._mandatoryEvents);
+			
+						for (var i = 0; i < contentEvents.length; i++){
+				var eventName = contentEvents[i];
+				if (typeof eventName == 'string') {
+					if (!this._eventRegistry[eventName]) {
+						this._eventRegistry[eventName] = [];
+					}
+					
+										this._eventRegistry[eventName].push(content);
+				};
+			}
+		};
+		
+				this.fireEvent = function(eventName, eventParams){
+			var res = true;
+
+			if (eventName == 'onBeforePlayerLoad') {
+				this._reset();
+			}
+			
+						var registeredContentObjects = this._eventRegistry[eventName];
+			if (registeredContentObjects) {
+				for (var i = 0; i < registeredContentObjects.length; i++){
+					var contentObject = registeredContentObjects[i];
+					try {
+												var tmpRes = contentObject[eventName](eventParams);
+						if (tmpRes != undefined) {
+							res = res && tmpRes;
+						}
+					}
+					catch(e){}
+				};
+			};
+			
+			return res;
+		};
+		
+				this.getHtml = function(){
+			var html = [];
+			for(var i = 0; i < this.pool.length; i++){
+				html.push(this.pool[i].getHtml());
+			};
+			return html.join('');
+		};
+		
+				this.getContent = function(name){
+			for(var i = 0; i < this.pool.length; i++){
+				if (this.pool[i].getName() == name){
+					return this.pool[i];
+				};
+			};
+			return null;
+		};
+		
+				this.all = function(command) {
+			for(var i = 0; i < this.pool.length; i++){
+				this.pool[i][command]();
+			};
+		};
+		
+		this.setVar = function(name, value) {
+			this._vars[name] = value;
+		};
+		
+		this.getVar = function(name) {
+			return this._vars[name];
+		};
+		
+				for (var contentType in CmmAppVideoApi.ContentConfig) {
+			var content = CmmAppVideoApi.ContentConfig[contentType];
+			if (!content.players || yq.inArray(player.type, content.players) >=0) {
+				if (!content.sites || yq.inArray(CmmAppVideoApi.CONST.siteName, content.sites) >= 0) { 
+					if (contentType == 'Splash' && (CmmAppVideoApi.CONST.noSplash || player.params.noSplash)) {continue};
+					if (contentType == 'Decoration' && player.params.dontShowDecoration === true) {continue};
+					if (contentType == 'PauseAd' && (CmmAppVideoApi.CONST.pauseAdDisabled || CmmAppVideoApi.CONST.noAds || player.video.is_no_ads || player.params.is_no_ads)) {continue};
+
+					this.add(new CmmAppVideoApi.Content(contentType, player));
+				}
+			}
+		}
+	};
+	
+			CmmAppVideoApi.ContentConfig = {
+		Decoration : {
+			players : ['HomepagePlayer', 'LightBoxArticlePlayer', 'TopStoryWide', 'TopStoryArticle']
+		},
+		FacebookButton : {
+			players : ['VideoChannel', 'LightBoxArticlePlayer']
+		},
+		Splash : {
+			sites : ['ynet', 'pplus']
+		},
+		PauseAd : {
+			sites : ['ynet', 'hot']
+		},
+		FlashUpgradeMessage : {
+		
+		}
+	};
+	
+		CmmAppVideoApi.DecorationConfig = {
+		Credit : {
+			players : ['HomepagePlayer', 'LightBoxArticlePlayer']
+		},
+		TopStory : {
+			players : ['TopStoryArticle', 'TopStoryWide']
+		}
+	};
+})();
