@@ -55,6 +55,15 @@ class gzipTests extends FunSuite {
 
   }
 
+  test("three pointers"){
+    val gzipPacket = new gzipPacket("C97;C97;C97;L3;D3;C97;C97;C97;L3;D3;C97;C97;C97;L3;D15;")
+    val check = gzipPacket.get(0,17)
+    println(check.data)
+    assert(check.data.equals("aaaaaaaaaaaaaaaaaa"))
+
+
+  }
+
   test("edge case from ynet"){
     val line = "<!-- Added by HTTrack --><meta http-equiv=\"content-type\" content=\"text/html;charset=UTF-8\" /><!-- /Added by HTTrack -->"
     val gzipAsciiCompressed = Converter.ToGzipAscii(line)
