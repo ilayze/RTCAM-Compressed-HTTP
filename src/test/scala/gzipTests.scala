@@ -1,5 +1,6 @@
+import com.jcraft.jzlib.Converter
 import org.scalatest.FunSuite
-import src.main.com.jce.{gzipPacket}
+import src.main.com.jce.gzipPacket
 
 /**
   * Created by izeidman on 8/4/2016.
@@ -52,5 +53,13 @@ class gzipTests extends FunSuite {
     val check = gzipPacket.get(0,11)
     assert(check.data.equals("abcabcabcabc"))
 
+  }
+
+  test("edge case from ynet"){
+    val line = "<!-- Added by HTTrack --><meta http-equiv=\"content-type\" content=\"text/html;charset=UTF-8\" /><!-- /Added by HTTrack -->"
+    val gzipAsciiCompressed = Converter.ToGzipAscii(line)
+    println(String.format("Line: %s, GzipAcsii: %s",line,gzipAsciiCompressed))
+
+    val gzipPacketCompressed = new gzipPacket(gzipAsciiCompressed)
   }
 }
