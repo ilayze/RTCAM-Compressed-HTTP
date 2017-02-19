@@ -22,7 +22,7 @@ class gzipPacket(val data: String) {
       val pointerDistance = getPointerValue(dataSplitted(i + 1)) //distnace to go back to start the pointer from
 
       var pointerInPointerLength = 0
-      for (curr <- 0 until (pointerLength)) {
+      for (curr <- 0 until (pointerDistance)) {
         val index = i - curr
         if (index >= 0) {
           //check if there is pointer within pointer
