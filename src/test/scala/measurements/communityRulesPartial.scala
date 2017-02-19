@@ -98,6 +98,37 @@ class communityRulesPartial extends FunSuite {
         printResults(resultsCompressed,resultsNaive)
       }
 
+    test("Real html file from ynet") {
+      val tcamSimulator = new tcamSimulator(width = 10)
+      tcamSimulator.printTcam = false
+      tcamSimulator.initializeWithParser("/rules/community-rules-partial.txt")
+
+      val payload = io.Source.fromInputStream(getClass.getResourceAsStream("/realData/www.ynet.co.il/articles/0,7340,L-138030,00d742.html")).getLines()
+      var payloadString = ""
+      payload.foreach(line => {
+        payloadString += line
+        val gzipAsciiCompressed = Converter.ToGzipAscii(line)
+        println(String.format("Line: %s, GzipAcsii: %s",line,gzipAsciiCompressed))
+
+        val gzipPacketCompressed = new gzipPacket(gzipAsciiCompressed)
+
+        val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacketCompressed, tcam = tcamSimulator)
+        val algorithmResult = rtcamCompressedHttp.execute()
+
+      })
+      println(payloadString)
+
+      val gzipAsciiCompressed = Converter.ToGzipAscii(payloadString)
+      val gzipPacketCompressed = new gzipPacket(gzipAsciiCompressed)
+
+      val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacketCompressed, tcam = tcamSimulator)
+      val algorithmResult = rtcamCompressedHttp.execute()
+
+
+    }
+
+
+
   def printResults(resultsCompressed: ListBuffer[algorithmResult], resultsNaive: ListBuffer[algorithmResult]): Unit = {
     for (i <- 0 until (resultsCompressed.length)) {
       println("$$$$$$$$$$     Width " + resultsCompressed(i).measurements.tcamWidth + "     $$$$$$$$$$")
