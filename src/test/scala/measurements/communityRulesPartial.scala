@@ -5,9 +5,10 @@ import com.jce.OfflineCapturer
 import com.jcraft.jzlib.Converter
 import org.scalatest.FunSuite
 import src.main.com.jce.{gzipPacket, tcamSimulator}
-import scala.collection.JavaConverters._
 
+import scala.collection.JavaConverters._
 import scala.collection.mutable.ListBuffer
+import java.io._
 
 /**
   * Created by izeidman on 9/6/2016.
@@ -103,31 +104,61 @@ class communityRulesPartial extends FunSuite {
       tcamSimulator.printTcam = false
       tcamSimulator.initializeWithParser("/rules/community-rules-partial.txt")
 
-      val payload = io.Source.fromInputStream(getClass.getResourceAsStream("/realData/www.ynet.co.il/articles/0,7340,L-138030,00d742.html")).getLines()
-      var payloadString = ""
-      payload.foreach(line => {
-        payloadString += line
-        val gzipAsciiCompressed = Converter.ToGzipAscii(line)
-        println(String.format("Line: %s, GzipAcsii: %s",line,gzipAsciiCompressed))
+      val fileList = recursiveListFiles(new File("C:/Development/RTCAM-Compressed-HTTP/src/test/resources/realData/www.ynet.co.il/"));
+      fileList.foreach((file) =>{
+        if(file.isDirectory()){
+          println(file.getAbsolutePath+" is directory")
+        }
+        else{
+          println("Processing file: "+file.getAbsolutePath);
+          var path: String = file.getAbsolutePath
+        //  path = path.replace("\\","/")
+          val asStream: InputStream = new FileInputStream(file)
+          val reader = new BufferedReader(new InputStreamReader(asStream));
+          var payloadString = ""
+          var line = reader.readLine();
+          while(line != null){
 
-        val gzipPacketCompressed = new gzipPacket(gzipAsciiCompressed)
+            println(line);
+            line = reader.readLine();
+            if(line !=null) {
+              payloadString += line
+              val gzipAsciiCompressed = Converter.ToGzipAscii(line)
+              println(String.format("Line: %s, GzipAcsii: %s", line, gzipAsciiCompressed))
 
-        val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacketCompressed, tcam = tcamSimulator)
-        val algorithmResult = rtcamCompressedHttp.execute()
+              val gzipPacketCompressed = new gzipPacket(gzipAsciiCompressed)
 
+              val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacketCompressed, tcam = tcamSimulator)
+              val algorithmResult = rtcamCompressedHttp.execute()
+              println(algorithmResult)
+            }
+          }
+
+
+         // val payload = io.Source.fromInputStream(asStream).getLines()
+         // var payloadString = ""
+        //  payload.foreach(line => {
+
+         // })
+        }
       })
-      println(payloadString)
+
+      /*println(payloadString)
 
       val gzipAsciiCompressed = Converter.ToGzipAscii(payloadString)
       val gzipPacketCompressed = new gzipPacket(gzipAsciiCompressed)
 
       val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacketCompressed, tcam = tcamSimulator)
-      val algorithmResult = rtcamCompressedHttp.execute()
+      val algorithmResult = rtcamCompressedHttp.execute()*/
 
 
     }
 
 
+  def recursiveListFiles(f: File): Array[File] = {
+    val these = f.listFiles
+    these ++ these.filter(_.isDirectory).flatMap(recursiveListFiles)
+  }
 
   def printResults(resultsCompressed: ListBuffer[algorithmResult], resultsNaive: ListBuffer[algorithmResult]): Unit = {
     for (i <- 0 until (resultsCompressed.length)) {
