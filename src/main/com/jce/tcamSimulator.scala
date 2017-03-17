@@ -62,7 +62,7 @@ class tcamSimulator(val width: Int) {
               keyChanged = keyChanged.substring(0, keyChanged.length() - 2)
               moreDC = false
             }
-            println("Tcam data:"+tcamData+", key:"+keyChanged+":"+(keyChanged.length() - 2).toString)
+           // println("Tcam data:"+tcamData+", key:"+keyChanged+":"+(keyChanged.length() - 2).toString)
             if (tcamData.equals(keyChanged))
               return entry.metadata
           } else {

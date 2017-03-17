@@ -18,7 +18,10 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
   var runtimeMeasurements = new runtimeMeasurements(packetLength = n, tcamWidth = width,numberOfUncompressed = packet.getNumberOfUncompressed)
   var lookupsHistory = new ListBuffer[lookupOccurence]
   println("Tcam width: %s, packet length: %s, number of uncompressed: %s".format(width, n,runtimeMeasurements.numberOfUncompressed))
-
+  tcam.lookupCounter = 0
+  tcam.shiftSum = 0
+  tcam.shiftsHistory = new ListBuffer[Int]
+  tcam.matchIdexes = new ListBuffer[Int]
 
   def execute(): algorithmResult = {
 

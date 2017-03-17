@@ -82,7 +82,7 @@ class communityRulesPartial extends FunSuite {
 
           val tcamSimulator = new tcamSimulator(width = 10)
           tcamSimulator.printTcam = false
-          tcamSimulator.initializeWithParser("/rules/community-rules-partial.txt")
+          tcamSimulator.initializeWithParser("/rules/community-rules.txt")
 
           println("Packet: "+packet)
           val gzipAsciiCompressed = Converter.ToGzipAscii(packet)
@@ -100,9 +100,9 @@ class communityRulesPartial extends FunSuite {
       }
 
     test("Real html file from ynet") {
-      val tcamSimulator = new tcamSimulator(width = 10)
+      val tcamSimulator = new tcamSimulator(width = 50)
       tcamSimulator.printTcam = false
-      tcamSimulator.initializeWithParser("/rules/community-rules-partial.txt")
+      tcamSimulator.initializeWithParser("/rules/community-rules.txt")
 
       val fileList = recursiveListFiles(new File("C:/Development/RTCAM-Compressed-HTTP/src/test/resources/realData/www.ynet.co.il/"));
       fileList.foreach((file) =>{
@@ -118,28 +118,27 @@ class communityRulesPartial extends FunSuite {
           var payloadString = ""
           var line = reader.readLine();
           while(line != null){
-
             println(line);
             line = reader.readLine();
             if(line !=null) {
               payloadString += line
-              val gzipAsciiCompressed = Converter.ToGzipAscii(line)
-              println(String.format("Line: %s, GzipAcsii: %s", line, gzipAsciiCompressed))
-
-              val gzipPacketCompressed = new gzipPacket(gzipAsciiCompressed)
-
-              val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacketCompressed, tcam = tcamSimulator)
-              val algorithmResult = rtcamCompressedHttp.execute()
-              println(algorithmResult)
             }
           }
+          val gzipAsciiCompressed = Converter.ToGzipAscii(payloadString)
+          //println(String.format("Line: %s, GzipAcsii: %s", line, gzipAsciiCompressed))
 
+          val gzipPacketCompressed = new gzipPacket(gzipAsciiCompressed)
 
-         // val payload = io.Source.fromInputStream(asStream).getLines()
-         // var payloadString = ""
-        //  payload.foreach(line => {
+          val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacketCompressed, tcam = tcamSimulator)
+          val algorithmResult = rtcamCompressedHttp.execute()
+          println(algorithmResult)
 
-         // })
+          val gzipAsciiNaive = getNaiveGzipAsciiString(payloadString)
+          val gzipPacketNaive = new gzipPacket(gzipAsciiNaive)
+          val rtcamNaive= new rtcamCompressedHttp(packet = gzipPacketNaive, tcam = tcamSimulator)
+          val algorithmResultNaive = rtcamNaive.execute()
+          println(algorithmResultNaive)
+          writeResultsToFile(algorithmResult,algorithmResultNaive,file.getName)
         }
       })
 
@@ -153,11 +152,42 @@ class communityRulesPartial extends FunSuite {
 
 
     }
+  def getNaiveGzipAsciiString(payloadString:String) : String = {
+    var retString = ""
+    val toAscii =payloadString.map(_.toByte)
+    toAscii.foreach(a => {
+      retString+= "C"+a+";"
+    })
 
+    return retString
+  }
 
   def recursiveListFiles(f: File): Array[File] = {
     val these = f.listFiles
     these ++ these.filter(_.isDirectory).flatMap(recursiveListFiles)
+  }
+
+  def writeResultsToFile(algorithmResult:algorithmResult, algorithmResultNaive: algorithmResult ,fileName: String): Unit ={
+    val lookupCsv = algorithmResult.measurements.packetLength.toString() + ","+algorithmResult.measurements.lookupCounter+","+algorithmResultNaive.measurements.lookupCounter+"\n"
+    val fw = new FileWriter("lookups.txt", true)
+    try {
+      fw.write(lookupCsv)
+    }
+    finally fw.close()
+
+    val memoryCsv = algorithmResult.measurements.packetLength.toString() + ","+algorithmResult.measurements.memoryAccessCounter+","+algorithmResultNaive.measurements.memoryAccessCounter+"\n"
+    val fw2 = new FileWriter("memoryAccess.txt", true)
+    try {
+      fw2.write(memoryCsv)
+    }
+    finally fw2.close()
+
+    val fullDataCsv = fileName +","+ algorithmResult.measurements.packetLength.toString() + ","+algorithmResult.measurements.memoryAccessCounter+","+algorithmResultNaive.measurements.memoryAccessCounter+","+algorithmResult.measurements.lookupCounter +","+ algorithmResultNaive.measurements.lookupCounter + ","  +"\n"
+    val fw3 = new FileWriter("fullResults.txt", true)
+    try {
+      fw3.write(fullDataCsv)
+    }
+    finally fw3.close()
   }
 
   def printResults(resultsCompressed: ListBuffer[algorithmResult], resultsNaive: ListBuffer[algorithmResult]): Unit = {
