@@ -51,7 +51,7 @@ class tcamSimulator(val width: Int) {
       if (entry.row.data == key)
         return entry.metadata
         //match with dont cares e.g key: abcde entry: abcd?
-      else if (entry.row.data.endsWith(DONT_CARE) && DONT_CARE.r.findAllMatchIn(entry.row.data).length < width) {
+      else if (entry.row.data.endsWith(DONT_CARE)) {
         var moreDC = true
         var tcamData = entry.row.data
         var keyChanged = key
@@ -60,7 +60,6 @@ class tcamSimulator(val width: Int) {
             tcamData = tcamData.substring(0, tcamData.length() - DONT_CARE.length())
             if(keyChanged.length()>1) {
               keyChanged = keyChanged.substring(0, keyChanged.length() - 2)
-              moreDC = false
             }
            // println("Tcam data:"+tcamData+", key:"+keyChanged+":"+(keyChanged.length() - 2).toString)
             if (tcamData.equals(keyChanged))
@@ -70,8 +69,24 @@ class tcamSimulator(val width: Int) {
           }
         }
       }
-      else if(entry.row.data.endsWith(DONT_CARE) && DONT_CARE.r.findAllMatchIn(entry.row.data).length == width)
-        return entry.metadata
+      else if(entry.row.data.startsWith(DONT_CARE)) {
+        var moreDC = true
+        var tcamData = entry.row.data
+        var keyChanged = key
+        while (moreDC) {
+          if (tcamData.startsWith(DONT_CARE)) {
+            tcamData = tcamData.substring(DONT_CARE.length(), tcamData.length())
+            if(keyChanged.length()>1) {
+              keyChanged = keyChanged.substring(2, keyChanged.length() )
+            }
+            // println("Tcam data:"+tcamData+", key:"+keyChanged+":"+(keyChanged.length() - 2).toString)
+            if (tcamData.equals(keyChanged))
+              return entry.metadata
+          } else {
+            moreDC = false
+          }
+        }
+      }
       //todo add case where the key starts with dont cares! see lookupHex function e.g key: ???ab entry df???
     }
     return null
