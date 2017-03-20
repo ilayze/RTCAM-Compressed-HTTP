@@ -9,13 +9,14 @@ import scala.collection.mutable.ListBuffer
   */
 class tcamSimulator(val width: Int) {
   var tcam = new ListBuffer[tcamEntry]
-  val DONT_CARE = "z"
+  val DONT_CARE = "zy"
   var signatureNumber = 1
   var printTcam = true
   var lookupCounter = 0
   var shiftSum = 0
   var shiftsHistory = new ListBuffer[Int]
   var matchIdexes = new ListBuffer[Int]
+  var metadataDontCares: subSignatureMetadata = _
 
 
   def lookUp(key: String,lookupType:String = "start"): ListBuffer[subSignatureMetadata] = {
@@ -50,46 +51,87 @@ class tcamSimulator(val width: Int) {
     for (entry <- tcam) {
       if (entry.row.data == key)
         return entry.metadata
-        //match with dont cares e.g key: abcde entry: abcd?
-      else if (entry.row.data.endsWith(DONT_CARE)) {
-        var moreDC = true
+      //match with dont cares e.g key: abcde entry: abcd?
+      else{
+        var moreTcamEndDC,moreTcamStartDC,moreKeyEndDC,moreKeyStartDC = true
         var tcamData = entry.row.data
         var keyChanged = key
-        while (moreDC) {
-          if (tcamData.endsWith(DONT_CARE)) {
-            tcamData = tcamData.substring(0, tcamData.length() - DONT_CARE.length())
-            if(keyChanged.length()>1) {
-              keyChanged = keyChanged.substring(0, keyChanged.length() - 2)
+
+        while(moreTcamEndDC || moreTcamStartDC || moreKeyEndDC || moreKeyStartDC) {
+          tcamData.endsWith(DONT_CARE) match {
+            case true => {
+              tcamData = tcamData.substring(0, tcamData.length() - DONT_CARE.length())
+              keyChanged.endsWith(DONT_CARE) match {
+                case true => {
+                  keyChanged = keyChanged.substring(0, keyChanged.length() - DONT_CARE.length())
+                }
+                case _ => {
+                  if(keyChanged.length() >1)
+                    keyChanged = keyChanged.substring(0, keyChanged.length() - 2)
+                }
+              }
             }
-           // println("Tcam data:"+tcamData+", key:"+keyChanged+":"+(keyChanged.length() - 2).toString)
-            if (tcamData.equals(keyChanged))
-              return entry.metadata
-          } else {
-            moreDC = false
+            case _ => moreTcamEndDC = false
+          }
+
+          tcamData.startsWith(DONT_CARE) match {
+            case true => {
+              tcamData = tcamData.substring(DONT_CARE.length(), tcamData.length())
+              keyChanged.startsWith(DONT_CARE) match {
+                case true => {
+                  keyChanged = keyChanged.substring(DONT_CARE.length(), keyChanged.length())
+                }
+                case _ => {
+                  if(keyChanged.length()> 1)
+                    keyChanged = keyChanged.substring(2, keyChanged.length())
+                }
+              }
+            }
+            case _ => moreTcamStartDC = false
+          }
+
+          keyChanged.endsWith(DONT_CARE) match {
+            case true => {
+              keyChanged = keyChanged.substring(0,keyChanged.length() - DONT_CARE.length())
+              tcamData.endsWith(DONT_CARE) match {
+                case true => {
+                  tcamData = tcamData.substring(0, tcamData.length() - DONT_CARE.length())
+                }
+                case _ => {
+                  if(tcamData.length() > 1)
+                    tcamData = tcamData.substring(0, tcamData.length() - 2)
+                }
+              }
+            }
+            case _ => moreKeyEndDC = false
+          }
+
+          keyChanged.startsWith(DONT_CARE) match {
+            case true => {
+              keyChanged = keyChanged.substring(DONT_CARE.length(), keyChanged.length())
+              tcamData.startsWith(DONT_CARE) match {
+                case true => {
+                  tcamData = tcamData.substring(DONT_CARE.length(), tcamData.length())
+                }
+                case _ => {
+                  if(tcamData.length()>1)
+                    tcamData = tcamData.substring(2, tcamData.length())
+                }
+              }
+            }
+            case _ => moreKeyStartDC =false
           }
         }
+
+        if(tcamData==keyChanged)
+          return entry.metadata
       }
-      else if(entry.row.data.startsWith(DONT_CARE)) {
-        var moreDC = true
-        var tcamData = entry.row.data
-        var keyChanged = key
-        while (moreDC) {
-          if (tcamData.startsWith(DONT_CARE)) {
-            tcamData = tcamData.substring(DONT_CARE.length(), tcamData.length())
-            if(keyChanged.length()>1) {
-              keyChanged = keyChanged.substring(2, keyChanged.length() )
-            }
-            // println("Tcam data:"+tcamData+", key:"+keyChanged+":"+(keyChanged.length() - 2).toString)
-            if (tcamData.equals(keyChanged))
-              return entry.metadata
-          } else {
-            moreDC = false
-          }
-        }
-      }
-      //todo add case where the key starts with dont cares! see lookupHex function e.g key: ???ab entry df???
+
     }
-    return null
+    val subSigWithDC = new ListBuffer[subSignatureMetadata]()
+    subSigWithDC.append(metadataDontCares)
+
+    return subSigWithDC
   }
 
   def addEntry(row: row, subSignatureMetadata: subSignatureMetadata): Unit = {
@@ -170,7 +212,9 @@ class tcamSimulator(val width: Int) {
       }
     }
 
-    addEntry(new row(dontcare(width)), new subSignatureMetadata(shift = width, signatureLength = width, signatureNumber = -1, signatureIndex = -1))
+    val metadataDC: subSignatureMetadata = new subSignatureMetadata(shift = width, signatureLength = width, signatureNumber = -1, signatureIndex = -1)
+    metadataDontCares = metadataDC
+    addEntry(new row(dontcare(width)), metadataDontCares)
     if (printTcam)
       println("############# TCAM entries #############\n" + this.toString())
 

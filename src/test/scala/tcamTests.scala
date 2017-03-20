@@ -14,6 +14,14 @@ class tcamTests extends FunSuite {
     assert(entry(0).shift.equals(1))
   }
 
+  test("handle dont cares properly") {
+    val tcamSimulator = new tcamSimulator(width = 5)
+    tcamSimulator.initialize("df")
+    val entry = tcamSimulator.lookUp("ab")
+
+    assert(entry(0).shift.equals(0))
+  }
+
   test("initialize signature less than width - should have don't cares on right") {
     val tcamSimulator = new tcamSimulator(width = 5)
     tcamSimulator.initialize("abcd")

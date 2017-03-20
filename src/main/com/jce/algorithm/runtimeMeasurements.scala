@@ -19,7 +19,7 @@ class runtimeMeasurements(val packetLength:Int,val tcamWidth:Int,val numberOfUnc
 
     println("%s lookups, %s memory access, packet length %s, tcam width %s, number of uncompressed %s, number of compressed %s".format(lookupCounter,memoryAccessCounter, packetLength, tcamWidth,numberOfUncompressed,numberOfCompressed))
     if (lookupCounter > 0)
-      println("Shift average: %s".format(shiftSum / lookupCounter))
+      println("Skip average: %s".format((shiftSum+numberOfCompressed) / lookupCounter))
 
     println("##################### End Of Measurements #####################")
   }

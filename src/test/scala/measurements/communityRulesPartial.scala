@@ -99,8 +99,8 @@ class communityRulesPartial extends FunSuite {
         printResults(resultsCompressed,resultsNaive)
       }
 
-    test("Real html file from ynet") {
-      val tcamSimulator = new tcamSimulator(width = 50)
+    test("Real html file ") {
+      val tcamSimulator = new tcamSimulator(width = 20)
       tcamSimulator.printTcam = false
       tcamSimulator.initializeWithParser("/rules/community-rules.txt")
 
@@ -110,6 +110,7 @@ class communityRulesPartial extends FunSuite {
           println(file.getAbsolutePath+" is directory")
         }
         else{
+
           println("Processing file: "+file.getAbsolutePath);
           var path: String = file.getAbsolutePath
         //  path = path.replace("\\","/")
@@ -182,7 +183,9 @@ class communityRulesPartial extends FunSuite {
     }
     finally fw2.close()
 
-    val fullDataCsv = fileName +","+ algorithmResult.measurements.packetLength.toString() + ","+algorithmResult.measurements.memoryAccessCounter+","+algorithmResultNaive.measurements.memoryAccessCounter+","+algorithmResult.measurements.lookupCounter +","+ algorithmResultNaive.measurements.lookupCounter + ","  +"\n"
+    val skipAverageCompressed = ((algorithmResult.measurements.shiftSum + algorithmResult.measurements.numberOfCompressed) / algorithmResult.measurements.lookupCounter).toString
+    val skipAverageNaive = ((algorithmResultNaive.measurements.shiftSum + algorithmResultNaive.measurements.numberOfCompressed) / algorithmResultNaive.measurements.lookupCounter).toString
+    val fullDataCsv = fileName +","+ algorithmResult.measurements.packetLength.toString() +","+algorithmResult.measurements.lookupCounter +"|"+algorithmResultNaive.measurements.lookupCounter+","+ skipAverageCompressed+"|"+ skipAverageNaive + ","+algorithmResult.measurements.tcamWidth + "\n"
     val fw3 = new FileWriter("fullResults.txt", true)
     try {
       fw3.write(fullDataCsv)
