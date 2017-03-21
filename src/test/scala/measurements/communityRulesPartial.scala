@@ -180,28 +180,30 @@ class communityRulesPartial extends FunSuite {
   }
 
   def writeResultsToFile(algorithmResult:algorithmResult, algorithmResultNaive: algorithmResult ,fileName: String): Unit ={
-    val lookupCsv = algorithmResult.measurements.packetLength.toString() + ","+algorithmResult.measurements.lookupCounter+","+algorithmResultNaive.measurements.lookupCounter+"\n"
-    val fw = new FileWriter("lookups.txt", true)
-    try {
-      fw.write(lookupCsv)
-    }
-    finally fw.close()
-
-    val memoryCsv = algorithmResult.measurements.packetLength.toString() + ","+algorithmResult.measurements.memoryAccessCounter+","+algorithmResultNaive.measurements.memoryAccessCounter+"\n"
-    val fw2 = new FileWriter("memoryAccess.txt", true)
-    try {
-      fw2.write(memoryCsv)
-    }
-    finally fw2.close()
 
     val skipAverageCompressed = ((algorithmResult.measurements.shiftSum + algorithmResult.measurements.numberOfCompressed) / algorithmResult.measurements.lookupCounter).toString
     val skipAverageNaive = ((algorithmResultNaive.measurements.shiftSum + algorithmResultNaive.measurements.numberOfCompressed) / algorithmResultNaive.measurements.lookupCounter).toString
-    val fullDataCsv = fileName +","+ algorithmResult.measurements.packetLength.toString() +","+algorithmResult.measurements.lookupCounter +"|"+algorithmResultNaive.measurements.lookupCounter+","+ skipAverageCompressed+"|"+ skipAverageNaive + ","+algorithmResult.measurements.tcamWidth + "\n"
-    val fw3 = new FileWriter("fullResults.txt", true)
+
+    val lookupCsv = algorithmResult.measurements.packetLength.toString() + ","+algorithmResult.measurements.lookupCounter+","+algorithmResultNaive.measurements.lookupCounter+"\n"
+    val fwLookup = new FileWriter("lookups.txt", true)
     try {
-      fw3.write(fullDataCsv)
+      fwLookup.write(lookupCsv)
     }
-    finally fw3.close()
+    finally fwLookup.close()
+
+    val skipAvCsv = algorithmResult.measurements.tcamWidth.toString() + ","+skipAverageCompressed+","+skipAverageNaive+"\n"
+    val fwSkipAv = new FileWriter("skipAverage.txt", true)
+    try {
+      fwSkipAv.write(skipAvCsv)
+    }
+    finally fwSkipAv.close()
+
+    val fullDataCsv = fileName +","+ algorithmResult.measurements.packetLength.toString() +","+algorithmResult.measurements.lookupCounter +"|"+algorithmResultNaive.measurements.lookupCounter+","+ skipAverageCompressed+"|"+ skipAverageNaive + ","+algorithmResult.measurements.tcamWidth + "\n"
+    val fwAllData = new FileWriter("fullResults.txt", true)
+    try {
+      fwAllData.write(fullDataCsv)
+    }
+    finally fwAllData.close()
   }
 
   def printResults(resultsCompressed: ListBuffer[algorithmResult], resultsNaive: ListBuffer[algorithmResult]): Unit = {
