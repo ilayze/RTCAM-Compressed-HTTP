@@ -13,7 +13,7 @@ import java.io._
 /**
   * Created by izeidman on 9/6/2016.
   */
-class communityRulesPartial extends FunSuite {
+class realDataTests extends FunSuite {
       val allAbc = "abcdefghijklmnopqrstuvwxyz"
       test("partial snort community rules"){
         var results = ListBuffer[algorithmResult]()
@@ -39,7 +39,7 @@ class communityRulesPartial extends FunSuite {
         }
       }
 
-      test("Naive vs Compressed"){
+/*      test("Naive vs Compressed"){
         var resultsCompressed = ListBuffer[algorithmResult]()
         var resultsNaive = ListBuffer[algorithmResult]()
         for(i<-5 until(50) by 5){
@@ -82,7 +82,7 @@ class communityRulesPartial extends FunSuite {
 
           val tcamSimulator = new tcamSimulator(width = 10)
           tcamSimulator.printTcam = false
-          tcamSimulator.initializeWithParser("/rules/community-rules.txt")
+          tcamSimulator.initializeWithParser("/rules/community-rules-partial.txt")
 
           println("Packet: "+packet)
           val gzipAsciiCompressed = Converter.ToGzipAscii(packet)
@@ -97,7 +97,7 @@ class communityRulesPartial extends FunSuite {
         }
 
         printResults(resultsCompressed,resultsNaive)
-      }
+      }*/
 
     test("Real html file ") {
 
@@ -107,7 +107,7 @@ class communityRulesPartial extends FunSuite {
       for(w <- 10 to maxWidth by jumps){
         val tcamSimulator = new tcamSimulator(width = w)
         tcamSimulator.printTcam = false
-        tcamSimulator.initializeWithParser("/rules/community-rules.txt")
+        tcamSimulator.initializeWithParser("/rules/community-rules-partial.txt")
 
         tcamSimulators.append(tcamSimulator)
       }
@@ -197,6 +197,13 @@ class communityRulesPartial extends FunSuite {
       fwSkipAv.write(skipAvCsv)
     }
     finally fwSkipAv.close()
+
+    val scanRationCsv = algorithmResult.measurements.compressionRatio.toString() + ","+algorithmResult.measurements.optimalScannedRatio.toString()+","+algorithmResult.measurements.scannedRatio.toString()+"\n"
+    val scanRatioFW = new FileWriter("scanRatio.txt", true)
+    try {
+      scanRatioFW.write(scanRationCsv)
+    }
+    finally scanRatioFW.close()
 
     val fullDataCsv = fileName +","+ algorithmResult.measurements.packetLength.toString() +","+algorithmResult.measurements.lookupCounter +"|"+algorithmResultNaive.measurements.lookupCounter+","+ skipAverageCompressed+"|"+ skipAverageNaive + ","+algorithmResult.measurements.tcamWidth + "\n"
     val fwAllData = new FileWriter("fullResults.txt", true)

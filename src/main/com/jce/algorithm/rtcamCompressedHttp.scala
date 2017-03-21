@@ -37,6 +37,7 @@ class rtcamCompressedHttp(val packet: gzipPacket, val tcam: tcamSimulator) {
         val entry = tcam.lookUp(key)
         val shift = entry(0).shift
         lookupsHistory.append(new lookupOccurence(key,Constants.START,shift))
+        runtimeMeasurements.actualScannedBytes +=1
         if (shift != 0) {
           pos = pos + shift
         }
