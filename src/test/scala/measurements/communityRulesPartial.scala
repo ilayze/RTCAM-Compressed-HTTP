@@ -100,9 +100,18 @@ class communityRulesPartial extends FunSuite {
       }
 
     test("Real html file ") {
-      val tcamSimulator = new tcamSimulator(width = 20)
-      tcamSimulator.printTcam = false
-      tcamSimulator.initializeWithParser("/rules/community-rules.txt")
+
+      val tcamSimulators = new ListBuffer[tcamSimulator]
+      val maxWidth = 50
+      val jumps = 10
+      for(w <- 10 to maxWidth by jumps){
+        val tcamSimulator = new tcamSimulator(width = w)
+        tcamSimulator.printTcam = false
+        tcamSimulator.initializeWithParser("/rules/community-rules.txt")
+
+        tcamSimulators.append(tcamSimulator)
+      }
+
 
       val fileList = recursiveListFiles(new File("C:/Development/RTCAM-Compressed-HTTP/src/test/resources/realData/www.ynet.co.il/"));
       fileList.foreach((file) =>{
@@ -111,35 +120,37 @@ class communityRulesPartial extends FunSuite {
         }
         else{
 
-          println("Processing file: "+file.getAbsolutePath);
-          var path: String = file.getAbsolutePath
-        //  path = path.replace("\\","/")
-          val asStream: InputStream = new FileInputStream(file)
-          val reader = new BufferedReader(new InputStreamReader(asStream));
-          var payloadString = ""
-          var line = reader.readLine();
-          while(line != null){
-            println(line);
-            line = reader.readLine();
-            if(line !=null) {
-              payloadString += line
+          for (ts <- 0 to tcamSimulators.length-1) {
+            println("Processing file: " + file.getAbsolutePath)
+            var path: String = file.getAbsolutePath
+            //  path = path.replace("\\","/")
+            val asStream: InputStream = new FileInputStream(file)
+            val reader = new BufferedReader(new InputStreamReader(asStream))
+            var payloadString = ""
+            var line = reader.readLine();
+            while (line != null) {
+              println(line);
+              line = reader.readLine();
+              if (line != null) {
+                payloadString += line
+              }
             }
+            val gzipAsciiCompressed = Converter.ToGzipAscii(payloadString)
+            //println(String.format("Line: %s, GzipAcsii: %s", line, gzipAsciiCompressed))
+
+            val gzipPacketCompressed = new gzipPacket(gzipAsciiCompressed)
+
+            val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacketCompressed, tcam = tcamSimulators(ts))
+            val algorithmResult = rtcamCompressedHttp.execute()
+            println(algorithmResult)
+
+            val gzipAsciiNaive = getNaiveGzipAsciiString(payloadString)
+            val gzipPacketNaive = new gzipPacket(gzipAsciiNaive)
+            val rtcamNaive = new rtcamCompressedHttp(packet = gzipPacketNaive, tcam = tcamSimulators(ts))
+            val algorithmResultNaive = rtcamNaive.execute()
+            println(algorithmResultNaive)
+            writeResultsToFile(algorithmResult, algorithmResultNaive, file.getName)
           }
-          val gzipAsciiCompressed = Converter.ToGzipAscii(payloadString)
-          //println(String.format("Line: %s, GzipAcsii: %s", line, gzipAsciiCompressed))
-
-          val gzipPacketCompressed = new gzipPacket(gzipAsciiCompressed)
-
-          val rtcamCompressedHttp = new rtcamCompressedHttp(packet = gzipPacketCompressed, tcam = tcamSimulator)
-          val algorithmResult = rtcamCompressedHttp.execute()
-          println(algorithmResult)
-
-          val gzipAsciiNaive = getNaiveGzipAsciiString(payloadString)
-          val gzipPacketNaive = new gzipPacket(gzipAsciiNaive)
-          val rtcamNaive= new rtcamCompressedHttp(packet = gzipPacketNaive, tcam = tcamSimulator)
-          val algorithmResultNaive = rtcamNaive.execute()
-          println(algorithmResultNaive)
-          writeResultsToFile(algorithmResult,algorithmResultNaive,file.getName)
         }
       })
 
