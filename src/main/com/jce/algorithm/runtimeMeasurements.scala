@@ -1,4 +1,4 @@
-package algorithm
+-package algorithm
 
 /**
   * Created by izeidman on 9/6/2016.
@@ -13,7 +13,7 @@ class runtimeMeasurements(val packetLength:Int,val tcamWidth:Int,val numberOfUnc
 
   def compressionRatio = numberOfUncompressed.toFloat/packetLength
   def scannedRatio = actualScannedBytes.toFloat/packetLength
-  def optimalScannedRatio = (1-compressionRatio) + (numberOfCompressed.toFloat/tcamWidth/packetLength)
+  def optimalScannedRatio = compressionRatio/tcamWidth
 
   def printMeasurements: Unit = {
     println("\n##################### Measurements #####################")

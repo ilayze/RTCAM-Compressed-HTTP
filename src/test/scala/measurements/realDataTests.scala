@@ -15,7 +15,7 @@ import java.io._
   */
 class realDataTests extends FunSuite {
       val allAbc = "abcdefghijklmnopqrstuvwxyz"
-      test("partial snort community rules"){
+     /* test("partial snort community rules"){
         var results = ListBuffer[algorithmResult]()
         for(i<-10 until(50) by 5){
           val tcamSimulator = new tcamSimulator(width = i)
@@ -37,7 +37,7 @@ class realDataTests extends FunSuite {
           println("Shift average: %s".format(res.measurements.shiftSum.toFloat / res.measurements.lookupCounter))
 
         }
-      }
+      }*/
 
 /*      test("Naive vs Compressed"){
         var resultsCompressed = ListBuffer[algorithmResult]()
